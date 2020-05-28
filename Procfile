@@ -1,1 +1,1 @@
-importertest: yarn workspace pubg-server script:importplayer donkolbe
+importplayer: yarn workspace pubg-server script:importplayer
