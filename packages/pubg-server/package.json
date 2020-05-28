@@ -5,9 +5,7 @@
   "private": true,
   "scripts": {
     "start:dev": "nodemon",
-    "start": "ts-node ./src/index.ts",
-    "script:importplayer": "ts-node ./src/scripts/importplayer.ts",
-    "script:importlifetimestats": "ts-node ./src/scripts/importlifetimestats.ts"
+    "start": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "axios": "^0.19.2",
