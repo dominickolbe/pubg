@@ -1,1 +1,1 @@
-importplayer: yarn workspace pubg-server script:importplayer
+importplayer: yarn workspace pubg-server ts-node --transpile-only ./src/scripts/importplayer.ts
