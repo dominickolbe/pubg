@@ -16,7 +16,9 @@
     "build:frontend": "yarn workspace pubg-frontend build"
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
   },
   "engines": {
     "node": "^12.16.1",
