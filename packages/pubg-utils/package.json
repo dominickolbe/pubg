@@ -1,0 +1,13 @@
+{
+  "name": "pubg-utils",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "option-t": "^22.3.2",
+    "runtypes": "^4.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}

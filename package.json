@@ -1,0 +1,21 @@
+{
+  "name": "pubg",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": "Dominic Kolbe <kolbedominic@gmail.com>",
+  "repository": "git@github.com:dominickolbe/pubg.git",
+  "workspaces": [
+    "packages/pubg-frontend",
+    "packages/pubg-model",
+    "packages/pubg-server",
+    "packages/pubg-utils"
+  ],
+  "scripts": {
+    "start:dev:server": "yarn workspace pubg-server start:dev",
+    "build:frontend": "yarn workspace pubg-frontend build"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "pubg-server",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start:dev": "nodemon",
+    "start": "ts-node ./src/index.ts",
+    "script:importplayer": "ts-node ./src/scripts/importplayer.ts",
+    "script:importlifetimestats": "ts-node ./src/scripts/importlifetimestats.ts"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "axios": "^0.19.2",
+    "dotenv-safe": "^8.2.0",
+    "koa": "^2.11.0",
+    "koa-router": "^8.0.8",
+    "mongoose": "^5.9.9",
+    "option-t": "^22.3.2",
+    "runtypes": "^4.2.0",
+    "yup": "^0.29.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.3",
+    "@types/koa-router": "^7.4.0",
+    "@types/koa__cors": "^3.0.1",
+    "@types/mongoose": "^5.7.10",
+    "@types/node": "^13.11.1",
+    "@types/yup": "^0.29.0",
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  }
+}
