@@ -15,8 +15,7 @@
     "start:dev:server": "yarn workspace pubg-server start:dev",
     "build:frontend": "yarn workspace pubg-frontend build"
   },
-  "devDependencies": {
-    "prettier": "^2.0.5",
+  "dependencies": {
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3"
   },
