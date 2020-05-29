@@ -1,4 +1,5 @@
 require("dotenv-safe").config();
+import cors from "@koa/cors";
 import Koa from "koa";
 import Router from "koa-router";
 import {
@@ -16,6 +17,8 @@ const server = async () => {
   if (result.err) process.exit(1);
 
   const app = new Koa();
+
+  app.use(cors());
 
   app.use(async (ctx, next) => {
     try {
