@@ -7,7 +7,7 @@
 vercel.com
 
 ```
-https://pubg-dev.now.sh
+https://pubg-app.now.sh
 ```
 
 heroku
@@ -41,7 +41,7 @@ yarn workspace pubg-server ts-node --transpile-only ./src/scripts/importlifetime
 run importer task on heroku
 
 ```bash
-heroku run importplayer *PLAYER_NAME* --app pubg-dev
+heroku run importplayer *PLAYER_NAME* --app pubg-app
 ```
 
 ## License
