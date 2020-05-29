@@ -8,12 +8,10 @@ const options = {
   useFindAndModify: false,
 };
 
-class DbController {
-  constructor() {}
-
-  connect = async () => {
+export const Database = {
+  connect: async () => {
+    console.log("[Info]: connect to database ...");
     try {
-      console.log("[Info]: connect to database ...");
       const connection = await mongoose.connect(MONGO_CONNECTION_URI, options);
       console.log("[Info]: successfully connected to database");
       return createOk(connection);
@@ -21,11 +19,9 @@ class DbController {
       console.log("[Error]: connection to database failed");
       return createErr(error);
     }
-  };
-
-  disconnect = async () => {
+  },
+  disconnect: async () => {
     console.log("[Info]: close connection to database ...");
     return mongoose.disconnect();
-  };
-}
-export const Database = new DbController();
+  },
+};
