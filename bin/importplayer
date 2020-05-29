@@ -1,0 +1,3 @@
+#!/bin/bash
+
+yarn workspace pubg-server ts-node --transpile-only ./src/scripts/importplayer.ts $1

@@ -30,6 +30,13 @@ run importer task on heroku
 heroku run importplayer *PLAYER_NAME* --app pubg-dev
 ```
 
+run importer
+
+```bash
+./bin/importplayer *PLAYER_NAME*
+./bin/importlifetimestats *PLAYER_NAME*
+```
+
 ## License
 
 Copyright (c) 2020 [Dominic Kolbe](https://dominickolbe.dk)
