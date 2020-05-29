@@ -13,7 +13,9 @@
   ],
   "scripts": {
     "start:dev:server": "yarn workspace pubg-server start:dev",
-    "start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts"
+    "start:dev:frontend": "yarn workspace pubg-frontend start",
+    "start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts",
+    "build:frontend": "yarn workspace pubg-frontend build"
   },
   "dependencies": {
     "ts-node": "^8.10.2",
