@@ -15,7 +15,7 @@ class DbController {
     try {
       console.log("[Info]: connect to database ...");
       const connection = await mongoose.connect(MONGO_CONNECTION_URI, options);
-      console.log("[Info]: connected to database");
+      console.log("[Info]: successfully connected to database");
       return createOk(connection);
     } catch (error) {
       console.log("[Error]: connection to database failed");
@@ -23,6 +23,9 @@ class DbController {
     }
   };
 
-  disconnect = async () => mongoose.disconnect();
+  disconnect = async () => {
+    console.log("[Info]: close connection to database ...");
+    return mongoose.disconnect();
+  };
 }
 export const Database = new DbController();
