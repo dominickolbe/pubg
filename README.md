@@ -4,6 +4,14 @@
 
 https://pubg-dev.herokuapp.com/
 
+## Production
+
+build application
+
+```
+$ yarn build:frontend
+```
+
 ## Commands
 
 import player
