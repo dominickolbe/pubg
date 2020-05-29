@@ -18,23 +18,10 @@ import player stats
 yarn workspace pubg-server ts-node --transpile-only ./src/scripts/importlifetimestats.ts *PLAYER_NAME*
 ```
 
-connect to heroku app
-
-```bash
-heroku run bash --app pubg-dev
-```
-
 run importer task on heroku
 
 ```bash
 heroku run importplayer *PLAYER_NAME* --app pubg-dev
-```
-
-run importer
-
-```bash
-./bin/importplayer *PLAYER_NAME*
-./bin/importlifetimestats *PLAYER_NAME*
 ```
 
 ## License
