@@ -27,6 +27,11 @@ const server = async () => {
     ctx.response.status = HTTP_STATUS_OK;
   });
 
+  router.get("/api/tatus", async (ctx) => {
+    ctx.body = "ok.";
+    ctx.response.status = HTTP_STATUS_OK;
+  });
+
   app.use(router.routes());
 
   app.listen(PORT, () => console.log(`server running on port ${PORT}`));
