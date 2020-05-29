@@ -12,7 +12,8 @@
     "packages/pubg-utils"
   ],
   "scripts": {
-    "start:dev:server": "yarn workspace pubg-server start:dev"
+    "start:dev:server": "yarn workspace pubg-server start:dev",
+    "start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts"
   },
   "dependencies": {
     "ts-node": "^8.10.2",
