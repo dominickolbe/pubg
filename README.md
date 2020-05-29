@@ -1,8 +1,20 @@
 # pubg
 
-## heroku
+> source of pubg
 
+## Preview
+
+vercel.com
+
+```
+https://pubg-dev.now.sh/
+```
+
+heroku
+
+```
 https://pubg-dev.herokuapp.com/
+```
 
 ## Production
 
