@@ -9,6 +9,10 @@ import {
   PubgPlayerStatsRequest,
 } from "pubg-model/types/PubgApi";
 import { PUBG_API_BASE } from "../constants";
+import {
+  HTTP_STATUS_TOO_MANY_REQUESTS,
+  HTTP_STATUS_NOT_FOUND,
+} from "pubg-utils/src";
 
 const defaultHeader = {
   accept: "application/vnd.api+json",
@@ -38,9 +42,13 @@ export const PubgApiDriver = {
         }
         return createOk(response.data);
       } catch (error) {
-        if (error.response!.status === 404) {
+        if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
           console.log(
-            `[Error]: PubgApiDriver.player.getByName "${playerName}" user not found (404)`
+            `[Error]: PubgApiDriver.player.getByName HTTP_STATUS_NOT_FOUND`
+          );
+        } else if (error.response!.status === HTTP_STATUS_TOO_MANY_REQUESTS) {
+          console.log(
+            `[Error]: PubgApiDriver.player.getByName HTTP_STATUS_TOO_MANY_REQUESTS`
           );
         } else {
           console.log(error);
@@ -50,7 +58,7 @@ export const PubgApiDriver = {
     },
     getLifetimeStats: async (
       id: string
-    ): Promise<Result<PubgPlayerStatsRequest, null>> => {
+    ): Promise<Result<PubgPlayerStatsRequest, number | null>> => {
       try {
         const response = await axios.get(
           `${PUBG_API_BASE}/players/${id}/seasons/lifetime`,
@@ -65,10 +73,16 @@ export const PubgApiDriver = {
         }
         return createOk(response.data);
       } catch (error) {
-        if (error.response!.status === 404) {
+        if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
           console.log(
-            `[Error]: PubgApiDriver.player.getByName user not found (404)`
+            `[Error]: PubgApiDriver.player.getByName HTTP_STATUS_NOT_FOUND`
           );
+          return createErr(HTTP_STATUS_NOT_FOUND);
+        } else if (error.response!.status === HTTP_STATUS_TOO_MANY_REQUESTS) {
+          console.log(
+            `[Error]: PubgApiDriver.player.getByName HTTP_STATUS_TOO_MANY_REQUESTS`
+          );
+          return createErr(HTTP_STATUS_TOO_MANY_REQUESTS);
         } else {
           console.log(error);
         }

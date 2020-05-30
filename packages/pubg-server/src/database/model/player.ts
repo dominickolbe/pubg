@@ -1,50 +1,65 @@
+import dayjs from "dayjs";
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
-import { RtPlayer } from "pubg-model/runtypes/Player";
+import { RtPlayer, RtPlayerResults } from "pubg-model/runtypes/Player";
 import { Player } from "pubg-model/types/Player";
 
 mongoose.set("useCreateIndex", true);
-const PlayerSchema = new mongoose.Schema({
-  pubgId: {
-    type: String,
-    required: true,
-    unique: true,
+const PlayerSchema = new mongoose.Schema(
+  {
+    pubgId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    stats: {
+      type: Object,
+      default: null,
+    },
+    statsUpdatedAt: {
+      type: String,
+      default: null,
+    },
+    matches: {
+      type: Array,
+      default: [],
+    },
+    matchesUpdatedAt: {
+      type: String,
+      default: null,
+    },
+    createdAt: {
+      type: String,
+      default: dayjs().format(),
+    },
   },
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  stats: {
-    type: Object,
-    default: null,
-  },
-  statsUpdatedAt: {
-    type: Date,
-    default: null,
-  },
-  matches: {
-    type: Array,
-    default: [],
-  },
-  matchesUpdatedAt: {
-    type: Date,
-    default: null,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { versionKey: false }
+);
 
 export const PlayerModel = mongoose.model("Player", PlayerSchema);
 
 export const PlayerDbController = {
+  find: async (query: object): Promise<Option<Player[]>> => {
+    try {
+      const result = await PlayerModel.find(query);
+      if (!result) return createNone();
+      const players = RtPlayerResults.check(result);
+      return createSome(players);
+    } catch (error) {
+      console.log(error);
+      return createNone();
+    }
+  },
   findByName: async (name: string): Promise<Option<Player>> => {
     try {
       const result = await PlayerModel.findOne({ name });
       if (!result) return createNone();
-      const player = RtPlayer.check(result.toObject({ versionKey: false }));
+      const player = RtPlayer.check(result.toObject());
       return createSome(player);
     } catch (error) {
       console.log(error);
@@ -58,9 +73,7 @@ export const PlayerDbController = {
         name,
         stats: null,
       }).save();
-      const player = RtPlayer.check(
-        result && result.toObject({ versionKey: false })
-      );
+      const player = RtPlayer.check(result && result.toObject());
       return createSome(player);
     } catch (error) {
       console.log(error);
@@ -77,14 +90,12 @@ export const PlayerDbController = {
         {
           $set: {
             stats: stats,
-            statsUpdatedAt: new Date(),
+            statsUpdatedAt: dayjs().format(),
           },
         },
         { new: true }
       );
-      const player = RtPlayer.check(
-        result && result.toObject({ versionKey: false })
-      );
+      const player = RtPlayer.check(result && result.toObject());
       return createSome(player);
     } catch (error) {
       console.log(error);
@@ -98,7 +109,7 @@ export const PlayerDbController = {
       },
       {
         $set: {
-          matchesUpdatedAt: new Date(),
+          matchesUpdatedAt: dayjs().format(),
         },
         $addToSet: {
           matches: matchId,

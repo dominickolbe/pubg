@@ -32,14 +32,14 @@ export const importPlayerByName = async (name: string) => {
 
 export const importPlayerStats = async (
   player: Player
-): Promise<Result<Player, null>> => {
+): Promise<Result<Player, number | null>> => {
   console.log(`[Info]: start importing player stats...`);
 
   const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
 
   if (!request.ok) {
     console.log(`[Error]: pubg api request failed`);
-    return createErr(null);
+    return createErr(request.err);
   }
 
   const newPlayer = await PlayerDbController.updateStats(

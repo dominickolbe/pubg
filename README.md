@@ -29,7 +29,7 @@ $ yarn build:frontend
 import player
 
 ```bash
-yarn workspace pubg-server ts-node --transpile-only ./src/scripts/importplayer.ts *PLAYER_NAME*
+yarn workspace pubg-server ts-node --transpile-only ./src/tasks/importplayer.ts *PLAYER_NAME*
 ```
 
 update players
@@ -38,15 +38,10 @@ update players
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts
 ```
 
-run importer task on heroku
+run tasks on heroku
 
 ```bash
 heroku run importplayer *PLAYER_NAME* --app pubg-app
-```
-
-run update task on heroku
-
-```bash
 heroku run updateplayers --app pubg-app
 ```
 
