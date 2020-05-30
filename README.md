@@ -35,7 +35,7 @@ yarn workspace pubg-server ts-node --transpile-only ./src/tasks/importplayer.ts 
 update players
 
 ```bash
-yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts
+yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
 ```
 
 run tasks on heroku
