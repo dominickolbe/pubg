@@ -26,7 +26,7 @@ export const PubgApiDriver = {
   player: {
     getByName: async (
       playerName: string
-    ): Promise<Result<PubgPlayerRequest, null>> => {
+    ): Promise<Result<PubgPlayerRequest, number | null>> => {
       try {
         const response = await axios.get(
           `${PUBG_API_BASE}/players?filter[playerNames]=${playerName}`,
@@ -46,10 +46,12 @@ export const PubgApiDriver = {
           console.log(
             `[Error]: PubgApiDriver.player.getByName HTTP_STATUS_NOT_FOUND`
           );
+          return createErr(HTTP_STATUS_NOT_FOUND);
         } else if (error.response!.status === HTTP_STATUS_TOO_MANY_REQUESTS) {
           console.log(
             `[Error]: PubgApiDriver.player.getByName HTTP_STATUS_TOO_MANY_REQUESTS`
           );
+          return createErr(HTTP_STATUS_TOO_MANY_REQUESTS);
         } else {
           console.log(error);
         }
