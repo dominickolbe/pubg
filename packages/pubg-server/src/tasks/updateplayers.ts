@@ -6,7 +6,8 @@ import { PlayerDbController } from "../database/model/player";
 import { importPlayerStats } from "../utils";
 import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
 
-const MIN_UPDATE_INTERVAL = 15; // in minutes
+// min update interval in minutes
+const MIN_UPDATE_INTERVAL = parseInt(process.argv[2] ?? 60);
 
 const run = async () => {
   const exit = async (exitCode: number) => {
