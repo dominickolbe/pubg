@@ -8,8 +8,7 @@ import {
   PubgPlayerRequest,
   PubgPlayerStatsRequest,
 } from "pubg-model/types/PubgApi";
-
-const URL_API_BASE = "https://api.pubg.com/shards/steam";
+import { PUBG_API_BASE } from "../constants";
 
 const defaultHeader = {
   accept: "application/vnd.api+json",
@@ -26,7 +25,7 @@ export const PubgApiDriver = {
     ): Promise<Result<PubgPlayerRequest, null>> => {
       try {
         const response = await axios.get(
-          `${URL_API_BASE}/players?filter[playerNames]=${playerName}`,
+          `${PUBG_API_BASE}/players?filter[playerNames]=${playerName}`,
           { headers: authHeader }
         );
 
@@ -39,8 +38,13 @@ export const PubgApiDriver = {
         }
         return createOk(response.data);
       } catch (error) {
-        // player not found or request failed for other reasons
-        console.log(error);
+        if (error.response!.status === 404) {
+          console.log(
+            `[Error]: PubgApiDriver.player.getByName "${playerName}" user not found (404)`
+          );
+        } else {
+          console.log(error);
+        }
         return createErr(null);
       }
     },
@@ -49,7 +53,7 @@ export const PubgApiDriver = {
     ): Promise<Result<PubgPlayerStatsRequest, null>> => {
       try {
         const response = await axios.get(
-          `${URL_API_BASE}/players/${id}/seasons/lifetime`,
+          `${PUBG_API_BASE}/players/${id}/seasons/lifetime`,
           { headers: authHeader }
         );
         const request = RtPubgPlayerStatsRequest.validate(response.data);
@@ -61,7 +65,13 @@ export const PubgApiDriver = {
         }
         return createOk(response.data);
       } catch (error) {
-        console.log(error);
+        if (error.response!.status === 404) {
+          console.log(
+            `[Error]: PubgApiDriver.player.getByName user not found (404)`
+          );
+        } else {
+          console.log(error);
+        }
         return createErr(null);
       }
     },
@@ -69,7 +79,7 @@ export const PubgApiDriver = {
   matches: {
     getById: async (id: string) => {
       try {
-        const response = await axios.get(`${URL_API_BASE}/matches/${id}`, {
+        const response = await axios.get(`${PUBG_API_BASE}/matches/${id}`, {
           headers: defaultHeader,
         });
       } catch (error) {

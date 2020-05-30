@@ -44,6 +44,12 @@ run importer task on heroku
 heroku run importplayer *PLAYER_NAME* --app pubg-app
 ```
 
+run update task on heroku
+
+```bash
+heroku run updateplayers --app pubg-app
+```
+
 ## License
 
 Copyright (c) 2020 [Dominic Kolbe](https://dominickolbe.dk)

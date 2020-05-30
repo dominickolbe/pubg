@@ -9,6 +9,12 @@ import {
 } from "pubg-utils/src";
 import { Database } from "./database";
 import { PlayerDbController } from "./database/model/player";
+import {
+  cache,
+  duplicatedPlayerCheck,
+  importPlayerByName,
+  importPlayerStats,
+} from "./utils";
 
 const PORT = process.env.PORT;
 
@@ -36,14 +42,40 @@ const server = async () => {
     ctx.response.status = HTTP_STATUS_OK;
   });
 
-  router.get("/api/v1/players/:id", async (ctx) => {
-    const player = await PlayerDbController.findByName(ctx.params.id);
-    if (player.ok) {
-      ctx.body = player.val;
-    } else {
+  router.get(
+    "/api/v1/players/:id",
+    duplicatedPlayerCheck,
+    async (ctx, next) => {
+      const player = await PlayerDbController.findByName(ctx.params.id);
+
+      // player found in db
+      if (player.ok) {
+        ctx.body = player.val;
+        return next();
+      }
+
+      // try to import player
+      const importedPlayer = await importPlayerByName(ctx.params.id);
+
+      if (importedPlayer.ok) {
+        const result = await importPlayerStats(importedPlayer.val);
+        if (result.ok) {
+          // return imported player with stats
+          ctx.body = result.val;
+          return next();
+        } else {
+          // return imported player without stats
+          ctx.body = importedPlayer.val;
+          return next();
+        }
+      }
+
+      // add failed player request to cache
+      cache.pubgPlayerNotFound.push(ctx.params.id);
+
       ctx.response.status = HTTP_STATUS_NOT_FOUND;
     }
-  });
+  );
 
   app.use(router.routes());
 
