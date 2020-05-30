@@ -6,6 +6,7 @@ import {
   HTTP_STATUS_INTERNAL_SERVER_ERROR,
   HTTP_STATUS_NOT_FOUND,
   HTTP_STATUS_OK,
+  HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import { Database } from "./database";
 import { PlayerDbController } from "./database/model/player";
@@ -75,10 +76,10 @@ const server = async () => {
           ctx.body = importedPlayer.val;
           return next();
         }
+      } else if (importedPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
+        // add failed player request to cache
+        cache.pubgPlayerNotFound.push(ctx.params.id);
       }
-
-      // add failed player request to cache
-      cache.pubgPlayerNotFound.push(ctx.params.id);
 
       ctx.response.status = HTTP_STATUS_NOT_FOUND;
     }
