@@ -8,16 +8,16 @@ import { PubgApiDriver } from "../services/PubgApiDriver";
 export const importPlayerByName = async (name: string) => {
   console.log(`[Info]: start importing player "${name}" ...`);
 
-  const response = await PubgApiDriver.player.getByName(name);
+  const request = await PubgApiDriver.player.getByName(name);
 
-  if (!response.ok || response.val.data.length !== 1) {
+  if (!request.ok || request.val.data.length !== 1) {
     console.log(`[Error]: pubg api request failed`);
-    return createErr(null);
+    return createErr(request.err);
   }
 
   const player = await PlayerDbController.save(
-    response.val.data[0].id,
-    response.val.data[0].attributes.name
+    request.val.data[0].id,
+    request.val.data[0].attributes.name
   );
 
   if (!player.ok) {
