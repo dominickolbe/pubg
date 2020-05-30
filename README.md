@@ -32,6 +32,12 @@ import player
 yarn workspace pubg-server ts-node --transpile-only ./src/scripts/importplayer.ts *PLAYER_NAME*
 ```
 
+update players
+
+```bash
+yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts
+```
+
 run importer task on heroku
 
 ```bash
