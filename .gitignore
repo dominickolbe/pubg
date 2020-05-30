@@ -6,4 +6,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+dump/
+
 packages/pubg-frontend/build
