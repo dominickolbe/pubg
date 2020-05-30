@@ -8,4 +8,15 @@ export const RtPlayer = rt.Record({
   createdAt: rt.InstanceOf(Date),
   stats: rt.Record({}).Or(rt.Null),
   statsUpdatedAt: rt.InstanceOf(Date).Or(rt.Null),
+  // TODO
+  matches: rt.Array(rt.Record({})),
+  matchesUpdatedAt: rt.InstanceOf(Date).Or(rt.Null),
+});
+
+export const RtPlayerRequest = rt.Record({
+  ...RtPlayer.fields,
+  _id: rt.String,
+  createdAt: rt.String,
+  statsUpdatedAt: rt.String.Or(rt.Null),
+  matchesUpdatedAt: rt.String.Or(rt.Null),
 });

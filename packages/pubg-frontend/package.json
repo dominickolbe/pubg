@@ -8,9 +8,12 @@
     "build": "react-scripts build"
   },
   "dependencies": {
+    "@sentry/browser": "^5.15.5",
     "axios": "^0.19.2",
+    "option-t": "^22.3.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "runtypes": "^4.2.0",
     "typescript": "^3.9.3"
   },
   "devDependencies": {
