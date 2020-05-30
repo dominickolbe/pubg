@@ -6,7 +6,7 @@ import { PlayerDbController } from "../database/model/player";
 import { importPlayerStats } from "../utils";
 import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
 
-const MIN_UPDATE_INTERVAL = 15; // in minutes
+const MIN_UPDATE_INTERVAL = 20; // in minutes
 const run = async () => {
   const exit = async (exitCode: number) => {
     await Database.disconnect();
