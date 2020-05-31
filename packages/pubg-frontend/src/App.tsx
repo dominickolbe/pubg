@@ -7,9 +7,11 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import { Header } from "./components/Header";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
 import { PlayerNotFound } from "./views/PlayerNotFound";
+import { Start } from "./views/Start";
 
 export const App = () => {
   const classes = useStyles();
@@ -18,10 +20,12 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
+
         <Router>
+          <Header />
           <Switch>
             <Route exact path="/">
-              <p>home</p>
+              <Start />
             </Route>
             <Route exact path="/players/:id">
               <Player />

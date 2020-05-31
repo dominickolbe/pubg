@@ -52,7 +52,7 @@ export const Player = () => {
 
   return (
     <Container maxWidth="md">
-      <Grid container className={classes.root} spacing={3}>
+      <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h5" gutterBottom>
             {player.name}
