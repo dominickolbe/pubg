@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/browser";
 import axios from "axios";
 import { createErr, createOk } from "option-t/cjs/PlainResult";
 import { RtPlayerRequest } from "pubg-model/runtypes/Player";
-import { API_BASE } from "./constants";
+import { API_BASE } from "../../constants";
 
 export const ApiController = {
   getPlayer: async (name: string) => {

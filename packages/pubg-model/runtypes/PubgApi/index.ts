@@ -1,4 +1,5 @@
 import * as rt from "runtypes";
+import { RtStats } from "../Stats";
 
 export const RtPubgPlayerRequest = rt.Record({
   data: rt.Array(
@@ -10,44 +11,6 @@ export const RtPubgPlayerRequest = rt.Record({
       }),
     })
   ),
-});
-
-export const RtPubgPlayerStatsKeysRequest = rt.Record({
-  assists: rt.Number,
-  boosts: rt.Number,
-  dBNOs: rt.Number,
-  dailyKills: rt.Number,
-  dailyWins: rt.Number,
-  damageDealt: rt.Number,
-  days: rt.Number,
-  headshotKills: rt.Number,
-  heals: rt.Number,
-  killPoints: rt.Number,
-  kills: rt.Number,
-  longestKill: rt.Number,
-  longestTimeSurvived: rt.Number,
-  losses: rt.Number,
-  maxKillStreaks: rt.Number,
-  mostSurvivalTime: rt.Number,
-  rankPoints: rt.Number,
-  rankPointsTitle: rt.String,
-  revives: rt.Number,
-  rideDistance: rt.Number,
-  roadKills: rt.Number,
-  roundMostKills: rt.Number,
-  roundsPlayed: rt.Number,
-  suicides: rt.Number,
-  swimDistance: rt.Number,
-  teamKills: rt.Number,
-  timeSurvived: rt.Number,
-  top10s: rt.Number,
-  vehicleDestroys: rt.Number,
-  walkDistance: rt.Number,
-  weaponsAcquired: rt.Number,
-  weeklyKills: rt.Number,
-  weeklyWins: rt.Number,
-  winPoints: rt.Number,
-  wins: rt.Number,
 });
 
 const RtPubgPlayerMatchItem = rt.Record({
@@ -63,14 +26,7 @@ export const RtPubgPlayerStatsRequest = rt.Record({
   data: rt.Record({
     type: rt.Literal("playerSeason"),
     attributes: rt.Record({
-      gameModeStats: rt.Record({
-        solo: RtPubgPlayerStatsKeysRequest,
-        "solo-fpp": RtPubgPlayerStatsKeysRequest,
-        duo: RtPubgPlayerStatsKeysRequest,
-        "duo-fpp": RtPubgPlayerStatsKeysRequest,
-        squad: RtPubgPlayerStatsKeysRequest,
-        "squad-fpp": RtPubgPlayerStatsKeysRequest,
-      }),
+      gameModeStats: RtStats,
     }),
     relationships: rt.Record({
       matchesSolo: RtPubgPlayerMatchItem,
