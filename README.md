@@ -49,6 +49,7 @@ run tasks on heroku
 ```bash
 heroku run importplayer *PLAYER_NAME* --app pubg-app
 heroku run updateplayers --app pubg-app
+heroku run importmatches --app pubg-app
 ```
 
 ## License
