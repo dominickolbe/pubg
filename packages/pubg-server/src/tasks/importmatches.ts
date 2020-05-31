@@ -2,8 +2,7 @@ require("dotenv-safe").config();
 
 import { Database } from "../database";
 import { PlayerDbController } from "../database/model/player";
-import { importMatch } from "../utils";
-import { PubgApiDriver } from "../services/PubgApiDriver";
+import { importMatches } from "../utils";
 
 const run = async () => {
   const exit = async (exitCode: number) => {
@@ -11,21 +10,22 @@ const run = async () => {
     process.exit(exitCode);
   };
 
-  const playerNameArg = process.argv[2] ?? null;
-
-  if (!playerNameArg) {
-    console.log(`[Error]: player arg missing`);
-    return await exit(1);
-  }
+  console.log(`[Info]: start importing players matches task ...`);
 
   const db = await Database.connect();
   if (db.err) exit(1);
 
-  const playerExist = await PlayerDbController.findByName(playerNameArg);
+  const players = await PlayerDbController.find({});
 
-  if (!playerExist.ok) {
-    console.log(`[Error]: player "${playerNameArg}" not found`);
-    return await exit(1);
+  if (!players.ok || players.val.length === 0) {
+    console.log(`[Info]: no players found`);
+    return await exit(0);
+  }
+
+  console.log(`[Info]: ${players.val.length} players found`);
+
+  for (const player of players.val) {
+    await importMatches(player.pubgId);
   }
 
   return await exit(0);

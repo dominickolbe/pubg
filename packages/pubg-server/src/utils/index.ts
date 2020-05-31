@@ -60,8 +60,8 @@ export const importPlayerStats = async (
   return createOk(newPlayer.val);
 };
 
-export const importMatch = async (id: string) => {
-  const exist = await PubgApiDriver.matches.getById(id);
+export const importMatchById = async (id: string) => {
+  const exist = await MatchDbController.findById(id);
 
   if (exist.ok) {
     console.log(`[Info]: skip import. match already exist`);
@@ -91,6 +91,32 @@ export const importMatch = async (id: string) => {
   console.log(`[Info]: match "${match.val._id}" successfully imported`);
 
   return createOk(match.val);
+};
+
+export const importMatches = async (pubgId: string) => {
+  const request = await PubgApiDriver.player.getLifetimeStats(pubgId);
+
+  if (!request.ok) {
+    console.log(`[Error]: pubg api request failed`);
+    return createErr(request.err);
+  }
+
+  // TODO
+  const matchTypes = [
+    "matchesSolo",
+    "matchesSoloFPP",
+    "matchesDuo",
+    "matchesDuoFPP",
+    "matchesSquad",
+    "matchesSquadFPP",
+  ] as const;
+
+  for (const matchType of matchTypes) {
+    for (const match of request.val.data.relationships[matchType].data) {
+      await importMatchById(match.id);
+    }
+  }
+  return createOk(null);
 };
 
 export const cache: {
