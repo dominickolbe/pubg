@@ -126,5 +126,3 @@ export const Player = () => {
     </Container>
   );
 };
-
-// player not found
