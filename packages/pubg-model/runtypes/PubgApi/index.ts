@@ -38,3 +38,16 @@ export const RtPubgPlayerStatsRequest = rt.Record({
     }),
   }),
 });
+
+export const RtPubgMatchRequest = rt.Record({
+  data: rt.Record({
+    type: rt.Literal("match"),
+    id: rt.String,
+    attributes: rt.Record({
+      createdAt: rt.String,
+      duration: rt.Number,
+      gameMode: rt.String,
+      mapName: rt.String,
+    }),
+  }),
+});

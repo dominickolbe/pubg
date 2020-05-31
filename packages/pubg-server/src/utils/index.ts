@@ -2,6 +2,7 @@ import Koa from "koa";
 import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
 import { Player } from "pubg-model/types/Player";
 import { HTTP_STATUS_NOT_FOUND } from "pubg-utils/src";
+import { MatchDbController } from "../database/model/match";
 import { PlayerDbController } from "../database/model/player";
 import { PubgApiDriver } from "../services/PubgApiDriver";
 
@@ -57,6 +58,39 @@ export const importPlayerStats = async (
   );
 
   return createOk(newPlayer.val);
+};
+
+export const importMatch = async (id: string) => {
+  const exist = await PubgApiDriver.matches.getById(id);
+
+  if (exist.ok) {
+    console.log(`[Info]: skip import. match already exist`);
+    return createOk(exist.val);
+  }
+
+  const request = await PubgApiDriver.matches.getById(id);
+
+  if (!request.ok) {
+    console.log(`[Error]: pubg api request failed`);
+    return createErr(request.err);
+  }
+
+  const match = await MatchDbController.save({
+    matchId: request.val.data.id,
+    gameMode: request.val.data.attributes.gameMode,
+    mapName: request.val.data.attributes.mapName,
+    duration: request.val.data.attributes.duration,
+    createdAt: request.val.data.attributes.createdAt,
+  });
+
+  if (!match.ok) {
+    console.log(`[Error]: import match to db failed`);
+    return createErr(null);
+  }
+
+  console.log(`[Info]: match "${match.val._id}" successfully imported`);
+
+  return createOk(match.val);
 };
 
 export const cache: {

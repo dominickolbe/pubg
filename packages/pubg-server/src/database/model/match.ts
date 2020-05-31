@@ -1,36 +1,55 @@
 import mongoose from "mongoose";
-import { createNone, createSome } from "option-t/cjs/PlainOption";
+import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
+import { RtMatch } from "pubg-model/runtypes/Match";
+import { Match, MatchImport } from "pubg-model/types/Match";
 
 mongoose.set("useCreateIndex", true);
-const MatchSchema = new mongoose.Schema({
-  matchId: {
-    type: String,
-    required: true,
-    unique: true,
+const MatchSchema = new mongoose.Schema(
+  {
+    matchId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    gameMode: {
+      type: String,
+      required: true,
+    },
+    mapName: {
+      type: String,
+      required: true,
+    },
+    duration: {
+      type: Number,
+      required: true,
+    },
+    createdAt: {
+      type: String,
+      required: true,
+    },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { versionKey: false }
+);
 
 export const MatchModel = mongoose.model("Match", MatchSchema);
 
 export const MatchDbController = {
-  findByMatchId: async (matchId: string) => {
+  findById: async (matchId: string): Promise<Option<Match>> => {
     try {
       const result = await MatchModel.findOne({ matchId });
       if (!result) return createNone();
-      return createSome(null);
+      const player = RtMatch.check(result.toObject());
+      return createSome(player);
     } catch (error) {
       console.log(error);
       return createNone();
     }
   },
-  save: async (matchId: string) => {
+  save: async (match: MatchImport): Promise<Option<Match>> => {
     try {
-      await new MatchModel({ matchId }).save();
-      return createSome(null);
+      const result = await new MatchModel(match).save();
+      const newMatch = RtMatch.check(result && result.toObject());
+      return createSome(newMatch);
     } catch (error) {
       console.log(error);
       return createNone();

@@ -1,12 +1,10 @@
 import * as rt from "runtypes";
 import {
+  RtPubgMatchRequest,
   RtPubgPlayerRequest,
-  RtPubgPlayerStatsKeysRequest,
   RtPubgPlayerStatsRequest,
 } from "../../runtypes/PubgApi";
 
 export type PubgPlayerRequest = rt.Static<typeof RtPubgPlayerRequest>;
-export type PubgPlayerStatsKeysRequest = rt.Static<
-  typeof RtPubgPlayerStatsKeysRequest
->;
 export type PubgPlayerStatsRequest = rt.Static<typeof RtPubgPlayerStatsRequest>;
+export type PubgMatchRequest = rt.Static<typeof RtPubgMatchRequest>;

@@ -1,18 +1,20 @@
 import axios from "axios";
 import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
 import {
+  RtPubgMatchRequest,
   RtPubgPlayerRequest,
   RtPubgPlayerStatsRequest,
 } from "pubg-model/runtypes/PubgApi";
 import {
+  PubgMatchRequest,
   PubgPlayerRequest,
   PubgPlayerStatsRequest,
 } from "pubg-model/types/PubgApi";
-import { PUBG_API_BASE } from "../constants";
 import {
-  HTTP_STATUS_TOO_MANY_REQUESTS,
   HTTP_STATUS_NOT_FOUND,
+  HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
+import { PUBG_API_BASE } from "../constants";
 
 const defaultHeader = {
   accept: "application/vnd.api+json",
@@ -93,11 +95,21 @@ export const PubgApiDriver = {
     },
   },
   matches: {
-    getById: async (id: string) => {
+    getById: async (
+      id: string
+    ): Promise<Result<PubgMatchRequest, number | null>> => {
       try {
         const response = await axios.get(`${PUBG_API_BASE}/matches/${id}`, {
           headers: defaultHeader,
         });
+        const request = RtPubgMatchRequest.validate(response.data);
+        if (!request.success) {
+          console.log(
+            `[Error]: PubgApiDriver.matches.getById validation error`
+          );
+          return createErr(null);
+        }
+        return createOk(response.data);
       } catch (error) {
         console.log(error);
         return createErr(null);
