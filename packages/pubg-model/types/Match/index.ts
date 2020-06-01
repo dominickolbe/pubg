@@ -1,5 +1,5 @@
 import * as rt from "runtypes";
-import { RtMatch, RtMatchImport } from "../../runtypes/Match";
+import { RtMatch, RtMatchCreate } from "../../runtypes/Match";
 
 export type Match = rt.Static<typeof RtMatch>;
-export type MatchImport = rt.Static<typeof RtMatchImport>;
+export type MatchCreate = rt.Static<typeof RtMatchCreate>;

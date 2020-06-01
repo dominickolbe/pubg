@@ -39,6 +39,38 @@ export const RtPubgPlayerStatsRequest = rt.Record({
   }),
 });
 
+export const RtPubgMatchRoster = rt.Record({
+  type: rt.Literal("roster"),
+  id: rt.String,
+  relationships: rt.Record({
+    participants: rt.Record({
+      data: rt.Array(
+        rt.Record({
+          id: rt.String,
+        })
+      ),
+    }),
+  }),
+});
+
+export const RtPubgMatchParticipant = rt.Record({
+  type: rt.Literal("participant"),
+  id: rt.String,
+  attributes: rt.Record({
+    stats: rt.Record({
+      // TODO add all keys
+    }),
+  }),
+});
+
+export const RtPubgMatchAsset = rt.Record({
+  type: rt.Literal("asset"),
+  id: rt.String,
+  attributes: rt.Record({
+    URL: rt.String,
+  }),
+});
+
 export const RtPubgMatchRequest = rt.Record({
   data: rt.Record({
     type: rt.Literal("match"),
@@ -50,4 +82,11 @@ export const RtPubgMatchRequest = rt.Record({
       mapName: rt.String,
     }),
   }),
+  included: rt.Array(
+    rt
+      .Record({ type: rt.String })
+      .Or(RtPubgMatchRoster)
+      .Or(RtPubgMatchParticipant)
+      .Or(RtPubgMatchAsset)
+  ),
 });

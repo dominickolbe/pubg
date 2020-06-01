@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
 import { RtMatch } from "pubg-model/runtypes/Match";
-import { Match, MatchImport } from "pubg-model/types/Match";
+import { Match, MatchCreate } from "pubg-model/types/Match";
 
 mongoose.set("useCreateIndex", true);
 const MatchSchema = new mongoose.Schema(
@@ -21,6 +21,18 @@ const MatchSchema = new mongoose.Schema(
     },
     duration: {
       type: Number,
+      required: true,
+    },
+    teams: {
+      type: Array,
+      required: true,
+    },
+    players: {
+      type: Array,
+      required: true,
+    },
+    telemetry: {
+      type: String,
       required: true,
     },
     createdAt: {
@@ -45,7 +57,7 @@ export const MatchDbController = {
       return createNone();
     }
   },
-  save: async (match: MatchImport): Promise<Option<Match>> => {
+  save: async (match: MatchCreate): Promise<Option<Match>> => {
     try {
       const result = await new MatchModel(match).save();
       const newMatch = RtMatch.check(result && result.toObject());
