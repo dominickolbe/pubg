@@ -25,7 +25,7 @@ const run = async () => {
   console.log(`[Info]: ${players.val.length} players found`);
 
   for (const player of players.val) {
-    await importMatches(player.pubgId);
+    await importMatches(player);
   }
 
   return await exit(0);

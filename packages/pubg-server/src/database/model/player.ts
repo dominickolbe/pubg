@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
 import { RtPlayer, RtPlayerResults } from "pubg-model/runtypes/Player";
+import { Match } from "pubg-model/types/Match";
 import { Player } from "pubg-model/types/Player";
 
 mongoose.set("useCreateIndex", true);
@@ -25,10 +26,7 @@ const PlayerSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    matches: {
-      type: Array,
-      default: [],
-    },
+    matches: [{ type: mongoose.Types.ObjectId, ref: "Match" }],
     matchesUpdatedAt: {
       type: String,
       default: null,
@@ -57,6 +55,7 @@ export const PlayerDbController = {
   },
   findByName: async (name: string): Promise<Option<Player>> => {
     try {
+      // const result = await PlayerModel.findOne({ name }).populate("matches");
       const result = await PlayerModel.findOne({ name });
       if (!result) return createNone();
       const player = RtPlayer.check(result.toObject());
@@ -102,20 +101,27 @@ export const PlayerDbController = {
       return createNone();
     }
   },
-  addMatch: async (id: mongoose.Types.ObjectId, matchId: String) => {
-    await PlayerModel.findByIdAndUpdate(
-      {
-        _id: id,
-      },
-      {
-        $set: {
-          matchesUpdatedAt: dayjs().format(),
+  pushMatch: async (id: mongoose.Types.ObjectId, match: Match) => {
+    try {
+      const result = await PlayerModel.findByIdAndUpdate(
+        {
+          _id: id,
         },
-        $addToSet: {
-          matches: matchId,
+        {
+          $set: {
+            matchesUpdatedAt: dayjs().format(),
+          },
+          $addToSet: {
+            matches: match._id,
+          },
         },
-      },
-      { new: true }
-    );
+        { new: true }
+      );
+      const player = RtPlayer.check(result && result.toObject());
+      return createSome(player);
+    } catch (error) {
+      console.log(error);
+      return createNone();
+    }
   },
 };

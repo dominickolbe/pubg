@@ -93,8 +93,8 @@ export const importMatchById = async (id: string) => {
   return createOk(match.val);
 };
 
-export const importMatches = async (pubgId: string) => {
-  const request = await PubgApiDriver.player.getLifetimeStats(pubgId);
+export const importMatches = async (player: Player) => {
+  const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
 
   if (!request.ok) {
     console.log(`[Error]: pubg api request failed`);
@@ -113,7 +113,9 @@ export const importMatches = async (pubgId: string) => {
 
   for (const matchType of matchTypes) {
     for (const match of request.val.data.relationships[matchType].data) {
-      await importMatchById(match.id);
+      const dbMatch = await importMatchById(match.id);
+      if (!dbMatch.ok) return createOk(null);
+      await PlayerDbController.pushMatch(player._id, dbMatch.val);
     }
   }
   return createOk(null);
