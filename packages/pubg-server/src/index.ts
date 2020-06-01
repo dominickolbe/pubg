@@ -20,15 +20,35 @@ import {
 
 const PORT = process.env.PORT;
 
+const compress = require("koa-compress");
+
 const server = async () => {
   const result = await Database.connect();
   if (result.err) process.exit(1);
 
   const app = new Koa();
 
+  app.use(
+    compress({
+      // @ts-ignore
+      filter(content_type) {
+        return /text/i.test(content_type);
+      },
+      threshold: 2048,
+      gzip: {
+        flush: require("zlib").Z_SYNC_FLUSH,
+      },
+      deflate: {
+        flush: require("zlib").Z_SYNC_FLUSH,
+      },
+      br: false, // disable brotli
+    })
+  );
+
   app.use(cors());
 
   app.use(async (ctx, next) => {
+    ctx.compress = true;
     try {
       await next();
     } catch (err) {
