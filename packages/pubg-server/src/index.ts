@@ -44,12 +44,12 @@ const server = async () => {
     ctx.response.status = HTTP_STATUS_OK;
   });
 
-  router.get("/api/v1/players", async (ctx) => {
-    const player = await PlayerDbController.find({});
-    if (player.ok) {
-      ctx.body = player.val;
-    }
-  });
+  // router.get("/api/v1/players", async (ctx) => {
+  //   const player = await PlayerDbController.find({});
+  //   if (player.ok) {
+  //     ctx.body = player.val;
+  //   }
+  // });
 
   router.get(
     "/api/v1/players/:id",
