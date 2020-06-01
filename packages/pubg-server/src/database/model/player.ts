@@ -54,8 +54,7 @@ export const PlayerDbController = {
   },
   findByName: async (name: string): Promise<Option<Player>> => {
     try {
-      // const result = await PlayerModel.findOne({ name }).populate("matches");
-      const result = await PlayerModel.findOne({ name });
+      const result = await PlayerModel.findOne({ name }).populate("matches");
       if (!result) return createNone();
       const player = RtPlayer.check(result.toObject());
       return createSome(player);
