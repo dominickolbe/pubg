@@ -28,11 +28,13 @@ const run = async () => {
   }
 
   // only update player stats older than MIN_UPDATE_INTERVAL
-  const playersToUpdate = players.val.filter((i) =>
-    isBefore(
-      parseISO(i.statsUpdatedAt || new Date().toISOString()),
-      sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
-    )
+  const playersToUpdate = players.val.filter(
+    (i) =>
+      i.statsUpdatedAt === null ||
+      isBefore(
+        parseISO(i.statsUpdatedAt),
+        sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+      )
   );
 
   console.log(`[Info]: ${playersToUpdate.length} players found`);

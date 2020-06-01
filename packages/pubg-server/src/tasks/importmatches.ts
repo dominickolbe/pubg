@@ -1,8 +1,12 @@
 require("dotenv-safe").config();
 
+import { isBefore, parseISO, sub } from "date-fns";
 import { Database } from "../database";
 import { PlayerDbController } from "../database/model/player";
 import { importMatches } from "../utils";
+
+// min update interval in minutes
+const MIN_UPDATE_INTERVAL = parseInt(process.argv[2] ?? 60);
 
 const run = async () => {
   const exit = async (exitCode: number) => {
@@ -22,9 +26,19 @@ const run = async () => {
     return await exit(0);
   }
 
-  console.log(`[Info]: ${players.val.length} players found`);
+  // only update player matches older than MIN_UPDATE_INTERVAL
+  const playersToUpdate = players.val.filter(
+    (i) =>
+      i.matchesUpdatedAt === null ||
+      isBefore(
+        parseISO(i.matchesUpdatedAt),
+        sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+      )
+  );
 
-  for (const player of players.val) {
+  console.log(`[Info]: ${playersToUpdate.length} players found`);
+
+  for (const player of playersToUpdate) {
     await importMatches(player);
   }
 
