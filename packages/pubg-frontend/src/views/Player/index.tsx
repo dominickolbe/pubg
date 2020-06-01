@@ -30,7 +30,7 @@ export const Player = () => {
   const classes = useStyles();
 
   const loadPlayer = async () => {
-    const response = await ApiController.getPlayer(id);
+    const response = await ApiController.getPlayer(id, true, true);
     if (response.ok) {
       setPlayer(response.val);
     } else {

@@ -5,9 +5,11 @@ import { RtPlayerRequest } from "pubg-model/runtypes/Player";
 import { API_BASE } from "../../constants";
 
 export const ApiController = {
-  getPlayer: async (name: string) => {
+  getPlayer: async (name: string, withStats: boolean, withMatches: boolean) => {
     try {
-      const response = await axios.get(`${API_BASE}/api/v1/players/${name}`);
+      const response = await axios.get(
+        `${API_BASE}/api/v1/players/${name}?stats=${withStats}&matches=${withMatches}`
+      );
       try {
         const player = RtPlayerRequest.check(response.data);
         return createOk(player);

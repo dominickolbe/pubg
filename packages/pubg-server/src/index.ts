@@ -2,6 +2,7 @@ require("dotenv-safe").config();
 import cors from "@koa/cors";
 import Koa from "koa";
 import Router from "koa-router";
+import { Player } from "pubg-model/types/Player";
 import {
   HTTP_STATUS_INTERNAL_SERVER_ERROR,
   HTTP_STATUS_NOT_FOUND,
@@ -54,12 +55,20 @@ const server = async () => {
     "/api/v1/players/:id",
     duplicatedPlayerCheck,
     async (ctx, next) => {
+      const returnPlayer = (player: Player) => {
+        // remove fields from player object
+        if (ctx.query.matches == "false") player.matches = [];
+        if (ctx.query.stats == "false") player.stats = null;
+
+        ctx.body = player;
+        return next();
+      };
+
       const player = await PlayerDbController.findByName(ctx.params.id);
 
       // player found in db
       if (player.ok) {
-        ctx.body = player.val;
-        return next();
+        return returnPlayer(player.val);
       }
 
       // try to import player
@@ -69,12 +78,10 @@ const server = async () => {
         const result = await importPlayerStats(importedPlayer.val);
         if (result.ok) {
           // return imported player with stats
-          ctx.body = result.val;
-          return next();
+          return returnPlayer(result.val);
         } else {
           // return imported player without stats
-          ctx.body = importedPlayer.val;
-          return next();
+          return returnPlayer(importedPlayer.val);
         }
       } else if (importedPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
         // add failed player request to cache
