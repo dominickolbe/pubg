@@ -1,10 +1,10 @@
 require("dotenv-safe").config();
 
-import dayjs from "dayjs";
+import { isBefore, parseISO, sub } from "date-fns";
+import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
 import { Database } from "../database";
 import { PlayerDbController } from "../database/model/player";
 import { importPlayerStats } from "../utils";
-import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
 
 // min update interval in minutes
 const MIN_UPDATE_INTERVAL = parseInt(process.argv[2] ?? 60);
@@ -29,8 +29,9 @@ const run = async () => {
 
   // only update player stats older than MIN_UPDATE_INTERVAL
   const playersToUpdate = players.val.filter((i) =>
-    dayjs(i.statsUpdatedAt ?? dayjs()).isBefore(
-      dayjs().subtract(MIN_UPDATE_INTERVAL, "minute")
+    isBefore(
+      parseISO(i.statsUpdatedAt || new Date().toISOString()),
+      sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
     )
   );
 

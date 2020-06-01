@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
 import { RtPlayer, RtPlayerResults } from "pubg-model/runtypes/Player";
@@ -33,7 +32,7 @@ const PlayerSchema = new mongoose.Schema(
     },
     createdAt: {
       type: String,
-      default: dayjs().format(),
+      default: new Date().toISOString(),
     },
   },
   { versionKey: false }
@@ -89,7 +88,7 @@ export const PlayerDbController = {
         {
           $set: {
             stats: stats,
-            statsUpdatedAt: dayjs().format(),
+            statsUpdatedAt: new Date().toISOString(),
           },
         },
         { new: true }
@@ -109,7 +108,7 @@ export const PlayerDbController = {
         },
         {
           $set: {
-            matchesUpdatedAt: dayjs().format(),
+            matchesUpdatedAt: new Date().toISOString(),
           },
           $addToSet: {
             matches: match._id,
