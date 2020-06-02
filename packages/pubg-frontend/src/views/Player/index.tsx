@@ -1,18 +1,35 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import { css } from "emotion";
 import { PlayerRequest } from "pubg-model/types/Player";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
 import { getTotalStats } from "../../utils";
+
+const SingleStatsListItem = (props: {
+  label: string;
+  value: () => ReactNode;
+}) => {
+  const { value, label, ...others } = props;
+  return (
+    <ListItem component="div" {...others}>
+      <ListItemText primary={label} />
+      <ListItemText
+        className={css`
+          display: flex;
+          justify-content: flex-end;
+        `}
+        primary={value()}
+      />
+    </ListItem>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,72 +71,45 @@ export const Player = () => {
     <Container maxWidth="md">
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
-          <Typography className={classes.title} variant="h5" gutterBottom>
+          <Typography className={classes.title} variant="h4" gutterBottom>
             {player.name}
           </Typography>
         </Grid>
-        <Grid item md={4} xs={12}>
+        <Grid item md={3} xs={12}>
+          <Typography variant="subtitle1">Total stats</Typography>
+          {/* <Typography variant="caption">{`updated: ${
+            player.statsUpdatedAt
+              ? formatDistanceToNow(parseISO(player.statsUpdatedAt), {
+                  includeSeconds: true,
+                  addSuffix: true,
+                })
+              : "never"
+          }`}</Typography> */}
           <Card>
-            <CardHeader
-              title="Total stats"
-              subheader={`updated: ${
-                player.statsUpdatedAt
-                  ? formatDistanceToNow(parseISO(player.statsUpdatedAt), {
-                      includeSeconds: true,
-                      addSuffix: true,
-                    })
-                  : "never"
-              }`}
-            />
-            <CardContent>
-              <List dense>
-                <ListItem>
-                  <ListItemText primary="Kills" />
-                  <ListItemSecondaryAction>
-                    {totalStats?.kills || "-"}
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Damage" />
-                  <ListItemSecondaryAction>
-                    {totalStats?.damageDealt || "-"}
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Wins" />
-                  <ListItemSecondaryAction>
-                    {totalStats?.wins || "-"}
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Top 10" />
-                  <ListItemSecondaryAction>
-                    {totalStats?.top10s || "-"}
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Rounds played" />
-                  <ListItemSecondaryAction>
-                    {totalStats?.roundsPlayed || "-"}
-                  </ListItemSecondaryAction>
-                </ListItem>
-              </List>
-            </CardContent>
+            <List component="div" dense>
+              <SingleStatsListItem
+                label="Kills"
+                value={() => totalStats?.kills || "-"}
+              />
+              <SingleStatsListItem
+                label="Damage"
+                value={() => totalStats?.damageDealt || "-"}
+              />
+              <SingleStatsListItem
+                label="Wins"
+                value={() => totalStats?.wins || "-"}
+              />
+              <SingleStatsListItem
+                label="Top 10"
+                value={() => totalStats?.top10s || "-"}
+              />
+            </List>
           </Card>
         </Grid>
-        <Grid item md={8} xs={12}>
+        <Grid item md={9} xs={12}>
+          <Typography variant="subtitle1">Matches</Typography>
           <Card>
-            <CardHeader
-              title="Matches"
-              subheader={`updated: ${
-                player.matchesUpdatedAt
-                  ? formatDistanceToNow(parseISO(player.matchesUpdatedAt), {
-                      includeSeconds: true,
-                      addSuffix: true,
-                    })
-                  : "never"
-              }`}
-            />
+            <CardContent>{`${player.matches.length} found.`}</CardContent>
           </Card>
         </Grid>
       </Grid>
