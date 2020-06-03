@@ -17,3 +17,9 @@ export const RtMatch = RtMatchCreate.And(
     _id: rt.InstanceOf(mongoose.Types.ObjectId),
   })
 );
+
+export const RtMatchRequest = rt.Record({
+  // TODO: fix to RtMatch
+  ...RtMatchCreate.fields,
+  _id: rt.String,
+});

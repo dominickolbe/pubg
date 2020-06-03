@@ -1,20 +1,26 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import {
+  default as ExpandMore,
+  default as ExpandMoreIcon,
+} from "@material-ui/icons/ExpandMore";
+import { format, parseISO } from "date-fns";
 import { css } from "emotion";
+import orderBy from "lodash/orderBy";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
-import { getTotalStats } from "../../utils";
+import { getMapName, getTotalStats, getWinPlace } from "../../utils";
 
 const SingleStatsListItem = (props: {
   label: string;
@@ -43,6 +49,16 @@ const useStyles = makeStyles((theme) => ({
   title: {
     padding: theme.spacing(2, 2, 0),
   },
+  expansionPanelHeading: {
+    fontSize: `${theme.typography.pxToRem(14)}!important`,
+  },
+  expansionPanelSecondaryHeading: {
+    fontSize: `${theme.typography.pxToRem(13)}!important`,
+    flexBasis: "55%",
+    marginLeft: "auto",
+    color: `${theme.palette.text.secondary}!important`,
+    flexShrink: 0,
+  },
 }));
 
 export const Player = () => {
@@ -55,7 +71,7 @@ export const Player = () => {
     if (response.ok) {
       setPlayer(response.val);
     } else {
-      history.push("/playernotfound");
+      // history.push("/playernotfound");
     }
   };
 
@@ -72,6 +88,8 @@ export const Player = () => {
   }
 
   const totalStats = player.stats ? getTotalStats(player.stats) : null;
+
+  const matches = orderBy(player.matches, ["createdAt"], ["desc"]);
 
   return (
     <Container maxWidth="md">
@@ -144,9 +162,27 @@ export const Player = () => {
         </Grid>
         <Grid item md={9} xs={12}>
           <Typography variant="subtitle1">Matches</Typography>
-          <Card>
-            <CardContent>{`${player.matches.length} found.`}</CardContent>
-          </Card>
+          <List>
+            {matches.map((match) => (
+              <ExpansionPanel
+                key={match.matchId}
+                TransitionProps={{ unmountOnExit: true }}
+              >
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.expansionPanelHeading}>
+                    {getMapName(match.mapName)}
+                    {" - "}
+                    {getWinPlace(match, player.pubgId)}
+                  </Typography>
+                  <Typography
+                    className={classes.expansionPanelSecondaryHeading}
+                  >
+                    {format(parseISO(match.createdAt), "PPpp")}
+                  </Typography>
+                </ExpansionPanelSummary>
+              </ExpansionPanel>
+            ))}
+          </List>
         </Grid>
       </Grid>
     </Container>

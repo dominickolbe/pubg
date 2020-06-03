@@ -48,3 +48,39 @@ export const getTotalStats = (stats: Stats) => {
 
   return total;
 };
+
+export const getMapName = (name: string) => {
+  switch (name) {
+    case "Desert_Main":
+      return "Miramar";
+    case "DihorOtok_Main":
+      return "Vikendi";
+    case "Erangel_Main":
+      return "Erangel";
+    case "Baltic_Main":
+      return "Erangel";
+    case "Range_Main":
+      return "Camp Jackal";
+    case "Savage_Main":
+      return "Sanhok";
+    case "Summerland_Main":
+      return "Karakin";
+    default:
+      return name;
+  }
+};
+
+// TODO
+export const getWinPlace = (match: object, playerToFind: string) => {
+  let winplace = 99;
+
+  // @ts-ignore
+  match.players.forEach((player) => {
+    // @ts-ignore
+    if (player.stats.playerId == playerToFind) {
+      winplace = player.stats.winPlace;
+    }
+  });
+
+  return winplace;
+};
