@@ -109,56 +109,52 @@ export const Player = () => {
                 })
               : "never"
           }`}</Typography> */}
-          <Card>
-            <List component="div" dense>
-              <SingleStatsListItem
-                label="Kills"
-                value={() => totalStats?.kills || "-"}
-              />
-              <SingleStatsListItem
-                label="Damage"
-                value={() => totalStats?.damageDealt || "-"}
-              />
-              <SingleStatsListItem
-                label="Wins"
-                value={() => totalStats?.wins || "-"}
-              />
-              <SingleStatsListItem
-                label="Top 10"
-                value={() => totalStats?.top10s || "-"}
-              />
-              <Divider light />
-              <ListItem
-                button
-                onClick={() => setOpenStats(!openStats)}
-                className={css`
-                  display: flex;
-                  justify-content: center;
-                `}
-              >
-                {openStats ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              <Divider light />
-              <Collapse in={openStats} timeout="auto">
+          <List>
+            <Card>
+              <List component="div" dense>
                 <SingleStatsListItem
-                  label="dBNOs"
-                  value={() => totalStats?.dBNOs || "-"}
+                  label="Kills"
+                  value={() => totalStats?.kills || "-"}
                 />
                 <SingleStatsListItem
-                  label="assists"
-                  value={() => totalStats?.assists || "-"}
+                  label="Damage"
+                  value={() => totalStats?.damageDealt || "-"}
                 />
                 <SingleStatsListItem
-                  label="revives"
-                  value={() => totalStats?.revives || "-"}
+                  label="Wins"
+                  value={() => totalStats?.wins || "-"}
                 />
                 <SingleStatsListItem
-                  label="vehicleDestroys"
-                  value={() => totalStats?.vehicleDestroys || "-"}
+                  label="Top 10"
+                  value={() => totalStats?.top10s || "-"}
                 />
-              </Collapse>
-            </List>
-          </Card>
+                <Collapse in={openStats} timeout="auto">
+                  <SingleStatsListItem
+                    label="DBNOs"
+                    value={() => totalStats?.dBNOs || "-"}
+                  />
+                  <SingleStatsListItem
+                    label="Assists"
+                    value={() => totalStats?.assists || "-"}
+                  />
+                  <SingleStatsListItem
+                    label="Revives"
+                    value={() => totalStats?.revives || "-"}
+                  />
+                  <SingleStatsListItem
+                    label="Vehicle destroyed"
+                    value={() => totalStats?.vehicleDestroys || "-"}
+                  />
+                </Collapse>
+                <ListItem button onClick={() => setOpenStats(!openStats)}>
+                  <ListItemText
+                    primary={`Show ${openStats ? "less" : "more"}`}
+                  />
+                  {openStats ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+              </List>
+            </Card>
+          </List>
         </Grid>
         <Grid item md={9} xs={12}>
           <Typography variant="subtitle1">Matches</Typography>
