@@ -33,7 +33,7 @@ export const Start = () => {
             fullWidth
             size="small"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value.trim())}
           />
         </Grid>
         <Grid item xs={4}>
