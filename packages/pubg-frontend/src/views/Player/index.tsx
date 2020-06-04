@@ -1,7 +1,6 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Collapse from "@material-ui/core/Collapse";
-import Divider from "@material-ui/core/Divider";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import List from "@material-ui/core/List";
@@ -13,7 +12,7 @@ import {
   default as ExpandMore,
   default as ExpandMoreIcon,
 } from "@material-ui/icons/ExpandMore";
-import { format, parseISO } from "date-fns";
+import { format, formatDistanceToNow, parseISO } from "date-fns";
 import { css } from "emotion";
 import orderBy from "lodash/orderBy";
 import { PlayerRequest } from "pubg-model/types/Player";
@@ -71,7 +70,7 @@ export const Player = () => {
     if (response.ok) {
       setPlayer(response.val);
     } else {
-      // history.push("/playernotfound");
+      history.push("/playernotfound");
     }
   };
 
@@ -101,14 +100,14 @@ export const Player = () => {
         </Grid>
         <Grid item md={3} xs={12}>
           <Typography variant="subtitle1">Total stats</Typography>
-          {/* <Typography variant="caption">{`updated: ${
+          <Typography variant="caption">{`updated: ${
             player.statsUpdatedAt
               ? formatDistanceToNow(parseISO(player.statsUpdatedAt), {
                   includeSeconds: true,
                   addSuffix: true,
                 })
               : "never"
-          }`}</Typography> */}
+          }`}</Typography>
           <List>
             <Card>
               <List component="div" dense>
@@ -158,6 +157,14 @@ export const Player = () => {
         </Grid>
         <Grid item md={9} xs={12}>
           <Typography variant="subtitle1">Matches</Typography>
+          <Typography variant="caption">{`updated: ${
+            player.matchesUpdatedAt
+              ? formatDistanceToNow(parseISO(player.matchesUpdatedAt), {
+                  includeSeconds: true,
+                  addSuffix: true,
+                })
+              : "never"
+          }`}</Typography>
           <List>
             {matches.map((match) => (
               <ExpansionPanel
