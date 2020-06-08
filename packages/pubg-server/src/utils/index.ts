@@ -86,28 +86,31 @@ export const importMatchById = async (id: string) => {
     telemetry: request.val.included.find((i) => i.type === "asset").attributes
       .URL,
 
+    players: [],
+    teams: [],
+
     // @ts-ignore
-    players: request.val.included
-      .filter((i) => i.type === "participant")
-      .map((i) => ({
-        // @ts-ignore
-        id: i.id,
-        // @ts-ignore
-        stats: i.attributes.stats,
-      })),
-    // @ts-ignore
-    teams: request.val.included
-      .filter((i) => i.type === "roster")
-      .map((i) => ({
-        // @ts-ignore
-        id: i.id,
-        // @ts-ignore
-        rank: i.attributes.stats.rank,
-        // @ts-ignore
-        teamId: i.attributes.stats.teamId,
-        // @ts-ignore
-        players: i.relationships.participants.data.map((n) => n.id),
-      })),
+    // players: request.val.included
+    //   .filter((i) => i.type === "participant")
+    //   .map((i) => ({
+    //     // @ts-ignore
+    //     id: i.id,
+    //     // @ts-ignore
+    //     stats: i.attributes.stats,
+    //   })),
+    // // @ts-ignore
+    // teams: request.val.included
+    //   .filter((i) => i.type === "roster")
+    //   .map((i) => ({
+    //     // @ts-ignore
+    //     id: i.id,
+    //     // @ts-ignore
+    //     rank: i.attributes.stats.rank,
+    //     // @ts-ignore
+    //     teamId: i.attributes.stats.teamId,
+    //     // @ts-ignore
+    //     players: i.relationships.participants.data.map((n) => n.id),
+    //   })),
   });
 
   if (!match.ok) {
