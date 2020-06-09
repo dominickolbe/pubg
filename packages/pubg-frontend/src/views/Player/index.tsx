@@ -1,12 +1,15 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Collapse from "@material-ui/core/Collapse";
+import Container from "@material-ui/core/Container";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import {
   default as ExpandMore,
@@ -34,7 +37,14 @@ const SingleStatsListItem = (props: {
           display: flex;
           justify-content: flex-end;
         `}
-        primary={value()}
+        primary={
+          <Typography component="div">
+            <Box fontWeight="fontWeightMedium" fontSize={14}>
+              {value()}
+            </Box>
+          </Typography>
+        }
+        disableTypography
       />
     </ListItem>
   );
@@ -147,7 +157,14 @@ export const Player = () => {
                 </Collapse>
                 <ListItem button onClick={() => setOpenStats(!openStats)}>
                   <ListItemText
-                    primary={`Show ${openStats ? "less" : "more"}`}
+                    primary={
+                      <Typography component="div">
+                        <Box fontWeight="fontWeightMedium" fontSize={14}>
+                          {`Show ${openStats ? "less" : "more"}`}
+                        </Box>
+                      </Typography>
+                    }
+                    disableTypography
                   />
                   {openStats ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>

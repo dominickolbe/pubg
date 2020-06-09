@@ -34,6 +34,9 @@ export const Start = () => {
             size="small"
             value={search}
             onChange={(e) => setSearch(e.target.value.trim())}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") onSubmit();
+            }}
           />
         </Grid>
         <Grid item xs={4}>
