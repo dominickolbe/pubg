@@ -84,6 +84,8 @@ const server = async () => {
         return next();
       };
 
+      if (ctx.query.compress == "false") ctx.compress = false;
+
       const player = await PlayerDbController.findByName(ctx.params.id);
 
       // player found in db
