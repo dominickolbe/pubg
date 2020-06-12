@@ -6,7 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { format, parseISO } from "date-fns";
+import { formatDistanceToNow, parseISO } from "date-fns";
 import orderBy from "lodash/orderBy";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
@@ -75,7 +75,9 @@ export const PlayerMatchesList = (props: {
                 </TableCell>
                 <TableCell align="right">
                   {" "}
-                  {format(parseISO(match.createdAt), "PPpp")}
+                  {formatDistanceToNow(parseISO(match.createdAt), {
+                    addSuffix: true,
+                  })}
                 </TableCell>
               </TableRow>
             );
