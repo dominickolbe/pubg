@@ -63,6 +63,17 @@ export const PlayerDbController = {
       return createNone();
     }
   },
+  findMatches: async (name: string): Promise<Option<Player>> => {
+    try {
+      const result = await PlayerModel.findOne({ name }).populate("matches");
+      if (!result) return createNone();
+      const player = RtPlayer.check(result.toObject());
+      return createSome(player);
+    } catch (error) {
+      console.log(error);
+      return createNone();
+    }
+  },
   save: async (pubgId: string, name: string): Promise<Option<Player>> => {
     try {
       const result = await new PlayerModel({

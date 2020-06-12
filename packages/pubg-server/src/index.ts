@@ -82,8 +82,6 @@ const server = async () => {
         return next();
       };
 
-      if (ctx.query.compress == "false") ctx.compress = false;
-
       const player = await PlayerDbController.findByName(ctx.params.id);
 
       // player found in db
@@ -111,6 +109,18 @@ const server = async () => {
       ctx.response.status = HTTP_STATUS_NOT_FOUND;
     }
   );
+
+  router.get("/api/v1/players/:id/matches", async (ctx, next) => {
+    const player = await PlayerDbController.findMatches(ctx.params.id);
+
+    // player found in db
+    if (player.ok) {
+      ctx.body = player.val.matches;
+      return next();
+    }
+
+    ctx.response.status = HTTP_STATUS_NOT_FOUND;
+  });
 
   app.use(router.routes());
 
