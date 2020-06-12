@@ -77,9 +77,6 @@ const server = async () => {
     async (ctx, next) => {
       const returnPlayer = (player: Player) => {
         // remove fields from player object
-        if (ctx.query.matches == "false") player.matches = [];
-        if (ctx.query.stats == "false") player.stats = null;
-
         ctx.body = player;
         return next();
       };

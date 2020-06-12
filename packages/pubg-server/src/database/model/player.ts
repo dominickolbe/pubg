@@ -43,7 +43,7 @@ export const PlayerModel = mongoose.model("Player", PlayerSchema);
 export const PlayerDbController = {
   find: async (query: object): Promise<Option<Player[]>> => {
     try {
-      const result = await PlayerModel.find(query).populate("matches");
+      const result = await PlayerModel.find(query);
       if (!result) return createNone();
       const players = RtPlayerResults.check(result);
       return createSome(players);
@@ -54,7 +54,7 @@ export const PlayerDbController = {
   },
   findByName: async (name: string): Promise<Option<Player>> => {
     try {
-      const result = await PlayerModel.findOne({ name }).populate("matches");
+      const result = await PlayerModel.findOne({ name });
       if (!result) return createNone();
       const player = RtPlayer.check(result.toObject());
       return createSome(player);

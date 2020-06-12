@@ -11,7 +11,7 @@ export const RtPlayer = rt.Record({
   stats: RtStats.Or(rt.Null),
   statsUpdatedAt: rt.String.Or(rt.Null),
   // TODO
-  matches: rt.Array(RtMatch),
+  matches: rt.Array(rt.Record({})),
   matchesUpdatedAt: rt.String.Or(rt.Null),
 });
 
@@ -20,5 +20,5 @@ export const RtPlayerResults = rt.Array(RtPlayer);
 export const RtPlayerRequest = rt.Record({
   ...RtPlayer.fields,
   _id: rt.String,
-  matches: rt.Array(RtMatchRequest),
+  matches: rt.Array(rt.String),
 });

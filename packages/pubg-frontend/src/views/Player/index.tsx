@@ -1,20 +1,17 @@
 import Container from "@material-ui/core/Container";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import ExpandMore from "@material-ui/icons/ExpandMore";
 import Alert from "@material-ui/lab/Alert";
-import { format, formatDistanceToNow, parseISO } from "date-fns";
+import Skeleton from "@material-ui/lab/Skeleton";
 import orderBy from "lodash/orderBy";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
 import { PlayerStatsCard } from "../../components/PlayerStatsCard";
-import { generateTotalStats, getMapName, getWinPlace } from "../../utils";
+import { generateTotalStats } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +39,7 @@ export const Player = () => {
   const classes = useStyles();
 
   const loadPlayer = async () => {
-    const response = await ApiController.getPlayer(id, true, true);
+    const response = await ApiController.getPlayer(id);
     if (response.ok) {
       setPlayer(response.val);
     } else {
@@ -92,16 +89,17 @@ export const Player = () => {
         </Grid>
         <Grid item md={9} xs={12}>
           <Typography variant="subtitle1">Matches</Typography>
-          <Typography variant="caption">{`updated: ${
+          {/* <Typography variant="caption">{`updated: ${
             player.matchesUpdatedAt
               ? formatDistanceToNow(parseISO(player.matchesUpdatedAt), {
                   includeSeconds: true,
                   addSuffix: true,
                 })
               : "never"
-          }`}</Typography>
+          }`}</Typography> */}
           <List>
-            {matches.map((match) => (
+            <Skeleton variant="rect" height={48} />
+            {/* {matches.map((match) => (
               <ExpansionPanel
                 key={match.matchId}
                 TransitionProps={{ unmountOnExit: true }}
@@ -119,7 +117,7 @@ export const Player = () => {
                   </Typography>
                 </ExpansionPanelSummary>
               </ExpansionPanel>
-            ))}
+            ))} */}
           </List>
         </Grid>
       </Grid>
