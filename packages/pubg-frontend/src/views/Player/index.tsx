@@ -10,7 +10,10 @@ import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
-import { PlayerStatsCard } from "../../components/PlayerStatsCard";
+import {
+  PlayerStatsCard,
+  PlayerStatsCardLoading,
+} from "../../components/PlayerStatsCard";
 import { generateTotalStats } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +41,8 @@ export const Player = () => {
   const history = useHistory();
   const classes = useStyles();
 
+  const [player, setPlayer] = useState<PlayerRequest | null>(null);
+
   const loadPlayer = async () => {
     const response = await ApiController.getPlayer(id);
     if (response.ok) {
@@ -47,26 +52,21 @@ export const Player = () => {
     }
   };
 
-  const [player, setPlayer] = useState<PlayerRequest | null>(null);
-
   useEffect(() => {
     loadPlayer();
   }, []);
 
-  if (player === null) {
-    return <div>Loading...</div>;
-  }
+  const totalStats =
+    player && player.stats ? generateTotalStats(player.stats) : null;
 
-  const totalStats = player.stats ? generateTotalStats(player.stats) : null;
-
-  const matches = orderBy(player.matches, ["createdAt"], ["desc"]);
+  // const matches = orderBy(player.matches, ["createdAt"], ["desc"]);
 
   return (
     <Container maxWidth="md">
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h4" gutterBottom>
-            {player.name}
+            {id}
           </Typography>
         </Grid>
         <Grid item md={3} xs={12}>
@@ -80,7 +80,9 @@ export const Player = () => {
               : "never"
           }`}</Typography> */}
           <List>
-            {totalStats ? (
+            {player === null ? (
+              <PlayerStatsCardLoading />
+            ) : totalStats ? (
               <PlayerStatsCard stats={totalStats} />
             ) : (
               <Alert severity="info">not imported yet</Alert>
