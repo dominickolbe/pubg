@@ -18,8 +18,9 @@ export const RtMatch = RtMatchCreate.And(
   })
 );
 
-export const RtMatchRequest = rt.Record({
-  // TODO: fix to RtMatch
+export const RtSingleMatchRequest = rt.Record({
   ...RtMatchCreate.fields,
   _id: rt.String,
 });
+
+export const RtMatchesRequest = rt.Array(RtSingleMatchRequest);

@@ -7,6 +7,7 @@ import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
 import orderBy from "lodash/orderBy";
 import { PlayerRequest } from "pubg-model/types/Player";
+import { MatchesRequest } from "pubg-model/types/Match";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
@@ -42,7 +43,15 @@ export const Player = () => {
   const classes = useStyles();
 
   const [player, setPlayer] = useState<PlayerRequest | null>(null);
+  const [matches, setMatches] = useState<MatchesRequest>([]);
 
+  const loadMatches = async () => {
+    const response = await ApiController.getPlayerMatches(id);
+    if (response.ok) {
+      return response.val;
+    }
+    return [];
+  };
   const loadPlayer = async () => {
     const response = await ApiController.getPlayer(id);
     if (response.ok) {
@@ -54,6 +63,7 @@ export const Player = () => {
 
   useEffect(() => {
     loadPlayer();
+    loadMatches();
   }, []);
 
   const totalStats =
