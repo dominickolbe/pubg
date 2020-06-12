@@ -64,6 +64,20 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
         />
         <Collapse in={expanded} timeout="auto">
           <SingleStatsListItem
+            label="Rounds played"
+            value={() => formatNumber(stats.roundsPlayed)}
+          />
+          <SingleStatsListItem
+            label="Time survived"
+            value={() =>
+              formatNumber(Math.ceil(stats.timeSurvived / 60 / 60)) + " h"
+            }
+          />
+          <SingleStatsListItem
+            label="Headshot kills"
+            value={() => formatNumber(stats.headshotKills)}
+          />
+          <SingleStatsListItem
             label="DBNOs"
             value={() => formatNumber(stats.dBNOs)}
           />
@@ -76,8 +90,40 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
             value={() => formatNumber(stats.revives)}
           />
           <SingleStatsListItem
+            label="Team kills"
+            value={() => formatNumber(stats.teamKills)}
+          />
+          <SingleStatsListItem
+            label="Suicides"
+            value={() => formatNumber(stats.suicides)}
+          />
+          <SingleStatsListItem
+            label="Heals"
+            value={() => formatNumber(stats.heals)}
+          />
+          <SingleStatsListItem
+            label="Boosts"
+            value={() => formatNumber(stats.boosts)}
+          />
+          <SingleStatsListItem
+            label="Weapons acquired"
+            value={() => formatNumber(stats.weaponsAcquired)}
+          />
+          <SingleStatsListItem
             label="Vehicle destroyed"
             value={() => formatNumber(stats.vehicleDestroys)}
+          />
+          <SingleStatsListItem
+            label="Ride distance"
+            value={() => formatNumber(stats.rideDistance)}
+          />
+          <SingleStatsListItem
+            label="Walk distance"
+            value={() => formatNumber(stats.walkDistance)}
+          />
+          <SingleStatsListItem
+            label="Swim distance"
+            value={() => formatNumber(stats.swimDistance)}
           />
         </Collapse>
         <ListItem button onClick={() => setExpanded(!expanded)}>

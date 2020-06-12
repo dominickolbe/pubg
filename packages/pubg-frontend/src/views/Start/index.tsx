@@ -37,6 +37,7 @@ export const Start = () => {
             onKeyPress={(e) => {
               if (e.key === "Enter") onSubmit();
             }}
+            autoFocus
           />
         </Grid>
         <Grid item xs={4}>
