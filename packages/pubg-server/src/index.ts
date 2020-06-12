@@ -76,7 +76,8 @@ const server = async () => {
     duplicatedPlayerCheck,
     async (ctx, next) => {
       const returnPlayer = (player: Player) => {
-        // remove fields from player object
+        // remove matches from player -> could be to big
+        player.matches = [];
         ctx.body = player;
         return next();
       };

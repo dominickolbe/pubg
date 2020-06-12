@@ -20,7 +20,6 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
-
         <Router>
           <Header />
           <Switch>
