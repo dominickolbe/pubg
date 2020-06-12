@@ -7,9 +7,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import Skeleton from "@material-ui/lab/Skeleton";
 import { css } from "emotion";
-import React, { ReactNode, useState } from "react";
 import { StatsObject } from "pubg-model/types/Stats";
+import React, { ReactNode, useState } from "react";
 
 const formatNumber = (number: number) => new Intl.NumberFormat().format(number);
 
@@ -142,4 +143,8 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
       </List>
     </Card>
   );
+};
+
+export const PlayerStatsCardLoading = () => {
+  return <Skeleton variant="rect" height={201} />;
 };
