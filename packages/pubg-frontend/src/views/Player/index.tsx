@@ -5,12 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
-import orderBy from "lodash/orderBy";
-import { PlayerRequest } from "pubg-model/types/Player";
 import { MatchesRequest } from "pubg-model/types/Match";
+import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
+import { PlayerMatchesList } from "../../components/PlayerMatchesList";
 import {
   PlayerStatsCard,
   PlayerStatsCardLoading,
@@ -47,10 +47,7 @@ export const Player = () => {
 
   const loadMatches = async () => {
     const response = await ApiController.getPlayerMatches(id);
-    if (response.ok) {
-      return response.val;
-    }
-    return [];
+    if (response.ok) setMatches(response.val);
   };
   const loadPlayer = async () => {
     const response = await ApiController.getPlayer(id);
@@ -68,8 +65,6 @@ export const Player = () => {
 
   const totalStats =
     player && player.stats ? generateTotalStats(player.stats) : null;
-
-  // const matches = orderBy(player.matches, ["createdAt"], ["desc"]);
 
   return (
     <Container maxWidth="md">
@@ -110,26 +105,11 @@ export const Player = () => {
               : "never"
           }`}</Typography> */}
           <List>
-            <Skeleton variant="rect" height={48} />
-            {/* {matches.map((match) => (
-              <ExpansionPanel
-                key={match.matchId}
-                TransitionProps={{ unmountOnExit: true }}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-                  <Typography className={classes.expansionPanelHeading}>
-                    {getMapName(match.mapName)}
-                    {" - "}
-                    {getWinPlace(match, player.pubgId)}
-                  </Typography>
-                  <Typography
-                    className={classes.expansionPanelSecondaryHeading}
-                  >
-                    {format(parseISO(match.createdAt), "PPpp")}
-                  </Typography>
-                </ExpansionPanelSummary>
-              </ExpansionPanel>
-            ))} */}
+            {player === null || matches.length === 0 ? (
+              <Skeleton variant="rect" height={48} />
+            ) : (
+              <PlayerMatchesList matches={matches} player={player} />
+            )}
           </List>
         </Grid>
       </Grid>

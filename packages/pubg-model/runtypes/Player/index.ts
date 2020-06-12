@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import * as rt from "runtypes";
 import { RtStats } from "../Stats";
-import { RtMatch, RtMatchRequest } from "../Match";
+import { RtMatch } from "../Match";
 
 export const RtPlayer = rt.Record({
   _id: rt.InstanceOf(mongoose.Types.ObjectId),
