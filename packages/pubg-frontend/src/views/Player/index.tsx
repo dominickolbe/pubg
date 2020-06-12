@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import Alert from "@material-ui/lab/Alert";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import orderBy from "lodash/orderBy";
 import { PlayerRequest } from "pubg-model/types/Player";
@@ -13,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
 import { PlayerStatsCard } from "../../components/PlayerStatsCard";
-import { getMapName, generateTotalStats, getWinPlace } from "../../utils";
+import { generateTotalStats, getMapName, getWinPlace } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,13 @@ export const Player = () => {
                 })
               : "never"
           }`}</Typography> */}
-          <List>{totalStats && <PlayerStatsCard stats={totalStats} />}</List>
+          <List>
+            {totalStats ? (
+              <PlayerStatsCard stats={totalStats} />
+            ) : (
+              <Alert severity="info">not imported yet</Alert>
+            )}
+          </List>
         </Grid>
         <Grid item md={9} xs={12}>
           <Typography variant="subtitle1">Matches</Typography>
