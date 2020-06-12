@@ -4,7 +4,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "option-t": "^22.3.2",
+    "option-t": "^22.4.1",
     "runtypes": "^4.2.0"
   },
   "devDependencies": {
