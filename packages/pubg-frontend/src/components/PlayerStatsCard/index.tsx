@@ -11,8 +11,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import { css } from "emotion";
 import { StatsObject } from "pubg-model/types/Stats";
 import React, { ReactNode, useState } from "react";
-
-const formatNumber = (number: number) => new Intl.NumberFormat().format(number);
+import { formatNumber } from "../../utils";
 
 const SingleStatsListItem = (props: {
   label: string;

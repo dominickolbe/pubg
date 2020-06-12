@@ -72,17 +72,39 @@ export const getMapName = (name: string) => {
   }
 };
 
-// TODO
-export const getWinPlace = (match: object, playerToFind: string) => {
-  let winplace = 99;
-
-  // @ts-ignore
-  match.players.forEach((player) => {
-    // @ts-ignore
-    if (player.stats.playerId == playerToFind) {
-      winplace = player.stats.winPlace;
-    }
-  });
-
-  return winplace;
+export const getGameMode = (gameMode: string) => {
+  switch (gameMode) {
+    case "solo":
+      return "Solo";
+    case "solo-fpp":
+      return "Solo Fpp";
+    case "duo":
+      return "Duo";
+    case "duo-fpp":
+      return "Duo Fpp";
+    case "squad":
+      return "Squad";
+    case "squad-fpp":
+      return "Squad Fpp";
+    default:
+      return gameMode;
+  }
 };
+
+// TODO
+export const getPlayerMatchStats = (match: object, playerToFind: string) => {
+  // @ts-ignore
+  const test = match.players.find(
+    // @ts-ignore
+    (player) => player.stats.playerId == playerToFind
+  );
+
+  return {
+    winPlace: test.stats.winPlace,
+    kills: test.stats.kills,
+    damageDealt: test.stats.damageDealt,
+  };
+};
+
+export const formatNumber = (number: number) =>
+  new Intl.NumberFormat().format(number);

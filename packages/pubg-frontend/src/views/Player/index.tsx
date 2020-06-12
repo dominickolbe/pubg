@@ -61,6 +61,7 @@ export const Player = () => {
   useEffect(() => {
     loadPlayer();
     loadMatches();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const totalStats =
@@ -106,7 +107,7 @@ export const Player = () => {
           }`}</Typography> */}
           <List>
             {player === null || matches.length === 0 ? (
-              <Skeleton variant="rect" height={48} />
+              <Skeleton variant="rect" height={56} />
             ) : (
               <PlayerMatchesList matches={matches} player={player} />
             )}

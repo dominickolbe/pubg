@@ -1,14 +1,22 @@
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import { format, parseISO } from "date-fns";
 import orderBy from "lodash/orderBy";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React from "react";
-import { getMapName, getWinPlace } from "../../utils";
+import {
+  formatNumber,
+  getGameMode,
+  getMapName,
+  getPlayerMatchStats,
+} from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   expansionPanelHeading: {
@@ -33,24 +41,47 @@ export const PlayerMatchesList = (props: {
   const orderedMatches = orderBy(matches, ["createdAt"], ["desc"]);
 
   return (
-    <>
-      {orderedMatches.map((match) => (
-        <ExpansionPanel
-          key={match.matchId}
-          TransitionProps={{ unmountOnExit: true }}
-        >
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-            <Typography className={classes.expansionPanelHeading}>
-              {getMapName(match.mapName)}
-              {" - "}
-              {getWinPlace(match, player.pubgId)}
-            </Typography>
-            <Typography className={classes.expansionPanelSecondaryHeading}>
-              {format(parseISO(match.createdAt), "PPpp")}
-            </Typography>
-          </ExpansionPanelSummary>
-        </ExpansionPanel>
-      ))}
-    </>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Rank</TableCell>
+            <TableCell>Mode</TableCell>
+            <TableCell>Map</TableCell>
+            <TableCell align="right">Kills</TableCell>
+            <TableCell align="right">Damage</TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {orderedMatches.map((match) => {
+            const playerStats = getPlayerMatchStats(match, player.pubgId);
+            return (
+              <TableRow key={match.matchId} hover>
+                <TableCell component="th" scope="row">
+                  {playerStats.winPlace} / {match.teams.length}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {getGameMode(match.gameMode)}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {getMapName(match.mapName)}
+                </TableCell>
+                <TableCell component="th" scope="row" align="right">
+                  {playerStats.kills}
+                </TableCell>
+                <TableCell component="th" scope="row" align="right">
+                  {formatNumber(Math.ceil(playerStats.damageDealt))}
+                </TableCell>
+                <TableCell align="right">
+                  {" "}
+                  {format(parseISO(match.createdAt), "PPpp")}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
