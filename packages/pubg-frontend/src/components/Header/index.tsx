@@ -21,7 +21,7 @@ export const Header = () => {
       <AppBar position="static" color="transparent">
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>
-            PUBG
+            pubg.
           </Typography>
           <Button color="inherit" onClick={() => history.push("/")}>
             Search
