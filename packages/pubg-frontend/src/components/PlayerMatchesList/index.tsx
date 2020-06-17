@@ -107,7 +107,7 @@ export const PlayerMatchesList = (props: {
                       borderLeft:
                         playerStats.winPlace === 1
                           ? "1px solid #5D85D2"
-                          : playerStats.winPlace < 10
+                          : playerStats.winPlace <= 10
                           ? "1px solid #DAA73A"
                           : "none",
                     }}
