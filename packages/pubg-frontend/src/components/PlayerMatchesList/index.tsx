@@ -1,4 +1,5 @@
 import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -8,8 +9,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import { format, formatDistanceToNow, parseISO } from "date-fns";
 import orderBy from "lodash/orderBy";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
@@ -87,7 +90,8 @@ export const PlayerMatchesList = (props: {
                   </Box>
                 </Typography>
               </TableCell>
-              <TableCell align="right"></TableCell>
+              <TableCell align="right" />
+              <TableCell align="right" />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,15 +100,20 @@ export const PlayerMatchesList = (props: {
               .map((match) => {
                 const playerStats = getPlayerMatchStats(match, player.pubgId);
                 return (
-                  <TableRow key={match.matchId} hover>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      style={{
-                        minWidth: "80px",
-                      }}
-                    >
-                      {playerStats.winPlace} / {match.teams.length}
+                  <TableRow
+                    key={match.matchId}
+                    hover
+                    style={{
+                      borderLeft:
+                        playerStats.winPlace === 1
+                          ? "1px solid #5D85D2"
+                          : playerStats.winPlace < 10
+                          ? "1px solid #DAA73A"
+                          : "none",
+                    }}
+                  >
+                    <TableCell component="th" scope="row">
+                      # {playerStats.winPlace}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {getGameMode(match.gameMode)}
@@ -126,9 +135,22 @@ export const PlayerMatchesList = (props: {
                         minWidth: "150px",
                       }}
                     >
-                      {formatDistanceToNow(parseISO(match.createdAt), {
-                        addSuffix: true,
-                      })}
+                      <Tooltip
+                        title={format(parseISO(match.createdAt), "PPpp")}
+                        placement="right"
+                        disableFocusListener
+                      >
+                        <div>
+                          {formatDistanceToNow(parseISO(match.createdAt), {
+                            addSuffix: true,
+                          })}
+                        </div>
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton size="small" onClick={() => {}}>
+                        <KeyboardArrowDownIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 );
