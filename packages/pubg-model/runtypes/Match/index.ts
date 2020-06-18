@@ -9,7 +9,14 @@ export const RtMatchCreate = rt.Record({
   createdAt: rt.String,
   telemetry: rt.String,
   players: rt.Array(rt.Record({})),
-  teams: rt.Array(rt.Record({})),
+  teams: rt.Array(
+    rt.Record({
+      id: rt.String,
+      rank: rt.Number,
+      teamId: rt.Number,
+      players: rt.Array(rt.String),
+    })
+  ),
 });
 
 export const RtMatch = RtMatchCreate.And(
@@ -18,9 +25,9 @@ export const RtMatch = RtMatchCreate.And(
   })
 );
 
-export const RtSingleMatchRequest = rt.Record({
+export const RtMatchRequest = rt.Record({
   ...RtMatchCreate.fields,
   _id: rt.String,
 });
 
-export const RtMatchesRequest = rt.Array(RtSingleMatchRequest);
+export const RtMatchesRequest = rt.Array(RtMatchRequest);

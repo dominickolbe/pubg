@@ -46,10 +46,12 @@ export const Player = () => {
   const [matches, setMatches] = useState<MatchesRequest>([]);
 
   const loadMatches = async () => {
+    setMatches([]);
     const response = await ApiController.getPlayerMatches(id);
     if (response.ok) setMatches(response.val);
   };
   const loadPlayer = async () => {
+    setPlayer(null);
     const response = await ApiController.getPlayer(id);
     if (response.ok) {
       setPlayer(response.val);
@@ -62,7 +64,7 @@ export const Player = () => {
     loadPlayer();
     loadMatches();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
   const totalStats =
     player && player.stats ? generateTotalStats(player.stats) : null;

@@ -103,6 +103,23 @@ export const getPlayerMatchStats = (match: object, playerToFind: string) => {
     winPlace: test.stats.winPlace,
     kills: test.stats.kills,
     damageDealt: test.stats.damageDealt,
+    name: test.stats.name,
+  };
+};
+
+// TODO
+export const getPlayerMatchStats2 = (match: object, playerToFind: string) => {
+  // @ts-ignore
+  const test = match.players.find(
+    // @ts-ignore
+    (player) => player.id == playerToFind
+  );
+
+  return {
+    winPlace: test.stats.winPlace,
+    kills: test.stats.kills,
+    damageDealt: test.stats.damageDealt,
+    name: test.stats.name,
   };
 };
 

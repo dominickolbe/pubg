@@ -1,7 +1,8 @@
-import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import { PlayerSearch } from "../PlayerSearch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,9 +24,9 @@ export const Header = () => {
           <Typography variant="h6" className={classes.title}>
             pubg.
           </Typography>
-          <Button color="inherit" onClick={() => history.push("/")}>
-            Search
-          </Button>
+          <PlayerSearch
+            onSubmit={(value) => history.push(`/players/${value}`)}
+          />
         </Toolbar>
       </AppBar>
     </div>

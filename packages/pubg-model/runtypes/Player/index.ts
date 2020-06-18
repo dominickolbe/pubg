@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import * as rt from "runtypes";
 import { RtStats } from "../Stats";
-import { RtMatch } from "../Match";
 
 export const RtPlayer = rt.Record({
   _id: rt.InstanceOf(mongoose.Types.ObjectId),
@@ -14,6 +13,14 @@ export const RtPlayer = rt.Record({
   matches: rt.Array(rt.Record({})),
   matchesUpdatedAt: rt.String.Or(rt.Null),
 });
+
+export const RtPlayersSearchSingle = rt.Record({
+  _id: rt.InstanceOf(mongoose.Types.ObjectId).Or(rt.String),
+  pubgId: rt.String,
+  name: rt.String,
+});
+
+export const RtPlayersSearch = rt.Array(RtPlayersSearchSingle);
 
 export const RtPlayerResults = rt.Array(RtPlayer);
 

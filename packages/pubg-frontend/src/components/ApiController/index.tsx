@@ -8,7 +8,7 @@ import { API_BASE } from "../../constants";
 export const ApiController = {
   getPlayer: async (name: string) => {
     try {
-      const response = await axios.get(`${API_BASE}/api/v1/players/${name}`);
+      const response = await axios.get(`${API_BASE}/api/players/${name}`);
       try {
         const player = RtPlayerRequest.check(response.data);
         return createOk(player);
@@ -26,7 +26,7 @@ export const ApiController = {
   getPlayerMatches: async (name: string) => {
     try {
       const response = await axios.get(
-        `${API_BASE}/api/v1/players/${name}/matches`
+        `${API_BASE}/api/players/${name}/matches`
       );
       try {
         const matches = RtMatchesRequest.check(response.data);
@@ -38,6 +38,15 @@ export const ApiController = {
       }
     } catch (error) {
       // TODO: check if not found or api error
+      console.log(error);
+      return createErr(error);
+    }
+  },
+  search: async (query: string) => {
+    try {
+      const response = await axios.get(`${API_BASE}/api/search?q=${query}`);
+      return createOk(response.data);
+    } catch (error) {
       console.log(error);
       return createErr(error);
     }

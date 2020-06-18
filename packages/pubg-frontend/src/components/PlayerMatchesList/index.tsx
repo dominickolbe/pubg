@@ -1,5 +1,10 @@
 import Box from "@material-ui/core/Box";
+import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -12,9 +17,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import orderBy from "lodash/orderBy";
-import { MatchesRequest } from "pubg-model/types/Match";
+import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useState } from "react";
 import {
@@ -22,9 +28,15 @@ import {
   getGameMode,
   getMapName,
   getPlayerMatchStats,
+  getPlayerMatchStats2,
 } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
+  tableRowRoot: {
+    "& > *": {
+      borderBottom: "unset",
+    },
+  },
   expansionPanelHeading: {
     fontSize: `${theme.typography.pxToRem(14)}!important`,
   },
@@ -37,12 +49,121 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const MatchRow = (props: {
+  match: MatchRequest;
+  player: PlayerRequest;
+}) => {
+  const classes = useStyles();
+  const { match, player } = props;
+  const playerStats = getPlayerMatchStats(match, player.pubgId);
+
+  const [open, setOpen] = useState(false);
+
+  const teams = orderBy(match.teams, ["rank"], ["asc"]);
+
+  return (
+    <>
+      <TableRow
+        key={match.matchId}
+        hover
+        style={{
+          borderLeft:
+            playerStats.winPlace === 1
+              ? "1px solid #5D85D2"
+              : playerStats.winPlace <= 10
+              ? "1px solid #DAA73A"
+              : "none",
+          backgroundColor: open ? "#515151" : "",
+        }}
+        className={open ? "" : classes.tableRowRoot}
+      >
+        <TableCell component="th" scope="row">
+          # {playerStats.winPlace}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {getGameMode(match.gameMode)}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {getMapName(match.mapName)}
+        </TableCell>
+        <TableCell component="th" scope="row" align="right">
+          {playerStats.kills}
+        </TableCell>
+        <TableCell component="th" scope="row" align="right">
+          {formatNumber(Math.ceil(playerStats.damageDealt))}
+        </TableCell>
+        <TableCell
+          component="th"
+          scope="row"
+          align="right"
+          style={{
+            minWidth: "150px",
+          }}
+        >
+          <Tooltip
+            title={format(parseISO(match.createdAt), "PPpp")}
+            placement="right"
+            disableFocusListener
+          >
+            <div>
+              {formatDistanceToNow(parseISO(match.createdAt), {
+                addSuffix: true,
+              })}
+            </div>
+          </Tooltip>
+        </TableCell>
+        <TableCell>
+          <IconButton size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ padding: 0 }} colSpan={7}>
+          <Collapse
+            in={open}
+            timeout="auto"
+            unmountOnExit
+            style={{ maxHeight: 350, overflow: "scroll" }}
+          >
+            <div>
+              <Typography variant="body2" style={{ padding: "10px 25px" }}>
+                Teams:
+              </Typography>
+              <List style={{ paddingTop: 0, paddingBottom: 0 }}>
+                {teams.map((team) => {
+                  const players = team.players.map((player) =>
+                    getPlayerMatchStats2(match, player)
+                  );
+                  return (
+                    <ListItem
+                      key={team.teamId}
+                      selected={playerStats.winPlace === team.rank}
+                      style={{ paddingLeft: 25 }}
+                    >
+                      <ListItemIcon># {team.rank}</ListItemIcon>
+                      <ListItemText>
+                        <Typography variant="body2">
+                          {players.map((p) => p.name).join(", ")}
+                        </Typography>
+                      </ListItemText>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </div>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+};
+
 export const PlayerMatchesList = (props: {
   player: PlayerRequest;
   matches: MatchesRequest;
 }) => {
   const { player, matches } = props;
-  const classes = useStyles();
 
   const orderedMatches = orderBy(matches, ["createdAt"], ["desc"]);
 
@@ -97,64 +218,9 @@ export const PlayerMatchesList = (props: {
           <TableBody>
             {orderedMatches
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((match) => {
-                const playerStats = getPlayerMatchStats(match, player.pubgId);
-                return (
-                  <TableRow
-                    key={match.matchId}
-                    hover
-                    style={{
-                      borderLeft:
-                        playerStats.winPlace === 1
-                          ? "1px solid #5D85D2"
-                          : playerStats.winPlace <= 10
-                          ? "1px solid #DAA73A"
-                          : "none",
-                    }}
-                  >
-                    <TableCell component="th" scope="row">
-                      # {playerStats.winPlace}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {getGameMode(match.gameMode)}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {getMapName(match.mapName)}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="right">
-                      {playerStats.kills}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="right">
-                      {formatNumber(Math.ceil(playerStats.damageDealt))}
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      align="right"
-                      style={{
-                        minWidth: "150px",
-                      }}
-                    >
-                      <Tooltip
-                        title={format(parseISO(match.createdAt), "PPpp")}
-                        placement="right"
-                        disableFocusListener
-                      >
-                        <div>
-                          {formatDistanceToNow(parseISO(match.createdAt), {
-                            addSuffix: true,
-                          })}
-                        </div>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton size="small" onClick={() => {}}>
-                        <KeyboardArrowDownIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              .map((match) => (
+                <MatchRow key={match._id} match={match} player={player} />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

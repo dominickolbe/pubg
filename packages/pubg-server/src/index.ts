@@ -59,58 +59,49 @@ const server = async () => {
 
   const router = new Router();
 
-  router.get("/api/v1/status", async (ctx) => {
-    ctx.body = "ok.";
-    ctx.response.status = HTTP_STATUS_OK;
+  router.get("/api/search", async (ctx) => {
+    const players = await PlayerDbController.search(ctx.query.q);
+    if (players.ok) {
+      ctx.body = players.val;
+    }
   });
 
-  // router.get("/api/v1/players", async (ctx) => {
-  //   const player = await PlayerDbController.find({});
-  //   if (player.ok) {
-  //     ctx.body = player.val;
-  //   }
-  // });
+  router.get("/api/players/:id", duplicatedPlayerCheck, async (ctx, next) => {
+    const returnPlayer = (player: Player) => {
+      // remove matches from player -> could be to big
+      player.matches = [];
+      ctx.body = player;
+      return next();
+    };
 
-  router.get(
-    "/api/v1/players/:id",
-    duplicatedPlayerCheck,
-    async (ctx, next) => {
-      const returnPlayer = (player: Player) => {
-        // remove matches from player -> could be to big
-        player.matches = [];
-        ctx.body = player;
-        return next();
-      };
+    const player = await PlayerDbController.findByName(ctx.params.id);
 
-      const player = await PlayerDbController.findByName(ctx.params.id);
-
-      // player found in db
-      if (player.ok) {
-        return returnPlayer(player.val);
-      }
-
-      // try to import player
-      const importedPlayer = await importPlayerByName(ctx.params.id);
-
-      if (importedPlayer.ok) {
-        const result = await importPlayerStats(importedPlayer.val);
-        if (result.ok) {
-          // return imported player with stats
-          return returnPlayer(result.val);
-        } else {
-          // return imported player without stats
-          return returnPlayer(importedPlayer.val);
-        }
-      } else if (importedPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
-        // add failed player request to cache
-        cache.pubgPlayerNotFound.push(ctx.params.id);
-      }
-
-      ctx.response.status = HTTP_STATUS_NOT_FOUND;
+    // player found in db
+    if (player.ok) {
+      return returnPlayer(player.val);
     }
-  );
 
-  router.get("/api/v1/players/:id/matches", async (ctx, next) => {
+    // try to import player
+    const importedPlayer = await importPlayerByName(ctx.params.id);
+
+    if (importedPlayer.ok) {
+      const result = await importPlayerStats(importedPlayer.val);
+      if (result.ok) {
+        // return imported player with stats
+        return returnPlayer(result.val);
+      } else {
+        // return imported player without stats
+        return returnPlayer(importedPlayer.val);
+      }
+    } else if (importedPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
+      // add failed player request to cache
+      cache.pubgPlayerNotFound.push(ctx.params.id);
+    }
+
+    ctx.response.status = HTTP_STATUS_NOT_FOUND;
+  });
+
+  router.get("/api/players/:id/matches", async (ctx, next) => {
     const player = await PlayerDbController.findMatches(ctx.params.id);
 
     // player found in db

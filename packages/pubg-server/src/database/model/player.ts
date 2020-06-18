@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
-import { RtPlayer, RtPlayerResults } from "pubg-model/runtypes/Player";
+import {
+  RtPlayer,
+  RtPlayerResults,
+  RtPlayersSearch,
+} from "pubg-model/runtypes/Player";
 import { Match } from "pubg-model/types/Match";
-import { Player } from "pubg-model/types/Player";
+import { Player, PlayersSearch } from "pubg-model/types/Player";
 
 mongoose.set("useCreateIndex", true);
 const PlayerSchema = new mongoose.Schema(
@@ -41,6 +45,21 @@ const PlayerSchema = new mongoose.Schema(
 export const PlayerModel = mongoose.model("Player", PlayerSchema);
 
 export const PlayerDbController = {
+  search: async (query: string): Promise<Option<PlayersSearch>> => {
+    try {
+      const result = await PlayerModel.find({
+        name: { $regex: query, $options: "i" },
+      })
+        .select("_id pubgId name")
+        .limit(10);
+      if (!result) return createNone();
+      const players = RtPlayersSearch.check(result);
+      return createSome(players);
+    } catch (error) {
+      console.log(error);
+      return createNone();
+    }
+  },
   find: async (query: object): Promise<Option<Player[]>> => {
     try {
       const result = await PlayerModel.find(query);
