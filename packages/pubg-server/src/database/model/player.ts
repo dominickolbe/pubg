@@ -80,6 +80,11 @@ export const PlayerDbController = {
         return createNone();
       }
 
+      // no matches yet
+      if (fPlayer.matches.length === 0) {
+        return createSome([]);
+      }
+
       const matches = await MatchModel.find({
         _id: {
           $in: fPlayer.matches,
