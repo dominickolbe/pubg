@@ -67,8 +67,9 @@ const server = async () => {
 
   router.get("/api/players/:id", duplicatedPlayerCheck, async (ctx, next) => {
     const returnPlayer = (player: IPlayer) => {
-      // TODO: remove matches key
-      ctx.body = player;
+      const resp = player.toObject();
+      delete resp.matches;
+      ctx.body = resp;
       return next();
     };
 
