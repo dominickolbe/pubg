@@ -2,9 +2,11 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { format, parseISO } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
@@ -78,15 +80,17 @@ export const Player = () => {
           </Typography>
         </Grid>
         <Grid item md={3} xs={12}>
-          <Typography variant="subtitle1">Total stats</Typography>
-          {/* <Typography variant="caption">{`updated: ${
-            player.statsUpdatedAt
-              ? formatDistanceToNow(parseISO(player.statsUpdatedAt), {
-                  includeSeconds: true,
-                  addSuffix: true,
-                })
-              : "never"
-          }`}</Typography> */}
+          <Tooltip
+            title={
+              player && player.statsUpdatedAt
+                ? "Updated: " + format(parseISO(player.statsUpdatedAt), "PPpp")
+                : "Updated: never"
+            }
+            placement="top-start"
+            disableFocusListener
+          >
+            <Typography variant="subtitle1">Total stats</Typography>
+          </Tooltip>
           <List>
             {player === null ? (
               <PlayerStatsCardLoading />
@@ -98,15 +102,18 @@ export const Player = () => {
           </List>
         </Grid>
         <Grid item md={9} xs={12}>
-          <Typography variant="subtitle1">Matches</Typography>
-          {/* <Typography variant="caption">{`updated: ${
-            player.matchesUpdatedAt
-              ? formatDistanceToNow(parseISO(player.matchesUpdatedAt), {
-                  includeSeconds: true,
-                  addSuffix: true,
-                })
-              : "never"
-          }`}</Typography> */}
+          <Tooltip
+            title={
+              player && player.matchesUpdatedAt
+                ? "Updated: " +
+                  format(parseISO(player.matchesUpdatedAt), "PPpp")
+                : "Updated: never"
+            }
+            placement="top-start"
+            disableFocusListener
+          >
+            <Typography variant="subtitle1">Matches</Typography>
+          </Tooltip>
           <List>
             {player === null || matches.length === 0 ? (
               <Skeleton variant="rect" height={56} />

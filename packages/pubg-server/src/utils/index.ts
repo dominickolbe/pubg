@@ -80,6 +80,8 @@ export const updatePlayerStatsAndMatches = async (
     }
   });
 
+  newPlayer.matchesUpdatedAt = new Date().toISOString();
+
   await newPlayer.save();
 
   console.log(`[Info]: player "${newPlayer.name}" successfully updated`);
