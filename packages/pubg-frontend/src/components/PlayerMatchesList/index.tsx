@@ -165,7 +165,8 @@ export const PlayerMatchesList = (props: {
 }) => {
   const { player, matches } = props;
 
-  const orderedMatches = orderBy(matches, ["createdAt"], ["desc"]);
+  // const orderedMatches = orderBy(matches, ["createdAt"], ["desc"]);
+  const orderedMatches = matches;
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -224,7 +225,7 @@ export const PlayerMatchesList = (props: {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
+      {/* <TablePagination
         labelRowsPerPage=""
         rowsPerPageOptions={[5, 10, 25, 50, 100]}
         component="div"
@@ -235,7 +236,7 @@ export const PlayerMatchesList = (props: {
         onChangeRowsPerPage={(event) =>
           setRowsPerPage(parseInt(event.target.value, 10))
         }
-      />
+      /> */}
     </Paper>
   );
 };

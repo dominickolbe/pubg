@@ -1,12 +1,12 @@
 import Koa from "koa";
 import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
-import { Player } from "pubg-model/types/Player";
+import { IPlayer, Player } from "pubg-model/types/Player";
 import { HTTP_STATUS_NOT_FOUND } from "pubg-utils/src";
 import { MatchDbController } from "../database/model/match";
-import { PlayerDbController } from "../database/model/player";
+import { PlayerModel } from "../database/model/player";
 import { MATCH_TYPES, PubgApiDriver } from "../services/PubgApiDriver";
 
-export const importPlayerByName = async (name: string) => {
+export const importNewPlayer = async (name: string) => {
   console.log(`[Info]: start importing player "${name}" ...`);
 
   const request = await PubgApiDriver.player.getByName(name);
@@ -16,26 +16,25 @@ export const importPlayerByName = async (name: string) => {
     return createErr(request.err);
   }
 
-  const player = await PlayerDbController.save(
-    request.val.data[0].id,
-    request.val.data[0].attributes.name
-  );
+  const player = new PlayerModel();
+  player.name = request.val.data[0].attributes.name;
+  player.pubgId = request.val.data[0].id;
 
-  if (!player.ok) {
+  const result = await player.save();
+
+  if (!result) {
     console.log(`[Error]: import player to db failed`);
     return createErr(null);
   }
 
-  console.log(`[Info]: player "${player.val.name}" successfully imported`);
+  console.log(`[Info]: player "${player.name}" successfully imported`);
 
-  return createOk(player.val);
+  return createOk(player);
 };
 
-export const updatePlayer = async (
-  player: Player
+export const updatePlayerStatsAndMatches = async (
+  player: IPlayer
 ): Promise<Result<Player, number | null>> => {
-  console.log(`[Info]: start importing player ${player.name} ...`);
-
   const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
 
   if (!request.ok) {
@@ -43,18 +42,18 @@ export const updatePlayer = async (
     return createErr(request.err);
   }
 
-  const updatedPlayer = await PlayerDbController.updateStats(
-    player._id,
-    request.val.data.attributes.gameModeStats
-  );
+  player.stats = request.val.data.attributes.gameModeStats;
+  player.statsUpdatedAt = new Date().toISOString();
 
-  if (!updatedPlayer.ok) {
+  const newPlayer = await player.save();
+
+  if (!newPlayer) {
     console.log(`[Error]: update player to db failed`);
     return createErr(null);
   }
 
   console.log(
-    `[Info]: stats for player "${player.name}" successfully imported`
+    `[Info]: stats for player "${newPlayer.name}" successfully imported`
   );
 
   const matches: string[] = [];
@@ -71,23 +70,26 @@ export const updatePlayer = async (
   );
 
   console.log(
-    `[Info]: matches for player "${player.name}" successfully imported`
+    `[Info]: matches for player "${newPlayer.name}" successfully imported`
   );
 
-  // TODO: this is quite slow ?
-  // import matches to player
-  for (const match of importedMatches) {
-    if (match.ok) await PlayerDbController.pushMatch(player._id, match.val);
-  }
+  // add matches to player
+  importedMatches.forEach((match) => {
+    if (match.ok && !newPlayer.matches.includes(match.val._id)) {
+      newPlayer.matches.push(match.val._id);
+    }
+  });
 
-  console.log(`[Info]: player "${player.name}" successfully updated`);
+  await newPlayer.save();
 
-  return createOk(updatedPlayer.val);
+  console.log(`[Info]: player "${newPlayer.name}" successfully updated`);
+
+  return createOk(newPlayer);
 };
 
 export const importPlayerStats = async (
-  player: Player
-): Promise<Result<Player, number | null>> => {
+  player: IPlayer
+): Promise<Result<IPlayer, number | null>> => {
   console.log(`[Info]: start importing player stats...`);
 
   const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
@@ -97,21 +99,21 @@ export const importPlayerStats = async (
     return createErr(request.err);
   }
 
-  const newPlayer = await PlayerDbController.updateStats(
-    player._id,
-    request.val.data.attributes.gameModeStats
-  );
+  player.stats = request.val.data.attributes.gameModeStats;
+  player.statsUpdatedAt = new Date().toISOString();
 
-  if (!newPlayer.ok) {
+  const result = await player.save();
+
+  if (!result) {
     console.log(`[Error]: update player to db failed`);
     return createErr(null);
   }
 
   console.log(
-    `[Info]: stats for player "${newPlayer.val.name}" successfully imported`
+    `[Info]: stats for player "${player.name}" successfully imported`
   );
 
-  return createOk(newPlayer.val);
+  return createOk(player);
 };
 
 export const importMatchById = async (id: string) => {

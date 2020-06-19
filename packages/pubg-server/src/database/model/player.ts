@@ -5,8 +5,9 @@ import {
   RtPlayerResults,
   RtPlayersSearch,
 } from "pubg-model/runtypes/Player";
-import { Match } from "pubg-model/types/Match";
-import { Player, PlayersSearch } from "pubg-model/types/Player";
+import { IMatch, Match } from "pubg-model/types/Match";
+import { IPlayer, Player, PlayersSearch } from "pubg-model/types/Player";
+import { MatchModel } from "./match";
 
 mongoose.set("useCreateIndex", true);
 const PlayerSchema = new mongoose.Schema(
@@ -29,7 +30,13 @@ const PlayerSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    matches: [{ type: mongoose.Types.ObjectId, ref: "Match" }],
+    matches: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Match",
+        default: [],
+      },
+    ],
     matchesUpdatedAt: {
       type: String,
       default: null,
@@ -42,7 +49,7 @@ const PlayerSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-export const PlayerModel = mongoose.model("Player", PlayerSchema);
+export const PlayerModel = mongoose.model<IPlayer>("Player", PlayerSchema);
 
 export const PlayerDbController = {
   search: async (query: string): Promise<Option<PlayersSearch>> => {
@@ -60,93 +67,29 @@ export const PlayerDbController = {
       return createNone();
     }
   },
-  find: async (query: object): Promise<Option<Player[]>> => {
+  findMatches: async (
+    query: object,
+    limit: number,
+    offset: number
+  ): Promise<Option<IMatch[]>> => {
     try {
-      const result = await PlayerModel.find(query);
-      if (!result) return createNone();
-      const players = RtPlayerResults.check(result);
-      return createSome(players);
-    } catch (error) {
-      console.log(error);
-      return createNone();
-    }
-  },
-  findByName: async (name: string): Promise<Option<Player>> => {
-    try {
-      const result = await PlayerModel.findOne({ name });
-      if (!result) return createNone();
-      const player = RtPlayer.check(result.toObject());
-      return createSome(player);
-    } catch (error) {
-      console.log(error);
-      return createNone();
-    }
-  },
-  findMatches: async (name: string): Promise<Option<Player>> => {
-    try {
-      const result = await PlayerModel.findOne({ name }).populate("matches");
-      if (!result) return createNone();
-      const player = RtPlayer.check(result.toObject());
-      return createSome(player);
-    } catch (error) {
-      console.log(error);
-      return createNone();
-    }
-  },
-  save: async (pubgId: string, name: string): Promise<Option<Player>> => {
-    try {
-      const result = await new PlayerModel({
-        pubgId,
-        name,
-        stats: null,
-      }).save();
-      const player = RtPlayer.check(result && result.toObject());
-      return createSome(player);
-    } catch (error) {
-      console.log(error);
-      return createNone();
-    }
-  },
-  updateStats: async (
-    id: mongoose.Types.ObjectId,
-    stats: Object
-  ): Promise<Option<Player>> => {
-    try {
-      const result = await PlayerModel.findByIdAndUpdate(
-        id,
-        {
-          $set: {
-            stats: stats,
-            statsUpdatedAt: new Date().toISOString(),
-          },
+      const fPlayer = await PlayerModel.findOne(query).select("matches");
+
+      // Player not found
+      if (fPlayer === null) {
+        return createNone();
+      }
+
+      const matches = await MatchModel.find({
+        _id: {
+          $in: fPlayer.matches,
         },
-        { new: true }
-      ).populate("matches");
-      const player = RtPlayer.check(result && result.toObject());
-      return createSome(player);
-    } catch (error) {
-      console.log(error);
-      return createNone();
-    }
-  },
-  pushMatch: async (id: mongoose.Types.ObjectId, match: Match) => {
-    try {
-      const result = await PlayerModel.findByIdAndUpdate(
-        {
-          _id: id,
-        },
-        {
-          $set: {
-            matchesUpdatedAt: new Date().toISOString(),
-          },
-          $addToSet: {
-            matches: match._id,
-          },
-        },
-        { new: true }
-      ).populate("matches");
-      const player = RtPlayer.check(result && result.toObject());
-      return createSome(player);
+      })
+        .sort("-createdAt")
+        .skip(offset)
+        .limit(limit);
+
+      return createSome(matches);
     } catch (error) {
       console.log(error);
       return createNone();

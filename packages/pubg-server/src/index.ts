@@ -2,18 +2,18 @@ require("dotenv-safe").config();
 import cors from "@koa/cors";
 import Koa from "koa";
 import Router from "koa-router";
-import { Player } from "pubg-model/types/Player";
+import { IPlayer } from "pubg-model/types/Player";
 import {
   HTTP_STATUS_INTERNAL_SERVER_ERROR,
   HTTP_STATUS_NOT_FOUND,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import { Database } from "./database";
-import { PlayerDbController } from "./database/model/player";
+import { PlayerDbController, PlayerModel } from "./database/model/player";
 import {
   cache,
   duplicatedPlayerCheck,
-  importPlayerByName,
+  importNewPlayer,
   importPlayerStats,
 } from "./utils";
 
@@ -66,33 +66,36 @@ const server = async () => {
   });
 
   router.get("/api/players/:id", duplicatedPlayerCheck, async (ctx, next) => {
-    const returnPlayer = (player: Player) => {
-      // remove matches from player -> could be to big
-      player.matches = [];
+    const returnPlayer = (player: IPlayer) => {
+      // TODO: remove matches key
       ctx.body = player;
       return next();
     };
 
-    const player = await PlayerDbController.findByName(ctx.params.id);
+    const player = await PlayerModel.findOne({ name: ctx.params.id }).select(
+      "-matches"
+    );
 
-    // player found in db
-    if (player.ok) {
-      return returnPlayer(player.val);
+    // return player if found
+    if (player) {
+      ctx.body = player;
+      return next();
     }
 
     // try to import player
-    const importedPlayer = await importPlayerByName(ctx.params.id);
+    const newPlayer = await importNewPlayer(ctx.params.id);
 
-    if (importedPlayer.ok) {
-      const result = await importPlayerStats(importedPlayer.val);
+    if (newPlayer.ok) {
+      const result = await importPlayerStats(newPlayer.val);
       if (result.ok) {
         // return imported player with stats
         return returnPlayer(result.val);
       } else {
         // return imported player without stats
-        return returnPlayer(importedPlayer.val);
+        return returnPlayer(newPlayer.val);
       }
-    } else if (importedPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
+    } else if (newPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
+      // TODO check if cache is still working
       // add failed player request to cache
       cache.pubgPlayerNotFound.push(ctx.params.id);
     }
