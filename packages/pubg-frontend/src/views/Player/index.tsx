@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -6,7 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { format, parseISO, isBefore, sub } from "date-fns";
+import { format, isBefore, parseISO, sub } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
@@ -18,6 +20,12 @@ import {
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
 import { generateTotalStats } from "../../utils";
+
+// TODO: remove
+const matchRequestDefaults = {
+  limit: 50,
+  offset: 0,
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,28 +53,32 @@ export const Player = () => {
   const classes = useStyles();
 
   const [player, setPlayer] = useState<PlayerRequest | null>(null);
-  // TODO add null
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
 
-  const loadMatches = async () => {
-    setMatches(null);
-    const response = await ApiController.getPlayerMatches(id);
-    if (response.ok) setMatches(response.val);
-  };
   const loadPlayer = async () => {
     setPlayer(null);
     const response = await ApiController.getPlayer(id);
     if (response.ok) {
       setPlayer(response.val);
     } else {
-      history.push("/playernotfound");
+      // TODO
+      // history.push("/playernotfound");
     }
+  };
+
+  const loadMatches = async () => {
+    setMatches(null);
+    const response = await ApiController.getPlayerMatches(
+      id,
+      matchRequestDefaults.limit,
+      matchRequestDefaults.offset
+    );
+    if (response.ok) setMatches(response.val);
   };
 
   useEffect(() => {
     loadPlayer();
     loadMatches();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const totalStats =
@@ -88,7 +100,7 @@ export const Player = () => {
         {isNewPlayer && (
           <Grid item xs={12}>
             <Alert severity="info">
-              Please wait up to 1h to see all player stats and matches.
+              Please wait up to 60 minutes to see all player stats and matches.
             </Alert>
           </Grid>
         )}

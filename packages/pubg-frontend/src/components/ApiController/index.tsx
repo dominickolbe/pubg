@@ -23,10 +23,10 @@ export const ApiController = {
       return createErr(error);
     }
   },
-  getPlayerMatches: async (name: string) => {
+  getPlayerMatches: async (name: string, limit: number, offset: number) => {
     try {
       const response = await axios.get(
-        `${API_BASE}/api/players/${name}/matches`
+        `${API_BASE}/api/players/${name}/matches?limit=${limit}&offset=${offset}`
       );
       try {
         const matches = RtMatchesRequest.check(response.data);

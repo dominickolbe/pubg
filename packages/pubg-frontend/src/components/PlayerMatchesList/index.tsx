@@ -165,9 +165,6 @@ export const PlayerMatchesList = (props: {
 }) => {
   const { player, matches } = props;
 
-  // const orderedMatches = orderBy(matches, ["createdAt"], ["desc"]);
-  const orderedMatches = matches;
-
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -217,26 +214,38 @@ export const PlayerMatchesList = (props: {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orderedMatches
+            {matches
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((match) => (
                 <MatchRow key={match._id} match={match} player={player} />
               ))}
+            {matches.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  no matches found
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <TablePagination
-        labelRowsPerPage=""
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-        component="div"
-        count={matches.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={(event, newPage) => setPage(newPage)}
-        onChangeRowsPerPage={(event) =>
-          setRowsPerPage(parseInt(event.target.value, 10))
-        }
-      /> */}
+      {
+        // TODO: create global constant
+        matches.length > 10 && (
+          <TablePagination
+            labelRowsPerPage=""
+            rowsPerPageOptions={[5, 10, 25, 50, 100]}
+            component="div"
+            count={matches.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={(event, newPage) => setPage(newPage)}
+            onChangeRowsPerPage={(event) =>
+              setRowsPerPage(parseInt(event.target.value, 10))
+            }
+          />
+        )
+      }
     </Paper>
   );
 };
