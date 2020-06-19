@@ -2,6 +2,16 @@ import mongoose from "mongoose";
 import * as rt from "runtypes";
 import { RtStats } from "../Stats";
 
+export const RtDbPlayer = rt.Record({
+  pubgId: rt.String,
+  name: rt.String,
+  stats: RtStats.Or(rt.Null),
+  statsUpdatedAt: rt.String.Or(rt.Null),
+  matches: rt.Array(rt.Record({})),
+  matchesUpdatedAt: rt.String.Or(rt.Null),
+  createdAt: rt.String,
+});
+
 export const RtPlayer = rt.Record({
   _id: rt.InstanceOf(mongoose.Types.ObjectId),
   pubgId: rt.String,

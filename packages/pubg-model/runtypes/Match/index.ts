@@ -6,7 +6,7 @@ export const RtMatchCreate = rt.Record({
   gameMode: rt.String,
   mapName: rt.String,
   duration: rt.Number,
-  createdAt: rt.String,
+  createdAt: rt.InstanceOf(Date),
   telemetry: rt.String,
   players: rt.Array(rt.Record({})),
   teams: rt.Array(
@@ -19,14 +19,14 @@ export const RtMatchCreate = rt.Record({
   ),
 });
 
-export const RtMatch = RtMatchCreate.And(
-  rt.Record({
-    _id: rt.InstanceOf(mongoose.Types.ObjectId),
-  })
-);
+export const RtMatch = rt.Record({
+  ...RtMatchCreate.fields,
+  _id: rt.InstanceOf(mongoose.Types.ObjectId),
+});
 
 export const RtMatchRequest = rt.Record({
   ...RtMatchCreate.fields,
+  createdAt: rt.String,
   _id: rt.String,
 });
 

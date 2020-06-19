@@ -6,7 +6,6 @@ import { Player } from "pubg-model/types/Player";
 import {
   HTTP_STATUS_INTERNAL_SERVER_ERROR,
   HTTP_STATUS_NOT_FOUND,
-  HTTP_STATUS_OK,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import { Database } from "./database";
@@ -102,11 +101,17 @@ const server = async () => {
   });
 
   router.get("/api/players/:id/matches", async (ctx, next) => {
-    const player = await PlayerDbController.findMatches(ctx.params.id);
+    const limit = ctx.query.limit ?? 10;
+    const offset = ctx.query.offset ?? 0;
 
-    // player found in db
-    if (player.ok) {
-      ctx.body = player.val.matches;
+    const matches = await PlayerDbController.findMatches(
+      { name: ctx.params.id },
+      limit,
+      offset
+    );
+
+    if (matches.ok) {
+      ctx.body = matches.val;
       return next();
     }
 

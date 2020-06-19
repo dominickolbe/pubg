@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
 import { RtMatch } from "pubg-model/runtypes/Match";
-import { Match, MatchCreate } from "pubg-model/types/Match";
+import { IMatch, Match, MatchCreate } from "pubg-model/types/Match";
 
 mongoose.set("useCreateIndex", true);
 const MatchSchema = new mongoose.Schema(
@@ -36,14 +36,14 @@ const MatchSchema = new mongoose.Schema(
       required: true,
     },
     createdAt: {
-      type: String,
+      type: Date,
       required: true,
     },
   },
   { versionKey: false }
 );
 
-export const MatchModel = mongoose.model("Match", MatchSchema);
+export const MatchModel = mongoose.model<IMatch>("Match", MatchSchema);
 
 export const MatchDbController = {
   findById: async (matchId: string): Promise<Option<Match>> => {

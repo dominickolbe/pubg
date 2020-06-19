@@ -134,7 +134,7 @@ export const importMatchById = async (id: string) => {
     gameMode: request.val.data.attributes.gameMode,
     mapName: request.val.data.attributes.mapName,
     duration: request.val.data.attributes.duration,
-    createdAt: request.val.data.attributes.createdAt,
+    createdAt: new Date(request.val.data.attributes.createdAt),
 
     // @ts-ignore
     telemetry: request.val.included.find((i) => i.type === "asset").attributes
