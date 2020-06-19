@@ -24,6 +24,13 @@ export const theme = createMuiTheme({
       '"Segoe UI Symbol"',
     ].join(","),
   },
+  overrides: {
+    MuiButton: {
+      root: {
+        textTransform: "initial",
+      },
+    },
+  },
 });
 
 export const useStyles = makeStyles((theme) => ({
