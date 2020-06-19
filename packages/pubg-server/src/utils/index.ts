@@ -4,7 +4,7 @@ import { Player } from "pubg-model/types/Player";
 import { HTTP_STATUS_NOT_FOUND } from "pubg-utils/src";
 import { MatchDbController } from "../database/model/match";
 import { PlayerDbController } from "../database/model/player";
-import { PubgApiDriver } from "../services/PubgApiDriver";
+import { MATCH_TYPES, PubgApiDriver } from "../services/PubgApiDriver";
 
 export const importPlayerByName = async (name: string) => {
   console.log(`[Info]: start importing player "${name}" ...`);
@@ -29,6 +29,60 @@ export const importPlayerByName = async (name: string) => {
   console.log(`[Info]: player "${player.val.name}" successfully imported`);
 
   return createOk(player.val);
+};
+
+export const updatePlayer = async (
+  player: Player
+): Promise<Result<Player, number | null>> => {
+  console.log(`[Info]: start importing player ${player.name} ...`);
+
+  const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
+
+  if (!request.ok) {
+    console.log(`[Error]: pubg api request failed`);
+    return createErr(request.err);
+  }
+
+  const updatedPlayer = await PlayerDbController.updateStats(
+    player._id,
+    request.val.data.attributes.gameModeStats
+  );
+
+  if (!updatedPlayer.ok) {
+    console.log(`[Error]: update player to db failed`);
+    return createErr(null);
+  }
+
+  console.log(
+    `[Info]: stats for player "${player.name}" successfully imported`
+  );
+
+  const matches: string[] = [];
+
+  MATCH_TYPES.forEach((type) => {
+    request.val.data.relationships[type].data.forEach((match) => {
+      matches.push(match.id);
+    });
+  });
+
+  // import matches to db
+  const importedMatches = await Promise.all(
+    matches.map((match) => importMatchById(match))
+  );
+
+  console.log(
+    `[Info]: matches for player "${player.name}" successfully imported`
+  );
+
+  // TODO: this is quite slow ?
+  // import matches to player
+  for (const match of importedMatches) {
+    if (match.ok) await PlayerDbController.pushMatch(player._id, match.val);
+  }
+
+  console.log(`[Info]: player "${player.name}" successfully updated`);
+
+  return createOk(updatedPlayer.val);
 };
 
 export const importPlayerStats = async (
@@ -64,7 +118,7 @@ export const importMatchById = async (id: string) => {
   const exist = await MatchDbController.findById(id);
 
   if (exist.ok) {
-    console.log(`[Info]: skip import. match already exist`);
+    // console.log(`[Info]: skip import. match already exist`);
     return createOk(exist.val);
   }
 
@@ -118,34 +172,6 @@ export const importMatchById = async (id: string) => {
   console.log(`[Info]: match "${match.val._id}" successfully imported`);
 
   return createOk(match.val);
-};
-
-export const importMatches = async (player: Player) => {
-  const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
-
-  if (!request.ok) {
-    console.log(`[Error]: pubg api request failed`);
-    return createErr(request.err);
-  }
-
-  // TODO
-  const matchTypes = [
-    "matchesSolo",
-    "matchesSoloFPP",
-    "matchesDuo",
-    "matchesDuoFPP",
-    "matchesSquad",
-    "matchesSquadFPP",
-  ] as const;
-
-  for (const matchType of matchTypes) {
-    for (const match of request.val.data.relationships[matchType].data) {
-      const dbMatch = await importMatchById(match.id);
-      if (!dbMatch.ok) return createOk(null);
-      await PlayerDbController.pushMatch(player._id, dbMatch.val);
-    }
-  }
-  return createOk(null);
 };
 
 export const cache: {

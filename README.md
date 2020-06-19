@@ -38,18 +38,11 @@ update players
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
 ```
 
-import matches
-
-```bash
-yarn workspace pubg-server ts-node --transpile-only ./src/tasks/importmatches.ts
-```
-
 run tasks on heroku
 
 ```bash
 heroku run importplayer *PLAYER_NAME* --app pubg-app
 heroku run updateplayers --app pubg-app
-heroku run importmatches --app pubg-app
 ```
 
 ## License

@@ -24,6 +24,15 @@ const authHeader = {
   Authorization: `Bearer ${process.env.PUBG_API_TOKEN}`,
 };
 
+export const MATCH_TYPES = [
+  "matchesSolo",
+  "matchesSoloFPP",
+  "matchesDuo",
+  "matchesDuoFPP",
+  "matchesSquad",
+  "matchesSquadFPP",
+] as const;
+
 export const PubgApiDriver = {
   player: {
     getByName: async (

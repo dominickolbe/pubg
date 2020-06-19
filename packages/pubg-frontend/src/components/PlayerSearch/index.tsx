@@ -48,6 +48,7 @@ export const PlayerSearch = (props: { onSubmit: (value: string) => void }) => {
           size="small"
           onKeyPress={(e) => {
             if (e.key === "Enter") {
+              // TODO
               // @ts-ignore
               props.onSubmit(e.target.value);
             }
