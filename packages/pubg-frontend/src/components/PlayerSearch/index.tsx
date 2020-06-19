@@ -13,6 +13,8 @@ export const PlayerSearch = (props: { onSubmit: (value: string) => void }) => {
   const [options, setOptions] = useState<PlayersSearch>([]);
   const [inputValue, setInputValue] = useState("");
 
+  // TODO: add trottle and cache
+
   useEffect(() => {
     if (!inputValue) return;
 

@@ -142,11 +142,13 @@ export const MatchRow = (props: {
                       style={{ paddingLeft: 25 }}
                     >
                       <ListItemIcon># {team.rank}</ListItemIcon>
-                      <ListItemText>
-                        <Typography variant="body2">
-                          {players.map((p) => p.name).join(", ")}
-                        </Typography>
-                      </ListItemText>
+                      <ListItemText
+                        primary={
+                          <Typography variant="body2">
+                            {players.map((p) => p.name).join(", ")}
+                          </Typography>
+                        }
+                      />
                     </ListItem>
                   );
                 })}
