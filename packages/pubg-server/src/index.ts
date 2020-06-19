@@ -105,8 +105,8 @@ const server = async () => {
   });
 
   router.get("/api/players/:id/matches", async (ctx, next) => {
-    const limit = ctx.query.limit ?? 10;
-    const offset = ctx.query.offset ?? 0;
+    const limit = parseInt(ctx.query.limit) ?? 10;
+    const offset = parseInt(ctx.query.offset) ?? 0;
 
     const matches = await PlayerDbController.findMatches(
       { name: ctx.params.id },
