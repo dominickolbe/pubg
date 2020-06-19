@@ -9,7 +9,7 @@
     "runtypes": "^4.2.0"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.7.26",
+    "@types/mongoose": "^5.7.27",
     "typescript": "^3.9.5"
   }
 }
