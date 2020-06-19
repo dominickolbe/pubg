@@ -19,7 +19,7 @@ export const Header = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="transparent">
+      <AppBar position="static">
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>
             pubg.
