@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, isBefore, sub } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
@@ -45,10 +45,11 @@ export const Player = () => {
   const classes = useStyles();
 
   const [player, setPlayer] = useState<PlayerRequest | null>(null);
-  const [matches, setMatches] = useState<MatchesRequest>([]);
+  // TODO add null
+  const [matches, setMatches] = useState<MatchesRequest | null>([]);
 
   const loadMatches = async () => {
-    setMatches([]);
+    setMatches(null);
     const response = await ApiController.getPlayerMatches(id);
     if (response.ok) setMatches(response.val);
   };
@@ -71,6 +72,10 @@ export const Player = () => {
   const totalStats =
     player && player.stats ? generateTotalStats(player.stats) : null;
 
+  const isNewPlayer =
+    player &&
+    isBefore(sub(new Date(), { minutes: 60 }), parseISO(player.createdAt));
+
   return (
     <Container maxWidth="md">
       <Grid container className={classes.root} spacing={2}>
@@ -79,6 +84,15 @@ export const Player = () => {
             {id}
           </Typography>
         </Grid>
+
+        {isNewPlayer && (
+          <Grid item xs={12}>
+            <Alert severity="info">
+              Please wait up to 1h to see all player stats and matches.
+            </Alert>
+          </Grid>
+        )}
+
         <Grid item md={3} xs={12}>
           <Tooltip
             title={
@@ -92,12 +106,10 @@ export const Player = () => {
             <Typography variant="subtitle1">Total stats</Typography>
           </Tooltip>
           <List>
-            {player === null ? (
-              <PlayerStatsCardLoading />
-            ) : totalStats ? (
+            {player && totalStats ? (
               <PlayerStatsCard stats={totalStats} />
             ) : (
-              <Alert severity="info">not imported yet</Alert>
+              <PlayerStatsCardLoading />
             )}
           </List>
         </Grid>
@@ -115,10 +127,10 @@ export const Player = () => {
             <Typography variant="subtitle1">Matches</Typography>
           </Tooltip>
           <List>
-            {player === null || matches.length === 0 ? (
-              <Skeleton variant="rect" height={56} />
-            ) : (
+            {player && matches !== null ? (
               <PlayerMatchesList matches={matches} player={player} />
+            ) : (
+              <Skeleton variant="rect" height={56} />
             )}
           </List>
         </Grid>
