@@ -25,7 +25,7 @@ export const Header = () => {
       <AppBar position="static">
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>
-            pubg.
+            pubg. - dev
           </Typography>
           <div className={classes.searchContainer}>
             <PlayerSearch
