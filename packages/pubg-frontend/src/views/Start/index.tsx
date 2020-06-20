@@ -1,11 +1,15 @@
-import { Button, Container, Grid, TextField } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(5),
     paddingBottom: theme.spacing(8),
   },
   title: {
@@ -25,8 +29,11 @@ export const Start = () => {
 
   return (
     <Container maxWidth="sm">
-      <Grid container className={classes.root} alignItems="center" spacing={2}>
-        <Grid item xs={8}>
+      <Grid container className={classes.root} alignItems="center" spacing={1}>
+        <Grid item xs={12}>
+          <Typography variant="body1">Search for player:</Typography>
+        </Grid>
+        <Grid item sm={8} xs={12}>
           <TextField
             label="Player name"
             variant="filled"
@@ -40,7 +47,7 @@ export const Start = () => {
             autoFocus
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={12}>
           <Button variant="contained" fullWidth onClick={() => onSubmit()}>
             Search
           </Button>

@@ -10,7 +10,6 @@ import {
 import { Header } from "./components/Header";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
-import { PlayerNotFound } from "./views/PlayerNotFound";
 import { Start } from "./views/Start";
 
 export const App = () => {
@@ -28,9 +27,6 @@ export const App = () => {
             </Route>
             <Route exact path="/players/:id">
               <Player />
-            </Route>
-            <Route exact path="/playernotfound">
-              <PlayerNotFound />
             </Route>
             <Route path="*">
               <Redirect to="/" />
