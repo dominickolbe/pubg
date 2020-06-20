@@ -64,6 +64,26 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
         />
         <Collapse in={expanded} timeout="auto">
           <SingleStatsListItem
+            label="Avg. K/D"
+            value={() => (stats.kills / stats.roundsPlayed).toFixed(1)}
+          />
+          <SingleStatsListItem
+            label="Avg. Damage"
+            value={() => (stats.damageDealt / stats.roundsPlayed).toFixed(0)}
+          />
+          <SingleStatsListItem
+            label="Top 10 %"
+            value={() =>
+              ((stats.top10s / stats.roundsPlayed) * 100).toFixed(0) + "%"
+            }
+          />
+          <SingleStatsListItem
+            label="Wins %"
+            value={() =>
+              ((stats.wins / stats.roundsPlayed) * 100).toFixed(0) + "%"
+            }
+          />
+          <SingleStatsListItem
             label="Rounds played"
             value={() => formatNumber(stats.roundsPlayed)}
           />
