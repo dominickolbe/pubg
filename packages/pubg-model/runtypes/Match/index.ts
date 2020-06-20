@@ -8,7 +8,17 @@ export const RtMatchCreate = rt.Record({
   duration: rt.Number,
   createdAt: rt.InstanceOf(Date),
   telemetry: rt.String,
-  players: rt.Array(rt.Record({})),
+  players: rt.Array(
+    rt.Record({
+      id: rt.String,
+      stats: rt.Record({
+        name: rt.String,
+        playerId: rt.String,
+        kills: rt.Number,
+        winPlace: rt.Number,
+      }),
+    })
+  ),
   teams: rt.Array(
     rt.Record({
       id: rt.String,
