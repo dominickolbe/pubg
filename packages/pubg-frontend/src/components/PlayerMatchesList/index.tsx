@@ -7,6 +7,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
+import Tab from "@material-ui/core/Tab";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -14,6 +15,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
+import Tabs from "@material-ui/core/Tabs";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
@@ -58,8 +60,10 @@ export const MatchRow = (props: {
   const playerStats = getPlayerMatchStats(match, player.pubgId);
 
   const [open, setOpen] = useState(false);
+  const [tab, setTab] = React.useState(0);
 
   const teams = orderBy(match.teams, ["rank"], ["asc"]);
+  const players = match.players;
 
   return (
     <>
@@ -126,34 +130,75 @@ export const MatchRow = (props: {
             unmountOnExit
             style={{ maxHeight: 350, overflow: "scroll" }}
           >
-            <div>
-              <Typography variant="body2" style={{ padding: "10px 25px" }}>
-                Teams:
-              </Typography>
-              <List style={{ paddingTop: 0, paddingBottom: 0 }}>
-                {teams.map((team) => {
-                  const players = team.players.map((player) =>
-                    getPlayerMatchStats2(match, player)
-                  );
-                  return (
-                    <ListItem
-                      key={team.teamId}
-                      selected={playerStats.winPlace === team.rank}
-                      style={{ paddingLeft: 25 }}
-                    >
-                      <ListItemIcon># {team.rank}</ListItemIcon>
-                      <ListItemText
-                        primary={
-                          <Typography variant="body2">
-                            {players.map((p) => p.name).join(", ")}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
-                  );
-                })}
-              </List>
-            </div>
+            <>
+              <Tabs
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+                variant="fullWidth"
+                value={tab}
+                onChange={(e, newValue) => setTab(newValue)}
+              >
+                <Tab label="teams"></Tab>
+                <Tab label="players" />
+                {/* <Tab label="match" /> */}
+              </Tabs>
+              {tab === 0 && (
+                <div>
+                  <List style={{ paddingTop: 0, paddingBottom: 0 }}>
+                    {teams.map((team) => {
+                      const players = team.players.map((player) =>
+                        getPlayerMatchStats2(match, player)
+                      );
+                      return (
+                        <ListItem
+                          key={team.teamId}
+                          selected={playerStats.winPlace === team.rank}
+                          style={{ paddingLeft: 25 }}
+                        >
+                          <ListItemIcon># {team.rank}</ListItemIcon>
+                          <ListItemText
+                            primary={
+                              <Typography variant="body2">
+                                {players.map((p) => p.name).join(", ")}
+                              </Typography>
+                            }
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </div>
+              )}
+              {tab === 1 && (
+                <div>
+                  <List style={{ paddingTop: 0, paddingBottom: 0 }}>
+                    {players.map((player) => {
+                      return (
+                        <ListItem
+                          key={player.id}
+                          style={{ paddingLeft: 25 }}
+                          selected={playerStats.name === player.stats.name}
+                        >
+                          <ListItemText
+                            primary={
+                              <Typography variant="body1">
+                                {player.stats.name}
+                              </Typography>
+                            }
+                            secondary={
+                              <Typography variant="body2">
+                                Kills: {player.stats.kills}
+                              </Typography>
+                            }
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </div>
+              )}
+            </>
           </Collapse>
         </TableCell>
       </TableRow>
