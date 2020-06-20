@@ -56,16 +56,6 @@ export const Player = () => {
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
   const [error, setError] = useState("");
 
-  const loadPlayer = async () => {
-    setPlayer(null);
-    const response = await ApiController.getPlayer(id);
-    if (response.ok) {
-      setPlayer(response.val);
-    } else {
-      setError("Player not found!");
-    }
-  };
-
   const loadMatches = async () => {
     setMatches(null);
     const response = await ApiController.getPlayerMatches(
@@ -76,10 +66,20 @@ export const Player = () => {
     if (response.ok) setMatches(response.val);
   };
 
+  const loadPlayer = async () => {
+    setPlayer(null);
+    const response = await ApiController.getPlayer(id);
+    if (response.ok) {
+      loadMatches();
+      setPlayer(response.val);
+    } else {
+      setError("Player not found!");
+    }
+  };
+
   useEffect(() => {
     setError("");
     loadPlayer();
-    loadMatches();
   }, [id]);
 
   const totalStats =
