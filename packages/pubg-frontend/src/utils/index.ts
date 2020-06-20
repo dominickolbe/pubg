@@ -77,15 +77,15 @@ export const getGameMode = (gameMode: string) => {
     case "solo":
       return "Solo";
     case "solo-fpp":
-      return "Solo Fpp";
+      return "Solo (FPP)";
     case "duo":
       return "Duo";
     case "duo-fpp":
-      return "Duo Fpp";
+      return "Duo (FPP)";
     case "squad":
       return "Squad";
     case "squad-fpp":
-      return "Squad Fpp";
+      return "Squad (FPP)";
     default:
       return gameMode;
   }
