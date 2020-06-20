@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  searchContainer: {
+    width: "175px",
+  },
 }));
 
 export const Header = () => {
@@ -24,9 +27,11 @@ export const Header = () => {
           <Typography variant="h6" className={classes.title}>
             pubg.
           </Typography>
-          <PlayerSearch
-            onSubmit={(value) => history.push(`/players/${value}`)}
-          />
+          <div className={classes.searchContainer}>
+            <PlayerSearch
+              onSubmit={(value) => history.push(`/players/${value}`)}
+            />
+          </div>
         </Toolbar>
       </AppBar>
     </div>

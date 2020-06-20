@@ -3,6 +3,7 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
+import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +13,7 @@ import { format, isBefore, parseISO, sub } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
 import { PlayerMatchesList } from "../../components/PlayerMatchesList";
 import {
@@ -29,7 +30,7 @@ const matchRequestDefaults = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(8),
   },
   title: {
@@ -49,11 +50,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const Player = () => {
   const { id } = useParams();
-  const history = useHistory();
   const classes = useStyles();
 
   const [player, setPlayer] = useState<PlayerRequest | null>(null);
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
+  const [error, setError] = useState("");
 
   const loadPlayer = async () => {
     setPlayer(null);
@@ -61,8 +62,7 @@ export const Player = () => {
     if (response.ok) {
       setPlayer(response.val);
     } else {
-      // TODO
-      // history.push("/playernotfound");
+      setError("Player not found!");
     }
   };
 
@@ -77,6 +77,7 @@ export const Player = () => {
   };
 
   useEffect(() => {
+    setError("");
     loadPlayer();
     loadMatches();
   }, [id]);
@@ -147,6 +148,13 @@ export const Player = () => {
           </List>
         </Grid>
       </Grid>
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
     </Container>
   );
 };
