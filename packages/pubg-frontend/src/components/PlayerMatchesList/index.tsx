@@ -141,7 +141,7 @@ export const MatchRow = (props: {
               >
                 <Tab label="teams"></Tab>
                 <Tab label="players" />
-                {/* <Tab label="match" /> */}
+                <Tab label="general" />
               </Tabs>
               {tab === 0 && (
                 <div>
