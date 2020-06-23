@@ -6,9 +6,11 @@ import { SENTRY_URL } from "./constants";
 import "./index.css";
 
 if (process.env.NODE_ENV === "production") {
-  Sentry.init({
-    dsn: SENTRY_URL,
-  });
+  if (SENTRY_URL) {
+    Sentry.init({
+      dsn: SENTRY_URL,
+    });
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
