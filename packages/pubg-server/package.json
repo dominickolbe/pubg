@@ -15,7 +15,7 @@
     "koa": "^2.13.0",
     "koa-compress": "^4.0.1",
     "koa-router": "^9.0.1",
-    "mongoose": "^5.9.19",
+    "mongoose": "^5.9.20",
     "option-t": "^22.4.1",
     "runtypes": "^4.2.0",
     "yup": "^0.29.1"
