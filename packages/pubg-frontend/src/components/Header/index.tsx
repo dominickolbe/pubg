@@ -1,7 +1,8 @@
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import { useHistory } from "react-router-dom";
+import { APP_TITLE } from "../../constants";
 import { PlayerSearch } from "../PlayerSearch";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,7 @@ export const Header = () => {
       <AppBar position="static">
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>
-            pubg. - dev
+            {APP_TITLE}
           </Typography>
           <div className={classes.searchContainer}>
             <PlayerSearch

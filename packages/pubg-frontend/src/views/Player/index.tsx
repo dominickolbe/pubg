@@ -9,7 +9,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { format, isBefore, parseISO, sub } from "date-fns";
+import { formatDistanceToNow, isBefore, parseISO, sub } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
@@ -110,7 +110,10 @@ export const Player = () => {
           <Tooltip
             title={
               player && player.statsUpdatedAt
-                ? "Updated: " + format(parseISO(player.statsUpdatedAt), "PPpp")
+                ? "Updated " +
+                  formatDistanceToNow(parseISO(player.statsUpdatedAt), {
+                    addSuffix: true,
+                  })
                 : "Updated: never"
             }
             placement="top-start"
@@ -130,8 +133,10 @@ export const Player = () => {
           <Tooltip
             title={
               player && player.matchesUpdatedAt
-                ? "Updated: " +
-                  format(parseISO(player.matchesUpdatedAt), "PPpp")
+                ? "Updated " +
+                  formatDistanceToNow(parseISO(player.matchesUpdatedAt), {
+                    addSuffix: true,
+                  })
                 : "Updated: never"
             }
             placement="top-start"
