@@ -1,6 +1,3 @@
-import "core-js/es/map";
-import "core-js/es/set";
-
 import * as Sentry from "@sentry/browser";
 import React from "react";
 import ReactDOM from "react-dom";
