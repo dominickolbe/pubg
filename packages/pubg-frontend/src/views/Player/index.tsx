@@ -8,8 +8,8 @@ import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import Star from "@material-ui/icons/Star";
+import StarBorder from "@material-ui/icons/StarBorder";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { formatDistanceToNow, isBefore, parseISO, sub } from "date-fns";
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   favButton: {
     marginLeft: "auto",
-    color: "red",
+    color: "#DAA73A",
   },
   expansionPanelHeading: {
     fontSize: `${theme.typography.pxToRem(14)}!important`,
@@ -136,9 +136,9 @@ export const Player = () => {
               onClick={() => onChangeFavorite()}
             >
               {favoritePlayers && favoritePlayers.includes(id) ? (
-                <FavoriteIcon fontSize="inherit" />
+                <Star fontSize="inherit" />
               ) : (
-                <FavoriteBorderIcon fontSize="inherit" />
+                <StarBorder fontSize="inherit" />
               )}
             </IconButton>
           </Tooltip>
