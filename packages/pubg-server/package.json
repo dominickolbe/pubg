@@ -17,7 +17,7 @@
     "koa-router": "^9.0.1",
     "mongoose": "^5.9.19",
     "option-t": "^22.4.1",
-    "runtypes": "^4.2.0",
+    "runtypes": "^4.3.0",
     "yup": "^0.29.1"
   },
   "devDependencies": {
