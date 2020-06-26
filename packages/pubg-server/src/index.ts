@@ -6,6 +6,7 @@ import { IPlayer } from "pubg-model/types/Player";
 import {
   HTTP_STATUS_INTERNAL_SERVER_ERROR,
   HTTP_STATUS_NOT_FOUND,
+  HTTP_STATUS_OK,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import { Database } from "./database";
@@ -57,6 +58,10 @@ const server = async () => {
   });
 
   const router = new Router();
+
+  router.get("/api/status", async (ctx) => {
+    ctx.response.status = HTTP_STATUS_OK;
+  });
 
   router.get("/api/search", async (ctx) => {
     const players = await PlayerDbController.search(ctx.query.q);
