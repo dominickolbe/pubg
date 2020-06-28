@@ -7,6 +7,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,6 +29,8 @@ import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useState, useEffect } from "react";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 import {
   formatNumber,
   getGameMode,
@@ -53,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.text.secondary}!important`,
     flexShrink: 0,
   },
+  matchRowDetailContainer: {
+    padding: theme.spacing(2),
+  },
 }));
 
 const MatchRowDetail = (props: {
@@ -60,6 +66,8 @@ const MatchRowDetail = (props: {
   player: PlayerRequest;
 }) => {
   const { match, player } = props;
+
+  const classes = useStyles();
 
   const [tab, setTab] = React.useState(0);
 
@@ -90,23 +98,39 @@ const MatchRowDetail = (props: {
   }, []);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Card>
-          <CardHeader title={teams.length} subheader="Teams" />
-        </Card>
+    <div className={classes.matchRowDetailContainer}>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <Card>
+            <CardHeader
+              title={(match.duration / 60).toFixed(0) + " min"}
+              subheader="Duration"
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={4}>
+          <Card>
+            <CardHeader title={players.length} subheader="Player" />
+          </Card>
+        </Grid>
+        <Grid item xs={4}>
+          <Card>
+            <CardHeader title={bots ? bots : "-"} subheader="Bots" />
+          </Card>
+        </Grid>
+        {/* <Grid item xs={12}>
+          <List
+            subheader={<ListSubheader component="div">Teams</ListSubheader>}
+            dense
+          >
+            <ListItem button onClick={() => {}}>
+              <ListItemText primary="Team 1" />
+              {true ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+          </List>
+        </Grid> */}
       </Grid>
-      <Grid item xs={4}>
-        <Card>
-          <CardHeader title={players.length} subheader="Player" />
-        </Card>
-      </Grid>
-      <Grid item xs={4}>
-        <Card>
-          <CardHeader title={bots} subheader="Bots" />
-        </Card>
-      </Grid>
-    </Grid>
+    </div>
   );
 
   // return (
@@ -191,7 +215,6 @@ export const MatchRow = (props: {
   const playerStats = getPlayerMatchStats(match, player.pubgId);
 
   const [open, setOpen] = useState(false);
-  const [tab, setTab] = React.useState(0);
 
   return (
     <>
