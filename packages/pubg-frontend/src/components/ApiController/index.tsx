@@ -51,4 +51,13 @@ export const ApiController = {
       return createErr(error);
     }
   },
+  getTelemetry: async (url: string) => {
+    try {
+      const response = await axios.get(url);
+      return createOk(response.data);
+    } catch (error) {
+      console.log(error);
+      return createErr(error);
+    }
+  },
 };

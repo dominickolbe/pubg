@@ -2,6 +2,9 @@ import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -24,7 +27,7 @@ import { format, formatDistanceToNow, parseISO } from "date-fns";
 import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   formatNumber,
   getGameMode,
@@ -32,6 +35,7 @@ import {
   getPlayerMatchStats,
   getPlayerMatchStats2,
 } from "../../utils";
+import { ApiController } from "../ApiController";
 
 const useStyles = makeStyles((theme) => ({
   tableRowRoot: {
@@ -51,6 +55,129 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const MatchRowDetail = (props: {
+  match: MatchRequest;
+  player: PlayerRequest;
+}) => {
+  const { match, player } = props;
+
+  const [tab, setTab] = React.useState(0);
+
+  const playerStats = getPlayerMatchStats(match, player.pubgId);
+
+  const teams = orderBy(match.teams, ["rank"], ["asc"]);
+  const players = match.players;
+
+  const [bots, setBots] = React.useState(0);
+
+  useEffect(() => {
+    ApiController.getTelemetry(match.telemetry).then((resp) => {
+      if (resp.ok) {
+        let bots = 0;
+        // console.log(resp.val);
+        // @ts-ignore
+        resp.val.forEach((data) => {
+          if (data._T === "LogPlayerCreate") {
+            // @ts-ignore
+            // console.log(data.character.accountId);
+            if (data.character.accountId.includes("ai.")) bots++;
+          }
+        });
+        console.log(bots);
+        setBots(bots);
+      }
+    });
+  }, []);
+
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <Card>
+          <CardHeader title={bots} subheader="Bots" />
+        </Card>
+      </Grid>
+      <Grid item xs={4}>
+        <Card>{/* <CardHeader title="60" subheader="Player" /> */}</Card>
+      </Grid>
+      <Grid item xs={4}>
+        <Card>{/* <CardHeader title="bots" subheader="30" /> */}</Card>
+      </Grid>
+    </Grid>
+  );
+
+  // return (
+  //   <>
+  //     <Tabs
+  //       indicatorColor="primary"
+  //       textColor="primary"
+  //       centered
+  //       variant="fullWidth"
+  //       value={tab}
+  //       onChange={(e, newValue) => setTab(newValue)}
+  //     >
+  //       <Tab label="teams"></Tab>
+  //       <Tab label="players" />
+  //       <Tab label="general" />
+  //     </Tabs>
+  //     {tab === 0 && (
+  //       <div>
+  //         <List style={{ paddingTop: 0, paddingBottom: 0 }}>
+  //           {teams.map((team) => {
+  //             const players = team.players.map((player) =>
+  //               getPlayerMatchStats2(match, player)
+  //             );
+  //             return (
+  //               <ListItem
+  //                 key={team.teamId}
+  //                 selected={playerStats.winPlace === team.rank}
+  //                 style={{ paddingLeft: 25 }}
+  //               >
+  //                 <ListItemIcon># {team.rank}</ListItemIcon>
+  //                 <ListItemText
+  //                   primary={
+  //                     <Typography variant="body2">
+  //                       {players.map((p) => p.name).join(", ")}
+  //                     </Typography>
+  //                   }
+  //                 />
+  //               </ListItem>
+  //             );
+  //           })}
+  //         </List>
+  //       </div>
+  //     )}
+  //     {tab === 1 && (
+  //       <div>
+  //         <List style={{ paddingTop: 0, paddingBottom: 0 }}>
+  //           {players.map((player) => {
+  //             return (
+  //               <ListItem
+  //                 key={player.id}
+  //                 style={{ paddingLeft: 25 }}
+  //                 selected={playerStats.name === player.stats.name}
+  //               >
+  //                 <ListItemText
+  //                   primary={
+  //                     <Typography variant="body1">
+  //                       {player.stats.name}
+  //                     </Typography>
+  //                   }
+  //                   secondary={
+  //                     <Typography variant="body2">
+  //                       Kills: {player.stats.kills}
+  //                     </Typography>
+  //                   }
+  //                 />
+  //               </ListItem>
+  //             );
+  //           })}
+  //         </List>
+  //       </div>
+  //     )}
+  //   </>
+  // );
+};
+
 export const MatchRow = (props: {
   match: MatchRequest;
   player: PlayerRequest;
@@ -61,9 +188,6 @@ export const MatchRow = (props: {
 
   const [open, setOpen] = useState(false);
   const [tab, setTab] = React.useState(0);
-
-  const teams = orderBy(match.teams, ["rank"], ["asc"]);
-  const players = match.players;
 
   return (
     <>
@@ -130,75 +254,7 @@ export const MatchRow = (props: {
             unmountOnExit
             style={{ maxHeight: 350, overflow: "scroll" }}
           >
-            <>
-              <Tabs
-                indicatorColor="primary"
-                textColor="primary"
-                centered
-                variant="fullWidth"
-                value={tab}
-                onChange={(e, newValue) => setTab(newValue)}
-              >
-                <Tab label="teams"></Tab>
-                <Tab label="players" />
-                <Tab label="general" />
-              </Tabs>
-              {tab === 0 && (
-                <div>
-                  <List style={{ paddingTop: 0, paddingBottom: 0 }}>
-                    {teams.map((team) => {
-                      const players = team.players.map((player) =>
-                        getPlayerMatchStats2(match, player)
-                      );
-                      return (
-                        <ListItem
-                          key={team.teamId}
-                          selected={playerStats.winPlace === team.rank}
-                          style={{ paddingLeft: 25 }}
-                        >
-                          <ListItemIcon># {team.rank}</ListItemIcon>
-                          <ListItemText
-                            primary={
-                              <Typography variant="body2">
-                                {players.map((p) => p.name).join(", ")}
-                              </Typography>
-                            }
-                          />
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </div>
-              )}
-              {tab === 1 && (
-                <div>
-                  <List style={{ paddingTop: 0, paddingBottom: 0 }}>
-                    {players.map((player) => {
-                      return (
-                        <ListItem
-                          key={player.id}
-                          style={{ paddingLeft: 25 }}
-                          selected={playerStats.name === player.stats.name}
-                        >
-                          <ListItemText
-                            primary={
-                              <Typography variant="body1">
-                                {player.stats.name}
-                              </Typography>
-                            }
-                            secondary={
-                              <Typography variant="body2">
-                                Kills: {player.stats.kills}
-                              </Typography>
-                            }
-                          />
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </div>
-              )}
-            </>
+            <MatchRowDetail player={player} match={match} />
           </Collapse>
         </TableCell>
       </TableRow>
