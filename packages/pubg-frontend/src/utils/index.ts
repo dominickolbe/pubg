@@ -1,4 +1,5 @@
 import { Stats, StatsObject } from "pubg-model/types/Stats";
+import damageCauserName from "./damageCauserName";
 
 export const generateEmptyStats = (): StatsObject => ({
   assists: 0,
@@ -125,3 +126,50 @@ export const getPlayerMatchStats2 = (match: object, playerToFind: string) => {
 
 export const formatNumber = (number: number) =>
   new Intl.NumberFormat().format(number);
+
+export const parseTelemetry = (data: object[], playerId: string) => {
+  const parsedTelemetry = {
+    bots: 0,
+    kills: [],
+  };
+
+  console.log(data);
+
+  try {
+  } catch {}
+
+  data.forEach((event) => {
+    // @ts-ignore
+    if (event._T === "LogPlayerCreate") {
+      // @ts-ignore
+      if (event.character.accountId.includes("ai.")) parsedTelemetry.bots++;
+    }
+    // @ts-ignore
+    else if (event._T === "LogPlayerKill") {
+      if (
+        // @ts-ignore
+        event.killer &&
+        // @ts-ignore
+        event.killer.accountId === playerId &&
+        // @ts-ignore
+        event.victim.accountId !== playerId
+      ) {
+        console.log(event);
+        parsedTelemetry.kills.push({
+          // @ts-ignore
+          victim: event.victim.name,
+          // @ts-ignore
+          isBot: event.victim.accountId.includes("ai."),
+          // @ts-ignore
+          date: event._D,
+          // @ts-ignore
+          how:
+            // @ts-ignore
+            damageCauserName[event.damageCauserName] || event.damageCauserName,
+        });
+      }
+    }
+  });
+
+  return parsedTelemetry;
+};

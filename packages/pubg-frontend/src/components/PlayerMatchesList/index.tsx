@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
@@ -24,7 +24,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import { format, formatDistanceToNow, parseISO } from "date-fns";
+import {
+  format,
+  formatDistanceToNow,
+  parseISO,
+  formatDistance,
+} from "date-fns";
 import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
@@ -37,6 +42,7 @@ import {
   getMapName,
   getPlayerMatchStats,
   getPlayerMatchStats2,
+  parseTelemetry,
 } from "../../utils";
 import { ApiController } from "../ApiController";
 
@@ -45,16 +51,6 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       borderBottom: "unset",
     },
-  },
-  expansionPanelHeading: {
-    fontSize: `${theme.typography.pxToRem(14)}!important`,
-  },
-  expansionPanelSecondaryHeading: {
-    fontSize: `${theme.typography.pxToRem(13)}!important`,
-    flexBasis: "55%",
-    marginLeft: "auto",
-    color: `${theme.palette.text.secondary}!important`,
-    flexShrink: 0,
   },
   matchRowDetailContainer: {
     padding: theme.spacing(2),
@@ -76,25 +72,36 @@ const MatchRowDetail = (props: {
   const teams = orderBy(match.teams, ["rank"], ["asc"]);
   const players = match.players;
 
-  const [bots, setBots] = React.useState(0);
+  const [telemetry, setTelemetry] = React.useState(() => ({
+    kills: [],
+    bots: 0,
+  }));
+
+  const loadTelemetry = async () => {
+    const telemetry = await ApiController.getTelemetry(match.telemetry);
+    if (telemetry.ok)
+      setTelemetry(parseTelemetry(telemetry.val, player.pubgId));
+  };
 
   useEffect(() => {
-    ApiController.getTelemetry(match.telemetry).then((resp) => {
-      if (resp.ok) {
-        let bots = 0;
-        // console.log(resp.val);
-        // @ts-ignore
-        resp.val.forEach((data) => {
-          if (data._T === "LogPlayerCreate") {
-            // @ts-ignore
-            // console.log(data.character.accountId);
-            if (data.character.accountId.includes("ai.")) bots++;
-          }
-        });
-        console.log(bots);
-        setBots(bots);
-      }
-    });
+    loadTelemetry();
+
+    // ApiController.getTelemetry(match.telemetry).then((resp) => {
+    //   if (resp.ok) {
+    //     let bots = 0;
+    //     // console.log(resp.val);
+    //     // @ts-ignore
+    //     resp.val.forEach((data) => {
+    //       if (data._T === "LogPlayerCreate") {
+    //         // @ts-ignore
+    //         // console.log(data.character.accountId);
+    //         if (data.character.accountId.includes("ai.")) bots++;
+    //       }
+    //     });
+    //     console.log(bots);
+    //     setBots(bots);
+    //   }
+    // });
   }, []);
 
   return (
@@ -104,31 +111,58 @@ const MatchRowDetail = (props: {
           <Card>
             <CardHeader
               title={(match.duration / 60).toFixed(0) + " min"}
-              subheader="Duration"
+              subheader="Match duration"
             />
           </Card>
         </Grid>
         <Grid item xs={4}>
           <Card>
-            <CardHeader title={players.length} subheader="Player" />
+            <CardHeader title={players.length} subheader="Total player" />
           </Card>
         </Grid>
         <Grid item xs={4}>
           <Card>
-            <CardHeader title={bots ? bots : "-"} subheader="Bots" />
+            <CardHeader title={telemetry.bots} subheader="Total bots" />
           </Card>
         </Grid>
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <List
-            subheader={<ListSubheader component="div">Teams</ListSubheader>}
+            subheader={<ListSubheader component="div">Kills</ListSubheader>}
             dense
           >
-            <ListItem button onClick={() => {}}>
-              <ListItemText primary="Team 1" />
-              {true ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            {telemetry.kills.map((kill) => (
+              <ListItem
+                key={
+                  // @ts-ignore
+                  kill.date
+                }
+              >
+                <ListItemText
+                  primary={
+                    // @ts-ignore
+                    kill.victim + (kill.isBot ? " (Bot)" : "")
+                  }
+                  secondary={
+                    // @ts-ignore
+                    kill.how
+                  }
+                />
+                <ListItemSecondaryAction>
+                  <ListItemText>
+                    {
+                      // @ts-ignore
+                      formatDistance(
+                        parseISO(match.createdAt),
+                        // @ts-ignore
+                        parseISO(kill.date)
+                      )
+                    }
+                  </ListItemText>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
           </List>
-        </Grid> */}
+        </Grid>
       </Grid>
     </div>
   );
@@ -275,12 +309,7 @@ export const MatchRow = (props: {
       </TableRow>
       <TableRow>
         <TableCell style={{ padding: 0 }} colSpan={7}>
-          <Collapse
-            in={open}
-            timeout="auto"
-            unmountOnExit
-            style={{ maxHeight: 350, overflow: "scroll" }}
-          >
+          <Collapse in={open} timeout="auto" unmountOnExit>
             <MatchRowDetail player={player} match={match} />
           </Collapse>
         </TableCell>
