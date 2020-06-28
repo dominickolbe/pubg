@@ -93,14 +93,18 @@ const MatchRowDetail = (props: {
     <Grid container spacing={2}>
       <Grid item xs={4}>
         <Card>
-          <CardHeader title={bots} subheader="Bots" />
+          <CardHeader title={teams.length} subheader="Teams" />
         </Card>
       </Grid>
       <Grid item xs={4}>
-        <Card>{/* <CardHeader title="60" subheader="Player" /> */}</Card>
+        <Card>
+          <CardHeader title={players.length} subheader="Player" />
+        </Card>
       </Grid>
       <Grid item xs={4}>
-        <Card>{/* <CardHeader title="bots" subheader="30" /> */}</Card>
+        <Card>
+          <CardHeader title={bots} subheader="Bots" />
+        </Card>
       </Grid>
     </Grid>
   );
