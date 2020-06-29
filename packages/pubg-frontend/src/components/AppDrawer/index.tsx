@@ -8,15 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useLocalStorage } from "react-use";
 import { useStyles } from "../../theme";
 import { app } from "../store";
 
 export const AppDrawer = view(() => {
   const classes = useStyles();
   const history = useHistory();
-
-  const [favoritePlayers] = useLocalStorage<string[]>("favoritePlayers", []);
 
   return (
     <Drawer
@@ -36,8 +33,8 @@ export const AppDrawer = view(() => {
           }
           dense
         >
-          {favoritePlayers && favoritePlayers.length ? (
-            favoritePlayers.map((player) => (
+          {app.favoritePlayer.length ? (
+            app.favoritePlayer.map((player) => (
               <ListItem
                 button
                 key={player}

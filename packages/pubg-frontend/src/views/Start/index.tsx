@@ -12,7 +12,6 @@ import Star from "@material-ui/icons/Star";
 import { view } from "@risingstack/react-easy-state";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useLocalStorage } from "react-use";
 import { app } from "../../components/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,13 +29,6 @@ export const Start = view(() => {
   const history = useHistory();
 
   const [search, setSearch] = useState("");
-
-  const [favoritePlayers] = useLocalStorage<string[]>("favoritePlayers", []);
-
-  const [lastVisitedPlayers] = useLocalStorage<string[]>(
-    "lastVisitedPlayers",
-    []
-  );
 
   const onSubmit = () => {
     search && history.push(`/players/${search}`);
@@ -76,8 +68,8 @@ export const Start = view(() => {
         </Grid>
         <Grid item xs={12}>
           <List component="nav">
-            {favoritePlayers && favoritePlayers.length ? (
-              favoritePlayers.map((player) => (
+            {app.favoritePlayer.length ? (
+              app.favoritePlayer.map((player) => (
                 <ListItem
                   button
                   key={player}
@@ -103,8 +95,8 @@ export const Start = view(() => {
         </Grid>
         <Grid item xs={12}>
           <List component="nav">
-            {lastVisitedPlayers && lastVisitedPlayers.length ? (
-              lastVisitedPlayers.map((player) => (
+            {app.lastVisitedPlayer.length ? (
+              app.lastVisitedPlayer.map((player) => (
                 <ListItem
                   button
                   key={player}

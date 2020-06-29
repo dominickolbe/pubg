@@ -19,7 +19,6 @@ import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useLocalStorage } from "react-use";
 import { ApiController } from "../../components/ApiController";
 import { PlayerMatchesList } from "../../components/PlayerMatchesList";
 import {
@@ -63,16 +62,6 @@ export const Player = view(() => {
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
   const [error, setError] = useState("");
 
-  const [favoritePlayers, setFavoritePlayers] = useLocalStorage<string[]>(
-    "favoritePlayers",
-    []
-  );
-
-  const [lastVisitedPlayers, setLastVisitedPlayers] = useLocalStorage<string[]>(
-    "lastVisitedPlayers",
-    []
-  );
-
   const loadMatches = async () => {
     setMatches(null);
     const response = await ApiController.getPlayerMatches(
@@ -90,8 +79,8 @@ export const Player = view(() => {
     if (response.ok) {
       loadMatches();
       setPlayer(response.val);
-      if (lastVisitedPlayers && lastVisitedPlayers.indexOf(id) === -1)
-        setLastVisitedPlayers([id, ...lastVisitedPlayers.slice(0, 9)]);
+      if (app.lastVisitedPlayer.indexOf(id) === -1)
+        app.lastVisitedPlayer = [id, ...app.lastVisitedPlayer.slice(0, 9)];
     } else {
       setError("Player not found!");
       app.title = "player not found";
@@ -111,12 +100,11 @@ export const Player = view(() => {
     isBefore(sub(new Date(), { minutes: 60 }), parseISO(player.createdAt));
 
   const onChangeFavorite = () => {
-    if (!favoritePlayers) return;
-    if (favoritePlayers.includes(id)) {
-      favoritePlayers.splice(favoritePlayers.indexOf(id));
-      setFavoritePlayers([...favoritePlayers]);
+    if (app.favoritePlayer.includes(id)) {
+      app.favoritePlayer.splice(app.favoritePlayer.indexOf(id));
+      app.favoritePlayer = [...app.favoritePlayer];
     } else {
-      setFavoritePlayers([...favoritePlayers, id]);
+      app.favoritePlayer = [...app.favoritePlayer, id];
     }
   };
 
@@ -141,7 +129,7 @@ export const Player = view(() => {
               size="medium"
               onClick={() => onChangeFavorite()}
             >
-              {favoritePlayers && favoritePlayers.includes(id) ? (
+              {app.favoritePlayer.includes(id) ? (
                 <Star fontSize="inherit" />
               ) : (
                 <StarBorder fontSize="inherit" />
