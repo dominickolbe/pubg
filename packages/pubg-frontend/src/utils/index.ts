@@ -133,7 +133,7 @@ export const parseTelemetry = (data: object[], playerId: string) => {
     kills: [],
   };
 
-  console.log(data);
+  // console.log(data);
 
   try {
   } catch {}
@@ -142,7 +142,7 @@ export const parseTelemetry = (data: object[], playerId: string) => {
 
   data.forEach((event) => {
     // @ts-ignore
-    console.log(event._T);
+    // console.log(event._T);
     // @ts-ignore
     if (event._T.includes("LogPlayerKill")) {
       // @ts-ignore
