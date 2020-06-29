@@ -1,5 +1,8 @@
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { APP_TITLE } from "../../constants";
@@ -25,9 +28,11 @@ export const Header = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <Typography variant="h6" className={classes.title}>
-            {APP_TITLE}
-          </Typography>
+          <div className={classes.title}>
+            <Button onClick={() => history.push("/")}>
+              <Typography variant="h4">{APP_TITLE}</Typography>
+            </Button>
+          </div>
           <div className={classes.searchContainer}>
             <PlayerSearch
               onSubmit={(value) => history.push(`/players/${value}`)}
