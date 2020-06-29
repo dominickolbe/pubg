@@ -9,9 +9,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Star from "@material-ui/icons/Star";
-import React, { useState } from "react";
+import { view } from "@risingstack/react-easy-state";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
+import { app } from "../../components/store";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Start = () => {
+export const Start = view(() => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -39,6 +41,10 @@ export const Start = () => {
   const onSubmit = () => {
     search && history.push(`/players/${search}`);
   };
+
+  useEffect(() => {
+    app.title = "";
+  }, []);
 
   return (
     <Container maxWidth="sm">
@@ -122,4 +128,4 @@ export const Start = () => {
       </Grid>
     </Container>
   );
-};
+});

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
+import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,6 +13,7 @@ import Star from "@material-ui/icons/Star";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { view } from "@risingstack/react-easy-state";
 import { formatDistanceToNow, isBefore, parseISO, sub } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
@@ -24,25 +26,18 @@ import {
   PlayerStatsCard,
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
+import { app } from "../../components/store";
+import { matchRequestDefaults } from "../../constants";
 import { generateTotalStats } from "../../utils";
 
-// TODO: remove
-const matchRequestDefaults = {
-  limit: 50,
-  offset: 0,
-};
-
 const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(8),
-  },
+  root: {},
   header: {
     display: "flex",
     alignItems: "center",
   },
   title: {
-    padding: theme.spacing(2, 2, 0),
+    padding: theme.spacing(2, 2),
   },
   favButton: {
     marginLeft: "auto",
@@ -60,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Player = () => {
+export const Player = view(() => {
   const { id } = useParams();
   const classes = useStyles();
 
@@ -90,15 +85,16 @@ export const Player = () => {
 
   const loadPlayer = async () => {
     setPlayer(null);
+    app.title = id;
     const response = await ApiController.getPlayer(id);
     if (response.ok) {
       loadMatches();
       setPlayer(response.val);
-
       if (lastVisitedPlayers && lastVisitedPlayers.indexOf(id) === -1)
         setLastVisitedPlayers([id, ...lastVisitedPlayers.slice(0, 9)]);
     } else {
       setError("Player not found!");
+      app.title = "player not found";
     }
   };
 
@@ -128,8 +124,10 @@ export const Player = () => {
     <Container maxWidth="md">
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12} className={classes.header}>
-          <Typography className={classes.title} variant="h4" gutterBottom>
-            {id}
+          <Typography component="div" className={classes.title}>
+            <Box fontWeight="fontWeightMedium" fontSize={26}>
+              {id}
+            </Box>
           </Typography>
           <Tooltip
             title="Add to favorite"
@@ -220,4 +218,4 @@ export const Player = () => {
       </Snackbar>
     </Container>
   );
-};
+});

@@ -1,5 +1,8 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import { view } from "@risingstack/react-easy-state";
+import { cx } from "emotion";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -7,33 +10,43 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import { Header } from "./components/Header";
+import { AppDrawer } from "./components/AppDrawer";
+import { AppHeader } from "./components/AppHeader";
+import { app } from "./components/store";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
 import { Start } from "./views/Start";
 
-export const App = () => {
+export const App = view(() => {
   const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              <Start />
-            </Route>
-            <Route exact path="/players/:id">
-              <Player />
-            </Route>
-            <Route path="*">
-              <Redirect to="/" />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
+      <CssBaseline />
+      <Router>
+        <div className={classes.root}>
+          <AppHeader />
+          <AppDrawer />
+          <main
+            className={cx(classes.content, {
+              [classes.contentShift]: app.drawer,
+            })}
+          >
+            <Toolbar variant="dense" />
+            <Switch>
+              <Route path="/" exact>
+                <Start />
+              </Route>
+              <Route path="/players/:id" exact>
+                <Player />
+              </Route>
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+          </main>
+        </div>
+      </Router>
     </ThemeProvider>
   );
-};
+});

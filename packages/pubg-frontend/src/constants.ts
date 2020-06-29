@@ -3,3 +3,8 @@ export const APP_TITLE =
 
 export const API_BASE = process.env.REACT_APP_API_URL;
 export const SENTRY_URL = process.env.REACT_APP_SENTRY_URL;
+
+export const matchRequestDefaults = {
+  limit: 50,
+  offset: 0,
+};

@@ -126,42 +126,44 @@ const MatchRowDetail = (props: {
           </Card>
         </Grid>
         <Grid item xs={12}>
-          <List
-            subheader={<ListSubheader component="div">Kills</ListSubheader>}
-            dense
-          >
-            {telemetry.kills.map((kill) => (
-              <ListItem
-                key={
-                  // @ts-ignore
-                  kill.date
-                }
-              >
-                <ListItemText
-                  primary={
+          {telemetry.kills.length > 0 && (
+            <List
+              subheader={<ListSubheader component="div">Kills</ListSubheader>}
+              dense
+            >
+              {telemetry.kills.map((kill) => (
+                <ListItem
+                  key={
                     // @ts-ignore
-                    kill.victim + (kill.isBot ? " (Bot)" : "")
+                    kill.date
                   }
-                  secondary={
-                    // @ts-ignore
-                    kill.how
-                  }
-                />
-                <ListItemSecondaryAction>
-                  <ListItemText>
-                    {
+                >
+                  <ListItemText
+                    primary={
                       // @ts-ignore
-                      formatDistance(
-                        parseISO(match.createdAt),
-                        // @ts-ignore
-                        parseISO(kill.date)
-                      )
+                      kill.victim + (kill.isBot ? " (Bot)" : "")
                     }
-                  </ListItemText>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
-          </List>
+                    secondary={
+                      // @ts-ignore
+                      kill.how
+                    }
+                  />
+                  <ListItemSecondaryAction>
+                    <ListItemText>
+                      {
+                        // @ts-ignore
+                        formatDistance(
+                          parseISO(match.createdAt),
+                          // @ts-ignore
+                          parseISO(kill.date)
+                        )
+                      }
+                    </ListItemText>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          )}
         </Grid>
       </Grid>
     </div>
