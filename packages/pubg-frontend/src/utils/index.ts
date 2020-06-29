@@ -129,7 +129,7 @@ export const formatNumber = (number: number) =>
 
 export const parseTelemetry = (data: object[], playerId: string) => {
   const parsedTelemetry = {
-    bots: 0,
+    bots: [],
     kills: [],
   };
 
@@ -138,14 +138,23 @@ export const parseTelemetry = (data: object[], playerId: string) => {
   try {
   } catch {}
 
+  // TODO: count bots
+
   data.forEach((event) => {
     // @ts-ignore
-    if (event._T === "LogPlayerCreate") {
+    console.log(event._T);
+    // @ts-ignore
+    if (event._T.includes("LogPlayerKill")) {
       // @ts-ignore
-      if (event.character.accountId.includes("ai.")) parsedTelemetry.bots++;
+      if (event.victim.accountId.includes("ai.")) {
+        // @ts-ignore
+        if (parsedTelemetry.bots.indexOf(event.victim.accountId) === -1)
+          // @ts-ignore
+          parsedTelemetry.bots.push(event.victim.accountId);
+      }
     }
     // @ts-ignore
-    else if (event._T === "LogPlayerKill") {
+    if (event._T === "LogPlayerKill") {
       if (
         // @ts-ignore
         event.killer &&
@@ -154,7 +163,6 @@ export const parseTelemetry = (data: object[], playerId: string) => {
         // @ts-ignore
         event.victim.accountId !== playerId
       ) {
-        console.log(event);
         parsedTelemetry.kills.push({
           // @ts-ignore
           victim: event.victim.name,

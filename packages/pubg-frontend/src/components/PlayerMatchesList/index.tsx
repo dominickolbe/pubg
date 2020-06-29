@@ -74,7 +74,7 @@ const MatchRowDetail = (props: {
 
   const [telemetry, setTelemetry] = React.useState(() => ({
     kills: [],
-    bots: 0,
+    bots: [],
   }));
 
   const loadTelemetry = async () => {
@@ -109,20 +109,20 @@ const MatchRowDetail = (props: {
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Card>
-            <CardHeader
-              title={(match.duration / 60).toFixed(0) + " min"}
-              subheader="Match duration"
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Card>
             <CardHeader title={players.length} subheader="Total player" />
           </Card>
         </Grid>
         <Grid item xs={4}>
           <Card>
-            <CardHeader title={telemetry.bots} subheader="Total bots" />
+            <CardHeader title={telemetry.bots.length} subheader="Total bots" />
+          </Card>
+        </Grid>
+        <Grid item xs={4}>
+          <Card>
+            <CardHeader
+              title={(match.duration / 60).toFixed(0) + " min"}
+              subheader="Match duration"
+            />
           </Card>
         </Grid>
         <Grid item xs={12}>
