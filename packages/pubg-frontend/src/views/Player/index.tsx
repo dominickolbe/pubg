@@ -68,7 +68,7 @@ export const Player = () => {
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
   const [error, setError] = useState("");
 
-  const [favoritePlayers, setFavoritePlayers] = useLocalStorage<String[]>(
+  const [favoritePlayers, setFavoritePlayers] = useLocalStorage<string[]>(
     "favoritePlayers",
     []
   );

@@ -30,6 +30,23 @@ export const theme = createMuiTheme({
         textTransform: "initial",
       },
     },
+    MuiTypography: {
+      h1: {
+        fontSize: "2rem",
+      },
+      h2: {
+        fontSize: "1.75rem",
+      },
+      h3: {
+        fontSize: "1.3rem",
+      },
+      h4: {
+        fontSize: "1.15rem",
+      },
+      h5: {
+        fontSize: "1rem",
+      },
+    },
   },
 });
 
