@@ -29,8 +29,10 @@ export const Start = () => {
 
   const [search, setSearch] = useState("");
 
-  const [favoritePlayers, setFavoritePlayers] = useLocalStorage<string[]>(
-    "favoritePlayers",
+  const [favoritePlayers] = useLocalStorage<string[]>("favoritePlayers", []);
+
+  const [lastVisitedPlayers] = useLocalStorage<string[]>(
+    "lastVisitedPlayers",
     []
   );
 
@@ -85,6 +87,33 @@ export const Start = () => {
               <ListItem>
                 <Typography variant="body1">
                   You don't have any favorite player yet.
+                </Typography>
+              </ListItem>
+            )}
+          </List>
+        </Grid>
+        <Grid item xs={12} style={{ marginTop: 24 }}>
+          <Typography variant="h3">Last visited players:</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <List component="nav">
+            {lastVisitedPlayers && lastVisitedPlayers.length ? (
+              lastVisitedPlayers.map((player) => (
+                <ListItem
+                  button
+                  key={player}
+                  onClick={() => history.push(`/players/${player}`)}
+                >
+                  <ListItemIcon>
+                    <Star fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary={player} />
+                </ListItem>
+              ))
+            ) : (
+              <ListItem>
+                <Typography variant="body1">
+                  You haven't visited any player yet.
                 </Typography>
               </ListItem>
             )}

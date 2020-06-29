@@ -73,6 +73,11 @@ export const Player = () => {
     []
   );
 
+  const [lastVisitedPlayers, setLastVisitedPlayers] = useLocalStorage<string[]>(
+    "lastVisitedPlayers",
+    []
+  );
+
   const loadMatches = async () => {
     setMatches(null);
     const response = await ApiController.getPlayerMatches(
@@ -89,6 +94,9 @@ export const Player = () => {
     if (response.ok) {
       loadMatches();
       setPlayer(response.val);
+
+      if (lastVisitedPlayers && lastVisitedPlayers.indexOf(id) === -1)
+        setLastVisitedPlayers([id, ...lastVisitedPlayers.slice(0, 9)]);
     } else {
       setError("Player not found!");
     }
