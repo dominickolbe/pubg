@@ -7,13 +7,13 @@
 vercel.com
 
 ```
-https://pubg-app.now.sh
+https://pubg.lol
 ```
 
 heroku
 
 ```
-https://pubg-app.herokuapp.com
+https://api.pubg.lol
 ```
 
 ## Production
