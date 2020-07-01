@@ -10,7 +10,8 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { css } from "emotion";
 import { StatsObject } from "pubg-model/types/Stats";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
+import { useLocalStorage } from "react-use";
 import { formatNumber } from "../../utils";
 
 const SingleStatsListItem = (props: {
@@ -41,7 +42,10 @@ const SingleStatsListItem = (props: {
 
 export const PlayerStatsCard = (props: { stats: StatsObject }) => {
   const { stats } = props;
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useLocalStorage(
+    "PlayerStatsCard-expanded",
+    false
+  );
 
   return (
     <Card>
@@ -51,25 +55,31 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
           value={() => formatNumber(stats.kills)}
         />
         <SingleStatsListItem
-          label="Damage"
-          value={() => formatNumber(stats.damageDealt)}
+          label="Avg. K/D"
+          value={() => (stats.kills / stats.roundsPlayed).toFixed(1)}
+        />
+        <SingleStatsListItem
+          label="Avg. Damage"
+          value={() => (stats.damageDealt / stats.roundsPlayed).toFixed(0)}
         />
         <SingleStatsListItem
           label="Wins"
           value={() => formatNumber(stats.wins)}
         />
-        <SingleStatsListItem
-          label="Top 10"
-          value={() => formatNumber(stats.top10s)}
-        />
         <Collapse in={expanded} timeout="auto">
           <SingleStatsListItem
-            label="Avg. K/D"
-            value={() => (stats.kills / stats.roundsPlayed).toFixed(1)}
+            label="Rounds played"
+            value={() => formatNumber(stats.roundsPlayed)}
           />
           <SingleStatsListItem
-            label="Avg. Damage"
-            value={() => (stats.damageDealt / stats.roundsPlayed).toFixed(0)}
+            label="Time survived"
+            value={() =>
+              formatNumber(Math.ceil(stats.timeSurvived / 60 / 60)) + " h"
+            }
+          />
+          <SingleStatsListItem
+            label="Top 10"
+            value={() => formatNumber(stats.top10s)}
           />
           <SingleStatsListItem
             label="Top 10 %"
@@ -84,14 +94,8 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
             }
           />
           <SingleStatsListItem
-            label="Rounds played"
-            value={() => formatNumber(stats.roundsPlayed)}
-          />
-          <SingleStatsListItem
-            label="Time survived"
-            value={() =>
-              formatNumber(Math.ceil(stats.timeSurvived / 60 / 60)) + " h"
-            }
+            label="Damage"
+            value={() => formatNumber(stats.damageDealt)}
           />
           <SingleStatsListItem
             label="Headshot kills"
