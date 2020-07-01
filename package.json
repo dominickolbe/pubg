@@ -15,7 +15,8 @@
     "start:dev:server": "yarn workspace pubg-server start:dev",
     "start:dev:frontend": "yarn workspace pubg-frontend start",
     "start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts",
-    "build:frontend": "yarn workspace pubg-frontend build"
+    "build:frontend": "yarn workspace pubg-frontend build",
+    "prettier-check": "prettier --check packages/"
   },
   "dependencies": {
     "ts-node": "^8.10.2",
