@@ -53,9 +53,7 @@ export const theme = createMuiTheme({
 const drawerWidth = 200;
 
 export const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
+  root: {},
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -70,17 +68,5 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
   },
 }));
