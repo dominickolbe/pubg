@@ -60,7 +60,7 @@ export const Player = view(() => {
 
   const [player, setPlayer] = useState<PlayerRequest | null>(null);
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const loadMatches = async () => {
     setMatches(null);
@@ -88,7 +88,7 @@ export const Player = view(() => {
   };
 
   useEffect(() => {
-    setError("");
+    setError(null);
     loadPlayer();
   }, [id]);
 
