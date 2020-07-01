@@ -62,6 +62,8 @@ export const Player = view(() => {
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
   const [error, setError] = useState<string | null>(null);
 
+  const abortCtrl = new AbortController();
+
   const loadMatches = async () => {
     setMatches(null);
     const response = await ApiController.getPlayerMatches(
@@ -69,6 +71,7 @@ export const Player = view(() => {
       matchRequestDefaults.limit,
       matchRequestDefaults.offset
     );
+    if (abortCtrl.signal.aborted) return;
     if (response.ok) setMatches(response.val);
   };
 
@@ -76,6 +79,7 @@ export const Player = view(() => {
     setPlayer(null);
     app.title = id;
     const response = await ApiController.getPlayer(id);
+    if (abortCtrl.signal.aborted) return;
     if (response.ok) {
       loadMatches();
       setPlayer(response.val);
@@ -90,6 +94,10 @@ export const Player = view(() => {
   useEffect(() => {
     setError(null);
     loadPlayer();
+
+    return () => {
+      abortCtrl.abort();
+    };
   }, [id]);
 
   const totalStats =
