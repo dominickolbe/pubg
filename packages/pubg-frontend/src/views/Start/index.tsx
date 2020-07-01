@@ -8,6 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import HistoryIcon from "@material-ui/icons/History";
 import Star from "@material-ui/icons/Star";
 import { view } from "@risingstack/react-easy-state";
 import React, { useEffect, useState } from "react";
@@ -64,7 +65,7 @@ export const Start = view(() => {
           </Button>
         </Grid>
         <Grid item xs={12} style={{ marginTop: 40 }}>
-          <Typography variant="h3">Your favorite player:</Typography>
+          <Typography variant="h4">Your favorite player:</Typography>
         </Grid>
         <Grid item xs={12}>
           <List component="nav">
@@ -91,7 +92,7 @@ export const Start = view(() => {
           </List>
         </Grid>
         <Grid item xs={12} style={{ marginTop: 24 }}>
-          <Typography variant="h3">Last visited players:</Typography>
+          <Typography variant="h4">Last visited players:</Typography>
         </Grid>
         <Grid item xs={12}>
           <List component="nav">
@@ -103,7 +104,7 @@ export const Start = view(() => {
                   onClick={() => history.push(`/players/${player}`)}
                 >
                   <ListItemIcon>
-                    <Star fontSize="small" />
+                    <HistoryIcon fontSize="small" />
                   </ListItemIcon>
                   <ListItemText primary={player} />
                 </ListItem>
