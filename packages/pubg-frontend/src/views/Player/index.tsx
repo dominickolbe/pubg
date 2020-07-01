@@ -100,8 +100,7 @@ export const Player = view(() => {
     };
   }, [id]);
 
-  const totalStats =
-    player && player.stats ? generateTotalStats(player.stats) : null;
+  const totalStats = player ? generateTotalStats(player.stats) : null;
 
   const isNewPlayer =
     player &&

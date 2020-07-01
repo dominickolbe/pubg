@@ -19,7 +19,6 @@ export const importNewPlayer = async (name: string) => {
   const player = new PlayerModel();
   player.name = request.val.data[0].attributes.name;
   player.pubgId = request.val.data[0].id;
-  player.createdAt = new Date().toISOString();
 
   const result = await player.save();
 

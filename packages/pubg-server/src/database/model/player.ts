@@ -1,12 +1,9 @@
 import mongoose from "mongoose";
 import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
-import {
-  RtPlayer,
-  RtPlayerResults,
-  RtPlayersSearch,
-} from "pubg-model/runtypes/Player";
-import { IMatch, Match } from "pubg-model/types/Match";
-import { IPlayer, Player, PlayersSearch } from "pubg-model/types/Player";
+import { RtPlayersSearch } from "pubg-model/runtypes/Player";
+import { IMatch } from "pubg-model/types/Match";
+import { IPlayer, PlayersSearch } from "pubg-model/types/Player";
+import { generateNewStatsObj } from "pubg-utils/src";
 import { MatchModel } from "./match";
 
 mongoose.set("useCreateIndex", true);
@@ -24,7 +21,7 @@ const PlayerSchema = new mongoose.Schema(
     },
     stats: {
       type: Object,
-      default: null,
+      default: () => generateNewStatsObj(),
     },
     statsUpdatedAt: {
       type: String,
@@ -42,8 +39,8 @@ const PlayerSchema = new mongoose.Schema(
       default: null,
     },
     createdAt: {
-      type: String,
-      required: true,
+      type: Date,
+      default: () => new Date(),
     },
   },
   { versionKey: false }

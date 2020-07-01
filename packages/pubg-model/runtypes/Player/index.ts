@@ -5,7 +5,7 @@ import { RtStats } from "../Stats";
 export const RtPlayer = rt.Record({
   pubgId: rt.String,
   name: rt.String,
-  stats: RtStats.Or(rt.Null),
+  stats: RtStats,
   statsUpdatedAt: rt.String.Or(rt.Null),
   matches: rt.Array(rt.InstanceOf(mongoose.Types.ObjectId)),
   matchesUpdatedAt: rt.String.Or(rt.Null),
