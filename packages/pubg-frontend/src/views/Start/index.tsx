@@ -64,59 +64,63 @@ export const Start = view(() => {
             Search
           </Button>
         </Grid>
-        <Grid item xs={12} style={{ marginTop: 40 }}>
-          <Typography variant="h4">Your favorite player:</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <List component="nav">
-            {app.favoritePlayer.length ? (
-              app.favoritePlayer.map((player) => (
-                <ListItem
-                  button
-                  key={player}
-                  onClick={() => history.push(`/players/${player}`)}
-                >
-                  <ListItemIcon>
-                    <Star fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText primary={player} />
-                </ListItem>
-              ))
-            ) : (
-              <ListItem>
-                <Typography variant="body1">
-                  You don't have any favorite player yet.
-                </Typography>
-              </ListItem>
-            )}
-          </List>
-        </Grid>
-        <Grid item xs={12} style={{ marginTop: 24 }}>
-          <Typography variant="h4">Last visited players:</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <List component="nav">
-            {app.lastVisitedPlayer.length ? (
-              app.lastVisitedPlayer.map((player) => (
-                <ListItem
-                  button
-                  key={player}
-                  onClick={() => history.push(`/players/${player}`)}
-                >
-                  <ListItemIcon>
-                    <HistoryIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText primary={player} />
-                </ListItem>
-              ))
-            ) : (
-              <ListItem>
-                <Typography variant="body1">
-                  You haven't visited any player yet.
-                </Typography>
-              </ListItem>
-            )}
-          </List>
+        <Grid item xs={12} style={{ marginTop: 32 }}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5" style={{ marginBottom: 16 }}>
+                Your favorite player:
+              </Typography>
+              <List component="nav">
+                {app.favoritePlayer.length ? (
+                  app.favoritePlayer.map((player) => (
+                    <ListItem
+                      button
+                      key={player}
+                      onClick={() => history.push(`/players/${player}`)}
+                    >
+                      <ListItemIcon>
+                        <Star fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary={player} />
+                    </ListItem>
+                  ))
+                ) : (
+                  <ListItem>
+                    <Typography variant="body1">
+                      You don't have any favorite player yet.
+                    </Typography>
+                  </ListItem>
+                )}
+              </List>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5" style={{ marginBottom: 16 }}>
+                Last visited players:
+              </Typography>
+              <List component="nav">
+                {app.lastVisitedPlayer.length ? (
+                  app.lastVisitedPlayer.map((player) => (
+                    <ListItem
+                      button
+                      key={player}
+                      onClick={() => history.push(`/players/${player}`)}
+                    >
+                      <ListItemIcon>
+                        <HistoryIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary={player} />
+                    </ListItem>
+                  ))
+                ) : (
+                  <ListItem>
+                    <Typography variant="body1">
+                      You haven't visited any player yet.
+                    </Typography>
+                  </ListItem>
+                )}
+              </List>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
