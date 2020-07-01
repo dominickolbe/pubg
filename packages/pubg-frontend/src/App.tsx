@@ -2,7 +2,6 @@ import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import { view } from "@risingstack/react-easy-state";
-import { cx } from "emotion";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -12,7 +11,6 @@ import {
 } from "react-router-dom";
 import { AppDrawer } from "./components/AppDrawer";
 import { AppHeader } from "./components/AppHeader";
-import { app } from "./components/store";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
 import { Start } from "./views/Start";
@@ -27,11 +25,7 @@ export const App = view(() => {
         <div className={classes.root}>
           <AppHeader />
           <AppDrawer />
-          <main
-            className={cx(classes.content, {
-              [classes.contentShift]: app.drawer,
-            })}
-          >
+          <main className={classes.content}>
             <Toolbar variant="dense" />
             <Switch>
               <Route path="/" exact>
