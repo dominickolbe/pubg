@@ -51,6 +51,10 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
     <Card>
       <List component="div" dense>
         <SingleStatsListItem
+          label="Wins"
+          value={() => formatNumber(stats.wins)}
+        />
+        <SingleStatsListItem
           label="Kills"
           value={() => formatNumber(stats.kills)}
         />
@@ -61,10 +65,6 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
         <SingleStatsListItem
           label="Avg. Damage"
           value={() => (stats.damageDealt / stats.roundsPlayed).toFixed(0)}
-        />
-        <SingleStatsListItem
-          label="Wins"
-          value={() => formatNumber(stats.wins)}
         />
         <Collapse in={expanded} timeout="auto">
           <SingleStatsListItem
