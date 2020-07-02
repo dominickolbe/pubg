@@ -1,17 +1,18 @@
+import { faRobot } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Box from "@material-ui/core/Box";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
+import Collapse from "@material-ui/core/Collapse";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import Tab from "@material-ui/core/Tab";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,29 +20,25 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import Tabs from "@material-ui/core/Tabs";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import {
   format,
+  formatDistance,
   formatDistanceToNow,
   parseISO,
-  formatDistance,
 } from "date-fns";
 import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
-import React, { useState, useEffect } from "react";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import React, { useEffect, useState } from "react";
 import {
   formatNumber,
   getGameMode,
   getMapName,
   getPlayerMatchStats,
-  getPlayerMatchStats2,
   parseTelemetry,
 } from "../../utils";
 import { ApiController } from "../ApiController";
@@ -140,8 +137,22 @@ const MatchRowDetail = (props: {
                 >
                   <ListItemText
                     primary={
-                      // @ts-ignore
-                      kill.victim + (kill.isBot ? " (Bot)" : "")
+                      <Typography>
+                        {
+                          // @ts-ignore
+                          kill.isBot && (
+                            <FontAwesomeIcon
+                              icon={faRobot}
+                              style={{ paddingBottom: 2, marginRight: 8 }}
+                              size="sm"
+                            />
+                          )
+                        }
+                        {
+                          // @ts-ignore
+                          kill.victim
+                        }
+                      </Typography>
                     }
                     secondary={
                       // @ts-ignore
