@@ -27,7 +27,7 @@
     "react-router-dom": "^5.2.0",
     "react-use": "^15.3.2",
     "runtypes": "^4.3.0",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
