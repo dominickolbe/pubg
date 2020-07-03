@@ -64,7 +64,7 @@ const MatchRowDetail = (props: {
 
   const classes = useStyles();
 
-  const [loading, setLoading] = React.useState(true);
+  const [loadingText, setLoadingText] = React.useState("Loading...");
 
   const [tab, setTab] = React.useState(0);
 
@@ -82,9 +82,10 @@ const MatchRowDetail = (props: {
     const telemetry = await ApiController.getTelemetry(match.telemetry);
     if (telemetry.ok) {
       setTelemetry(parseTelemetry(telemetry.val, player.pubgId));
-      setLoading(false);
+      setLoadingText("");
+    } else {
+      setLoadingText("Coudln't load match telemetry data!");
     }
-    // TODO: show error
   };
 
   useEffect(() => {
@@ -93,10 +94,10 @@ const MatchRowDetail = (props: {
 
   return (
     <div className={classes.matchRowDetailContainer}>
-      {loading ? (
+      {loadingText ? (
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" fontSize={13}>
-            Loading ...
+            {loadingText}
           </Box>
         </Typography>
       ) : (
