@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   matchRowDetailContainer: {
+    display: "flex",
+    justifyContent: "center",
     padding: theme.spacing(2),
   },
 }));
@@ -61,6 +63,8 @@ const MatchRowDetail = (props: {
   const { match, player } = props;
 
   const classes = useStyles();
+
+  const [loading, setLoading] = React.useState(true);
 
   const [tab, setTab] = React.useState(0);
 
@@ -76,107 +80,126 @@ const MatchRowDetail = (props: {
 
   const loadTelemetry = async () => {
     const telemetry = await ApiController.getTelemetry(match.telemetry);
-    if (telemetry.ok)
+    if (telemetry.ok) {
       setTelemetry(parseTelemetry(telemetry.val, player.pubgId));
+      setLoading(false);
+    }
+    // TODO: show error
   };
 
   useEffect(() => {
     loadTelemetry();
-
-    // ApiController.getTelemetry(match.telemetry).then((resp) => {
-    //   if (resp.ok) {
-    //     let bots = 0;
-    //     // console.log(resp.val);
-    //     // @ts-ignore
-    //     resp.val.forEach((data) => {
-    //       if (data._T === "LogPlayerCreate") {
-    //         // @ts-ignore
-    //         // console.log(data.character.accountId);
-    //         if (data.character.accountId.includes("ai.")) bots++;
-    //       }
-    //     });
-    //     console.log(bots);
-    //     setBots(bots);
-    //   }
-    // });
   }, []);
 
   return (
     <div className={classes.matchRowDetailContainer}>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Card>
-            <CardHeader title={players.length} subheader="Total player" />
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Card>
-            <CardHeader title={telemetry.bots.length} subheader="Total bots" />
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Card>
-            <CardHeader
-              title={(match.duration / 60).toFixed(0) + " min"}
-              subheader="Match duration"
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12}>
-          {telemetry.kills.length > 0 && (
-            <List
-              subheader={<ListSubheader component="div">Kills</ListSubheader>}
-              dense
-            >
-              {telemetry.kills.map((kill) => (
-                <ListItem
-                  key={
-                    // @ts-ignore
-                    kill.date
-                  }
-                >
-                  <ListItemText
-                    primary={
-                      <Typography>
+      {loading ? (
+        <Typography component="div">
+          <Box fontWeight="fontWeightMedium" fontSize={13}>
+            Loading ...
+          </Box>
+        </Typography>
+      ) : (
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Card>
+              <CardHeader
+                title={
+                  <Typography component="div">
+                    <Box fontWeight="fontWeightBold">{players.length}</Box>
+                  </Typography>
+                }
+                subheader="Total player"
+                subheaderTypographyProps={{ variant: "h6" }}
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            <Card>
+              <CardHeader
+                title={
+                  <Typography component="div">
+                    <Box fontWeight="fontWeightBold">
+                      {telemetry.bots.length}
+                    </Box>
+                  </Typography>
+                }
+                subheader="Total bots"
+                subheaderTypographyProps={{ variant: "h6" }}
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            <Card>
+              <CardHeader
+                title={
+                  <Typography component="div">
+                    <Box fontWeight="fontWeightBold">
+                      {(match.duration / 60).toFixed(0) + " min"}
+                    </Box>
+                  </Typography>
+                }
+                subheader="Match duration"
+                subheaderTypographyProps={{ variant: "h6" }}
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            {telemetry.kills.length > 0 && (
+              <List
+                subheader={<ListSubheader component="div">Kills</ListSubheader>}
+                dense
+              >
+                {telemetry.kills.map((kill) => (
+                  <ListItem
+                    key={
+                      // @ts-ignore
+                      kill.date
+                    }
+                  >
+                    <ListItemText
+                      primary={
+                        <Typography>
+                          {
+                            // @ts-ignore
+                            kill.isBot && (
+                              <FontAwesomeIcon
+                                icon={faRobot}
+                                style={{ paddingBottom: 2, marginRight: 8 }}
+                                size="sm"
+                              />
+                            )
+                          }
+                          {
+                            // @ts-ignore
+                            kill.victim
+                          }
+                        </Typography>
+                      }
+                      secondary={
+                        // @ts-ignore
+                        kill.how
+                      }
+                    />
+                    <ListItemSecondaryAction>
+                      <ListItemText>
                         {
                           // @ts-ignore
-                          kill.isBot && (
-                            <FontAwesomeIcon
-                              icon={faRobot}
-                              style={{ paddingBottom: 2, marginRight: 8 }}
-                              size="sm"
-                            />
+                          formatDistance(
+                            parseISO(match.createdAt),
+                            // @ts-ignore
+                            parseISO(kill.date)
                           )
                         }
-                        {
-                          // @ts-ignore
-                          kill.victim
-                        }
-                      </Typography>
-                    }
-                    secondary={
-                      // @ts-ignore
-                      kill.how
-                    }
-                  />
-                  <ListItemSecondaryAction>
-                    <ListItemText>
-                      {
-                        // @ts-ignore
-                        formatDistance(
-                          parseISO(match.createdAt),
-                          // @ts-ignore
-                          parseISO(kill.date)
-                        )
-                      }
-                    </ListItemText>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-            </List>
-          )}
+                      </ListItemText>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                ))}
+              </List>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 
