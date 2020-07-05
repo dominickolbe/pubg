@@ -26,7 +26,7 @@ export const ApiController = {
   getPlayerMatches: async (name: string, limit: number, offset: number) => {
     try {
       const response = await axios.get(
-        `${API_BASE}/api/players/${name}/matches?limit=${limit}&offset=${offset}`
+        `${API_BASE}/api/matches/${name}?limit=${limit}&offset=${offset}`
       );
       try {
         const matches = RtMatchesRequest.check(response.data);

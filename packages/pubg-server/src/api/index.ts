@@ -24,6 +24,8 @@ export const setUpApi = (params: { prefix: string }) => {
         ctx.response.status = HTTP_STATUS_OK;
       });
 
+      // PLAYERS
+
       router.get("/players/search", async (ctx) => {
         const players = await PlayerDbController.search(ctx.query.q);
         if (players.ok) {
@@ -70,7 +72,9 @@ export const setUpApi = (params: { prefix: string }) => {
         ctx.response.status = HTTP_STATUS_NOT_FOUND;
       });
 
-      router.get("/players/:id/matches", async (ctx, next) => {
+      // MATCHES
+
+      router.get("/matches/:id", async (ctx, next) => {
         const limit = parseInt(ctx.query.limit) ?? 10;
         const offset = parseInt(ctx.query.offset) ?? 0;
 
