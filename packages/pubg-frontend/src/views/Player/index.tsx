@@ -110,8 +110,14 @@ export const Player = view(() => {
     if (app.favoritePlayer.includes(id)) {
       app.favoritePlayer.splice(app.favoritePlayer.indexOf(id));
       app.favoritePlayer = [...app.favoritePlayer];
+      app.notification.msg = "Player removed from your favorites";
+      app.notification.type = "success";
+      app.notification.show = true;
     } else {
       app.favoritePlayer = [...app.favoritePlayer, id];
+      app.notification.msg = "Player added to your favorites";
+      app.notification.type = "success";
+      app.notification.show = true;
     }
   };
 

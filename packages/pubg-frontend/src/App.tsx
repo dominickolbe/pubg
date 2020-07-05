@@ -14,6 +14,9 @@ import { AppHeader } from "./components/AppHeader";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
 import { Start } from "./views/Start";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import { app } from "./components/store";
 
 export const App = view(() => {
   const classes = useStyles();
@@ -39,6 +42,19 @@ export const App = view(() => {
               </Route>
             </Switch>
           </main>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            open={app.notification.show}
+            autoHideDuration={app.notification.duration}
+            onClose={() => (app.notification.show = false)}
+          >
+            <Alert severity={app.notification.type}>
+              {app.notification.msg}
+            </Alert>
+          </Snackbar>
         </div>
       </Router>
     </ThemeProvider>
