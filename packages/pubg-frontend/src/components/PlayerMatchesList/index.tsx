@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { faRobot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Box from "@material-ui/core/Box";
@@ -64,6 +66,8 @@ const MatchRowDetail = (props: {
 
   const classes = useStyles();
 
+  const abortCtrl = new AbortController();
+
   const [loadingText, setLoadingText] = React.useState("Loading...");
 
   const [tab, setTab] = React.useState(0);
@@ -80,6 +84,7 @@ const MatchRowDetail = (props: {
 
   const loadTelemetry = async () => {
     const telemetry = await ApiController.getTelemetry(match.telemetry);
+    if (abortCtrl.signal.aborted) return;
     if (telemetry.ok) {
       setTelemetry(parseTelemetry(telemetry.val, player.pubgId));
       setLoadingText("");
@@ -90,6 +95,9 @@ const MatchRowDetail = (props: {
 
   useEffect(() => {
     loadTelemetry();
+    return () => {
+      abortCtrl.abort();
+    };
   }, []);
 
   return (
