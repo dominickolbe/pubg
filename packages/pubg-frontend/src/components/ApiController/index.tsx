@@ -44,7 +44,9 @@ export const ApiController = {
   },
   search: async (query: string) => {
     try {
-      const response = await axios.get(`${API_BASE}/api/search?q=${query}`);
+      const response = await axios.get(
+        `${API_BASE}/api/players/search?q=${query}`
+      );
       return createOk(response.data);
     } catch (error) {
       console.log(error);
