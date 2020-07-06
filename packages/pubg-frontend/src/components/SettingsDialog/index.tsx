@@ -69,8 +69,8 @@ export const SettingsDialog = view(() => {
         <List dense>
           <ListItem>
             <ListItemText
-              primary="Refresh player stats and matches automatically"
-              secondary={`Player view updates automatically every ${
+              primary="Player auto refresh"
+              secondary={`Players view updates automatically every ${
                 PLAYER_VIEW_UPDATE_INTERVAL / 1000 / 60
               }min`}
             />
@@ -86,8 +86,8 @@ export const SettingsDialog = view(() => {
           <Divider />
           <ListItem>
             <ListItemText
-              primary="Clear all your favorite players"
-              secondary="Deletes all favorite players"
+              primary="Clear favorite players"
+              secondary="Deletes all your favorite players"
             />
             <ListItemSecondaryAction>
               <IconButton edge="end" onClick={() => onDeleteFavoritePlayers()}>
@@ -98,8 +98,8 @@ export const SettingsDialog = view(() => {
           <Divider />
           <ListItem>
             <ListItemText
-              primary="Clear all your last visited players"
-              secondary="Deletes all last visited players"
+              primary="Clear history"
+              secondary="Deletes all your last visited players"
             />
             <ListItemSecondaryAction>
               <IconButton

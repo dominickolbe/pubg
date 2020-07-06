@@ -9,5 +9,5 @@ export const matchRequestDefaults = {
   offset: 0,
 };
 
-// Todo: add different interval value
+// 5min
 export const PLAYER_VIEW_UPDATE_INTERVAL = 1000 * 60 * 5;

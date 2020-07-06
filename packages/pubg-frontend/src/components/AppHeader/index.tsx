@@ -43,7 +43,7 @@ export const AppHeader = view(() => {
         </IconButton>
         <div className={classes.title}>
           <Button onClick={() => history.push("/")}>
-            <Typography variant="h4">{APP_TITLE}</Typography>
+            <Typography variant="h4">pupg.lol</Typography>
           </Button>
         </div>
 
