@@ -100,6 +100,7 @@ export const getPlayerMatchStats = (match: object, playerToFind: string) => {
   // @ts-ignore
   const test = match.players.find(
     // @ts-ignore
+    // eslint-disable-next-line eqeqeq
     (player) => player.stats.playerId == playerToFind
   );
 
@@ -116,6 +117,7 @@ export const getPlayerMatchStats2 = (match: object, playerToFind: string) => {
   // @ts-ignore
   const test = match.players.find(
     // @ts-ignore
+    // eslint-disable-next-line eqeqeq
     (player) => player.id == playerToFind
   );
 

@@ -26,7 +26,10 @@ import {
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
 import { app } from "../../components/store";
-import { matchRequestDefaults } from "../../constants";
+import {
+  matchRequestDefaults,
+  PLAYER_VIEW_UPDATE_INTERVAL,
+} from "../../constants";
 import { generateTotalStats } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   favButton: {
     marginLeft: "auto",
-    color: "#DAA73A",
+    color: "#F2D829",
   },
   expansionPanelHeading: {
     fontSize: `${theme.typography.pxToRem(14)}!important`,
@@ -61,6 +64,10 @@ export const Player = view(() => {
   const [player, setPlayer] = useState<PlayerRequest | null>(null);
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const [intervalFn, setIntervalFn] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
 
   const abortCtrl = new AbortController();
 
@@ -99,6 +106,20 @@ export const Player = view(() => {
       abortCtrl.abort();
     };
   }, [id]);
+
+  useEffect(() => {
+    if (intervalFn && !app.app.playerIntervalUpdate) clearInterval(intervalFn);
+    if (app.app.playerIntervalUpdate) {
+      setIntervalFn(
+        setInterval(() => {
+          loadPlayer();
+        }, PLAYER_VIEW_UPDATE_INTERVAL)
+      );
+    }
+    return () => {
+      if (intervalFn) clearInterval(intervalFn);
+    };
+  }, [app.app.playerIntervalUpdate]);
 
   const totalStats = player ? generateTotalStats(player.stats) : null;
 

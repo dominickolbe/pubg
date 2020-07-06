@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { APP_TITLE } from "../../constants";
 import { PlayerSearch } from "../PlayerSearch";
 import { app } from "../store";
+import SettingsIcon from "@material-ui/icons/Tune";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   searchContainer: {
+    marginRight: 24,
     width: "175px",
   },
 }));
@@ -48,6 +50,13 @@ export const AppHeader = view(() => {
             onSubmit={(value) => history.push(`/players/${value}`)}
           />
         </div>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={() => (app.dialog.settings.open = true)}
+        >
+          <SettingsIcon fontSize="small" />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

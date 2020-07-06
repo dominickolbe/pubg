@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { AppDrawer } from "./components/AppDrawer";
 import { AppHeader } from "./components/AppHeader";
+import { SettingsDialog } from "./components/SettingsDialog";
 import { app } from "./components/store";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
@@ -47,6 +48,7 @@ export const App = view(() => {
               </Route>
             </Switch>
           </main>
+          <SettingsDialog />
           <Snackbar
             anchorOrigin={{
               vertical: "bottom",

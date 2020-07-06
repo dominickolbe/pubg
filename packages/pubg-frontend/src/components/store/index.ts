@@ -15,10 +15,18 @@ const fromLocalStorage = (key: string, defaultValue: any) => {
 export type NotificationType = "success" | "error" | "warning" | "info";
 
 type store = {
+  app: {
+    playerIntervalUpdate: boolean;
+  };
   drawer: boolean;
   title: string;
   favoritePlayer: string[];
   lastVisitedPlayer: string[];
+  dialog: {
+    settings: {
+      open: boolean;
+    };
+  };
   notification: {
     show: boolean;
     msg: string;
@@ -28,10 +36,18 @@ type store = {
 };
 
 const initalStore: store = {
+  app: {
+    playerIntervalUpdate: fromLocalStorage("playerIntervalUpdate", true),
+  },
   drawer: false,
   title: "",
   favoritePlayer: fromLocalStorage("favoritePlayer", []),
   lastVisitedPlayer: fromLocalStorage("lastVisitedPlayer", []),
+  dialog: {
+    settings: {
+      open: false,
+    },
+  },
   notification: {
     show: false,
     msg: "",
@@ -47,6 +63,10 @@ autoEffect(
 );
 
 autoEffect(() => {
+  localStorage.setItem(
+    "playerIntervalUpdate",
+    JSON.stringify(app.app.playerIntervalUpdate)
+  );
   localStorage.setItem("favoritePlayer", JSON.stringify(app.favoritePlayer));
   localStorage.setItem(
     "lastVisitedPlayer",

@@ -8,3 +8,5 @@ export const matchRequestDefaults = {
   limit: 50,
   offset: 0,
 };
+
+export const PLAYER_VIEW_UPDATE_INTERVAL = 60000 * 1; // in minutes
