@@ -5,14 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
+import SettingsIcon from "@material-ui/icons/Tune";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { APP_TITLE } from "../../constants";
 import { PlayerSearch } from "../PlayerSearch";
 import { rootstore } from "../store";
-import SettingsIcon from "@material-ui/icons/Tune";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -46,10 +44,6 @@ export const AppHeader = view(() => {
             <Typography variant="h4">pupg.lol</Typography>
           </Button>
         </div>
-
-        <IconButton edge="start" color="inherit" onClick={() => {}}>
-          <NotificationsIcon fontSize="small" />
-        </IconButton>
         <div className={classes.searchContainer}>
           <PlayerSearch
             onSubmit={(value) => history.push(`/players/${value}`)}
