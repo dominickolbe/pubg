@@ -30,6 +30,11 @@ export const theme = createMuiTheme({
         textTransform: "initial",
       },
     },
+    MuiTab: {
+      root: {
+        textTransform: "initial",
+      },
+    },
     MuiTypography: {
       h1: {
         fontSize: "2rem",

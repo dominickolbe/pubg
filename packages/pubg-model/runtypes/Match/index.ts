@@ -15,6 +15,7 @@ export const RtMatchCreate = rt.Record({
         name: rt.String,
         playerId: rt.String,
         kills: rt.Number,
+        damageDealt: rt.Number,
         winPlace: rt.Number,
       }),
     })

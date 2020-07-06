@@ -12,9 +12,9 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
+import Tab from "@material-ui/core/Tab";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -22,6 +22,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
+import Tabs from "@material-ui/core/Tabs";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
@@ -32,12 +33,12 @@ import {
   formatDistanceToNow,
   parseISO,
 } from "date-fns";
-import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import {
   formatNumber,
+  generateTeamStats,
   getGameMode,
   getMapName,
   getPlayerMatchStats,
@@ -69,13 +70,15 @@ const MatchRowDetail = (props: {
   const abortCtrl = new AbortController();
 
   const [loadingText, setLoadingText] = React.useState("Loading...");
-
   const [tab, setTab] = React.useState(0);
 
+  const players = match.players;
+  // TODO: refactor
   const playerStats = getPlayerMatchStats(match, player.pubgId);
 
-  const teams = orderBy(match.teams, ["rank"], ["asc"]);
-  const players = match.players;
+  // const teams = orderBy(match.teams, ["rank"], ["asc"]);
+
+  const teams = generateTeamStats(match);
 
   const [telemetry, setTelemetry] = React.useState(() => ({
     kills: [],
@@ -153,136 +156,152 @@ const MatchRowDetail = (props: {
               />
             </Card>
           </Grid>
+
           <Grid item xs={12}>
-            {telemetry.kills.length > 0 && (
-              <List
-                subheader={<ListSubheader component="div">Kills</ListSubheader>}
-                dense
-              >
-                {telemetry.kills.map((kill) => (
-                  <ListItem
-                    key={
-                      // @ts-ignore
-                      kill.date
-                    }
-                  >
-                    <ListItemText
-                      primary={
-                        <Typography>
+            <Tabs
+              variant="fullWidth"
+              centered
+              value={tab}
+              onChange={(e, newValue) => setTab(newValue)}
+            >
+              <Tab label="Kills" />
+              <Tab label="Teams" />
+              <Tab label="Players" disabled />
+            </Tabs>
+          </Grid>
+
+          {tab === 0 && (
+            <Grid item xs={12}>
+              {telemetry.kills.length > 0 && (
+                <List dense>
+                  {telemetry.kills.map((kill) => (
+                    <ListItem
+                      key={
+                        // @ts-ignore
+                        kill.date
+                      }
+                    >
+                      <ListItemText
+                        primary={
+                          <Typography>
+                            {
+                              // @ts-ignore
+                              kill.isBot && (
+                                <FontAwesomeIcon
+                                  icon={faRobot}
+                                  style={{ paddingBottom: 2, marginRight: 8 }}
+                                  size="sm"
+                                />
+                              )
+                            }
+                            {
+                              // @ts-ignore
+                              kill.victim
+                            }
+                          </Typography>
+                        }
+                        secondary={
+                          // @ts-ignore
+                          kill.how
+                        }
+                      />
+                      <ListItemSecondaryAction>
+                        <ListItemText>
                           {
                             // @ts-ignore
-                            kill.isBot && (
-                              <FontAwesomeIcon
-                                icon={faRobot}
-                                style={{ paddingBottom: 2, marginRight: 8 }}
-                                size="sm"
-                              />
+                            formatDistance(
+                              parseISO(match.createdAt),
+                              // @ts-ignore
+                              parseISO(kill.date)
                             )
                           }
-                          {
-                            // @ts-ignore
-                            kill.victim
-                          }
+                        </ListItemText>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </Grid>
+          )}
+
+          {tab === 1 && (
+            <Grid item xs={12}>
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <Typography component="div">
+                          <Box
+                            fontWeight="fontWeightMedium"
+                            fontSize={13}
+                          ></Box>
                         </Typography>
-                      }
-                      secondary={
-                        // @ts-ignore
-                        kill.how
-                      }
-                    />
-                    <ListItemSecondaryAction>
-                      <ListItemText>
-                        {
-                          // @ts-ignore
-                          formatDistance(
-                            parseISO(match.createdAt),
-                            // @ts-ignore
-                            parseISO(kill.date)
-                          )
-                        }
-                      </ListItemText>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            )}
-          </Grid>
+                      </TableCell>
+                      <TableCell>
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightMedium" fontSize={13}>
+                            Player
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightMedium" fontSize={13}>
+                            Kills
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightMedium" fontSize={13}>
+                            Damage
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {teams.map((team) => (
+                      <TableRow
+                        key={team.id}
+                        style={{
+                          backgroundColor: team.players
+                            .map((player) => player.name)
+                            .includes(player.name)
+                            ? "#515151"
+                            : "",
+                        }}
+                      >
+                        <TableCell>{team.rank}</TableCell>
+                        <TableCell>
+                          {team.players.map((player) => player.name).join(", ")}
+                        </TableCell>
+                        <TableCell align="right">
+                          {team.players
+                            .map((player) => player.kills)
+                            .reduce((a, b) => a + b, 0)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {formatNumber(
+                            Math.ceil(
+                              team.players
+                                .map((player) => player.damageDealt)
+                                .reduce((a, b) => a + b, 0)
+                            )
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          )}
         </Grid>
       )}
     </div>
   );
-
-  // return (
-  //   <>
-  //     <Tabs
-  //       indicatorColor="primary"
-  //       textColor="primary"
-  //       centered
-  //       variant="fullWidth"
-  //       value={tab}
-  //       onChange={(e, newValue) => setTab(newValue)}
-  //     >
-  //       <Tab label="teams"></Tab>
-  //       <Tab label="players" />
-  //       <Tab label="general" />
-  //     </Tabs>
-  //     {tab === 0 && (
-  //       <div>
-  //         <List style={{ paddingTop: 0, paddingBottom: 0 }}>
-  //           {teams.map((team) => {
-  //             const players = team.players.map((player) =>
-  //               getPlayerMatchStats2(match, player)
-  //             );
-  //             return (
-  //               <ListItem
-  //                 key={team.teamId}
-  //                 selected={playerStats.winPlace === team.rank}
-  //                 style={{ paddingLeft: 25 }}
-  //               >
-  //                 <ListItemIcon># {team.rank}</ListItemIcon>
-  //                 <ListItemText
-  //                   primary={
-  //                     <Typography variant="body2">
-  //                       {players.map((p) => p.name).join(", ")}
-  //                     </Typography>
-  //                   }
-  //                 />
-  //               </ListItem>
-  //             );
-  //           })}
-  //         </List>
-  //       </div>
-  //     )}
-  //     {tab === 1 && (
-  //       <div>
-  //         <List style={{ paddingTop: 0, paddingBottom: 0 }}>
-  //           {players.map((player) => {
-  //             return (
-  //               <ListItem
-  //                 key={player.id}
-  //                 style={{ paddingLeft: 25 }}
-  //                 selected={playerStats.name === player.stats.name}
-  //               >
-  //                 <ListItemText
-  //                   primary={
-  //                     <Typography variant="body1">
-  //                       {player.stats.name}
-  //                     </Typography>
-  //                   }
-  //                   secondary={
-  //                     <Typography variant="body2">
-  //                       Kills: {player.stats.kills}
-  //                     </Typography>
-  //                   }
-  //                 />
-  //               </ListItem>
-  //             );
-  //           })}
-  //         </List>
-  //       </div>
-  //     )}
-  //   </>
-  // );
 };
 
 export const MatchRow = (props: {
