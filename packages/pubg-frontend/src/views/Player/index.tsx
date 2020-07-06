@@ -111,8 +111,9 @@ export const Player = view(() => {
   }, [id]);
 
   useEffect(() => {
-    if (intervalFn && !app.app.playerIntervalUpdate) clearInterval(intervalFn);
-    if (app.app.playerIntervalUpdate) {
+    if (intervalFn && !rootstore.app.playerIntervalUpdate)
+      clearInterval(intervalFn);
+    if (rootstore.app.playerIntervalUpdate) {
       if (abortCtrl.signal.aborted) return;
       setIntervalFn(
         setInterval(() => {
@@ -123,7 +124,7 @@ export const Player = view(() => {
     return () => {
       if (intervalFn) clearInterval(intervalFn);
     };
-  }, [app.app.playerIntervalUpdate]);
+  }, [rootstore.app.playerIntervalUpdate]);
 
   const totalStats = player ? generateTotalStats(player.stats) : null;
 
