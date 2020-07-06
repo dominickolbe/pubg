@@ -25,7 +25,7 @@ import {
   PlayerStatsCard,
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
-import { app } from "../../components/store";
+import { rootstore } from "../../components/store";
 import {
   matchRequestDefaults,
   PLAYER_VIEW_UPDATE_INTERVAL,
@@ -84,17 +84,20 @@ export const Player = view(() => {
 
   const loadPlayer = async () => {
     setPlayer(null);
-    app.title = id;
+    rootstore.title = id;
     const response = await ApiController.getPlayer(id);
     if (abortCtrl.signal.aborted) return;
     if (response.ok) {
       loadMatches();
       setPlayer(response.val);
-      if (app.lastVisitedPlayer.indexOf(id) === -1)
-        app.lastVisitedPlayer = [id, ...app.lastVisitedPlayer.slice(0, 9)];
+      if (rootstore.lastVisitedPlayer.indexOf(id) === -1)
+        rootstore.lastVisitedPlayer = [
+          id,
+          ...rootstore.lastVisitedPlayer.slice(0, 9),
+        ];
     } else {
       setError("Player not found!");
-      app.title = "player not found";
+      rootstore.title = "player not found";
     }
   };
 
@@ -107,20 +110,21 @@ export const Player = view(() => {
     };
   }, [id]);
 
-  useEffect(() => {
-    if (intervalFn && !app.app.playerIntervalUpdate) clearInterval(intervalFn);
-    if (app.app.playerIntervalUpdate) {
-      if (abortCtrl.signal.aborted) return;
-      setIntervalFn(
-        setInterval(() => {
-          loadPlayer();
-        }, PLAYER_VIEW_UPDATE_INTERVAL)
-      );
-    }
-    return () => {
-      if (intervalFn) clearInterval(intervalFn);
-    };
-  }, [app.app.playerIntervalUpdate]);
+  // useEffect(() => {
+  //   if (intervalFn && !rootstore.app.playerIntervalUpdate
+  //     clearInterval(intervalFn);
+  //   if (rootstore.app.playerIntervalUpdate) {
+  //     if (abortCtrl.signal.aborted) return;
+  //     setIntervalFn(
+  //       setInterval(() => {
+  //         loadPlayer();
+  //       }, PLAYER_VIEW_UPDATE_INTERVAL)
+  //     );
+  //   }
+  //   return () => {
+  //     if (intervalFn) clearInterval(intervalFn);
+  //   };
+  // }, [rootstore.app.playerIntervalUpdate]);
 
   const totalStats = player ? generateTotalStats(player.stats) : null;
 
@@ -129,17 +133,17 @@ export const Player = view(() => {
     isBefore(sub(new Date(), { minutes: 60 }), parseISO(player.createdAt));
 
   const onChangeFavorite = () => {
-    if (app.favoritePlayer.includes(id)) {
-      app.favoritePlayer.splice(app.favoritePlayer.indexOf(id));
-      app.favoritePlayer = [...app.favoritePlayer];
-      app.notification.msg = "Player removed from your favorites";
-      app.notification.type = "success";
-      app.notification.show = true;
+    if (rootstore.favoritePlayer.includes(id)) {
+      rootstore.favoritePlayer.splice(rootstore.favoritePlayer.indexOf(id));
+      rootstore.favoritePlayer = [...rootstore.favoritePlayer];
+      rootstore.notification.msg = "Player removed from your favorites";
+      rootstore.notification.type = "success";
+      rootstore.notification.show = true;
     } else {
-      app.favoritePlayer = [...app.favoritePlayer, id];
-      app.notification.msg = "Player added to your favorites";
-      app.notification.type = "success";
-      app.notification.show = true;
+      rootstore.favoritePlayer = [...rootstore.favoritePlayer, id];
+      rootstore.notification.msg = "Player added to your favorites";
+      rootstore.notification.type = "success";
+      rootstore.notification.show = true;
     }
   };
 
@@ -164,7 +168,7 @@ export const Player = view(() => {
               size="medium"
               onClick={() => onChangeFavorite()}
             >
-              {app.favoritePlayer.includes(id) ? (
+              {rootstore.favoritePlayer.includes(id) ? (
                 <Star fontSize="inherit" />
               ) : (
                 <StarBorder fontSize="inherit" />

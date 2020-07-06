@@ -15,7 +15,7 @@ import {
 import { AppDrawer } from "./components/AppDrawer";
 import { AppHeader } from "./components/AppHeader";
 import { SettingsDialog } from "./components/SettingsDialog";
-import { app } from "./components/store";
+import { rootstore } from "./components/store";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
 import { Start } from "./views/Start";
@@ -32,7 +32,7 @@ export const App = view(() => {
           <AppDrawer />
           <main
             className={cx(classes.content, {
-              [classes.contentShift]: app.drawer,
+              [classes.contentShift]: rootstore.drawer,
             })}
           >
             <Toolbar variant="dense" />
@@ -54,12 +54,12 @@ export const App = view(() => {
               vertical: "bottom",
               horizontal: "left",
             }}
-            open={app.notification.show}
-            autoHideDuration={app.notification.duration}
-            onClose={() => (app.notification.show = false)}
+            open={rootstore.notification.show}
+            autoHideDuration={rootstore.notification.duration}
+            onClose={() => (rootstore.notification.show = false)}
           >
-            <Alert severity={app.notification.type}>
-              {app.notification.msg}
+            <Alert severity={rootstore.notification.type}>
+              {rootstore.notification.msg}
             </Alert>
           </Snackbar>
         </div>

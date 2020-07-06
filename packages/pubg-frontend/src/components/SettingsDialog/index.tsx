@@ -16,46 +16,46 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { PLAYER_VIEW_UPDATE_INTERVAL } from "../../constants";
-import { app } from "../store";
+import { rootstore } from "../store";
 
 export const SettingsDialog = view(() => {
   const onChangePlayerIntervalUpdate = () => {
-    app.app.playerIntervalUpdate = !app.app.playerIntervalUpdate;
+    rootstore.app.playerIntervalUpdate = !rootstore.app.playerIntervalUpdate;
 
-    app.notification.msg = `Player view interval updates ${
-      app.app.playerIntervalUpdate ? "activated" : "deactivated"
+    rootstore.notification.msg = `Player view interval updates ${
+      rootstore.app.playerIntervalUpdate ? "activated" : "deactivated"
     }`;
-    app.notification.type = "success";
-    app.notification.show = true;
+    rootstore.notification.type = "success";
+    rootstore.notification.show = true;
   };
   const onDeleteFavoritePlayers = () => {
-    app.favoritePlayer = [];
+    rootstore.favoritePlayer = [];
 
-    app.notification.msg = "Deleted all favorite player";
-    app.notification.type = "success";
-    app.notification.show = true;
+    rootstore.notification.msg = "Deleted all favorite player";
+    rootstore.notification.type = "success";
+    rootstore.notification.show = true;
   };
   const onDeleteLastVisitedPlayers = () => {
-    app.lastVisitedPlayer = [];
+    rootstore.lastVisitedPlayer = [];
 
-    app.notification.msg = "Deleted all last visited players";
-    app.notification.type = "success";
-    app.notification.show = true;
+    rootstore.notification.msg = "Deleted all last visited players";
+    rootstore.notification.type = "success";
+    rootstore.notification.show = true;
   };
   const onDeleteAppData = () => {
-    app.favoritePlayer = [];
-    app.lastVisitedPlayer = [];
-    localStorage.clear();
+    rootstore.favoritePlayer = [];
+    rootstore.lastVisitedPlayer = [];
+    rootstore.clear();
 
-    app.notification.msg = "Deleted all app data";
-    app.notification.type = "success";
-    app.notification.show = true;
+    rootstore.notification.msg = "Deleted all app data";
+    rootstore.notification.type = "success";
+    rootstore.notification.show = true;
   };
 
   return (
     <Dialog
-      open={app.dialog.settings.open}
-      onClose={() => (app.dialog.settings.open = false)}
+      open={rootstore.dialog.settings.open}
+      onClose={() => (rootstore.dialog.settings.open = false)}
       scroll="body"
       maxWidth="sm"
       fullWidth
@@ -76,7 +76,7 @@ export const SettingsDialog = view(() => {
             />
             <ListItemSecondaryAction>
               <Switch
-                checked={app.app.playerIntervalUpdate}
+                checked={rootstore.app.playerIntervalUpdate}
                 onChange={() => onChangePlayerIntervalUpdate()}
                 color="primary"
                 size="small"

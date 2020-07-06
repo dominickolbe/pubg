@@ -14,7 +14,7 @@ const fromLocalStorage = (key: string, defaultValue: any) => {
 
 export type NotificationType = "success" | "error" | "warning" | "info";
 
-type store = {
+type rootstoreDefointion = {
   app: {
     playerIntervalUpdate: boolean;
   };
@@ -35,7 +35,7 @@ type store = {
   };
 };
 
-const initalStore: store = {
+const initalStore: rootstoreDefointion = {
   app: {
     playerIntervalUpdate: fromLocalStorage("playerIntervalUpdate", true),
   },
@@ -56,20 +56,26 @@ const initalStore: store = {
   },
 };
 
-export const app = store(initalStore);
+export const rootstore = store(initalStore);
 
 autoEffect(
-  () => (document.title = `pubg.lol ${app.title ? " - " + app.title : ""}`)
+  () =>
+    (document.title = `pubg.lol ${
+      rootstore.title ? " - " + rootstore.title : ""
+    }`)
 );
 
 autoEffect(() => {
   localStorage.setItem(
     "playerIntervalUpdate",
-    JSON.stringify(app.app.playerIntervalUpdate)
+    JSON.stringify(rootstore.app.playerIntervalUpdate)
   );
-  localStorage.setItem("favoritePlayer", JSON.stringify(app.favoritePlayer));
+  localStorage.setItem(
+    "favoritePlayer",
+    JSON.stringify(rootstore.favoritePlayer)
+  );
   localStorage.setItem(
     "lastVisitedPlayer",
-    JSON.stringify(app.lastVisitedPlayer)
+    JSON.stringify(rootstore.lastVisitedPlayer)
   );
 });

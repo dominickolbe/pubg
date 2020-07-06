@@ -13,7 +13,7 @@ import Star from "@material-ui/icons/Star";
 import { view } from "@risingstack/react-easy-state";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { app } from "../../components/store";
+import { rootstore } from "../../components/store";
 
 const useStyles = makeStyles((theme) => ({
   root: {

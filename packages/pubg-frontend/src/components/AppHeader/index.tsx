@@ -10,8 +10,9 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { APP_TITLE } from "../../constants";
 import { PlayerSearch } from "../PlayerSearch";
-import { app } from "../store";
+import { rootstore } from "../store";
 import SettingsIcon from "@material-ui/icons/Tune";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -36,7 +37,7 @@ export const AppHeader = view(() => {
         <IconButton
           edge="start"
           color="inherit"
-          onClick={() => (app.drawer = !app.drawer)}
+          onClick={() => (rootstore.drawer = !rootstore.drawer)}
         >
           <MenuIcon fontSize="small" />
         </IconButton>
@@ -45,6 +46,10 @@ export const AppHeader = view(() => {
             <Typography variant="h4">{APP_TITLE}</Typography>
           </Button>
         </div>
+
+        <IconButton edge="start" color="inherit" onClick={() => {}}>
+          <NotificationsIcon fontSize="small" />
+        </IconButton>
         <div className={classes.searchContainer}>
           <PlayerSearch
             onSubmit={(value) => history.push(`/players/${value}`)}
@@ -53,7 +58,7 @@ export const AppHeader = view(() => {
         <IconButton
           edge="start"
           color="inherit"
-          onClick={() => (app.dialog.settings.open = true)}
+          onClick={() => (rootstore.dialog.settings.open = true)}
         >
           <SettingsIcon fontSize="small" />
         </IconButton>

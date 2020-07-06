@@ -9,7 +9,7 @@ import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "../../theme";
-import { app } from "../store";
+import { rootstore } from "../store";
 
 export const AppDrawer = view(() => {
   const classes = useStyles();
@@ -17,7 +17,7 @@ export const AppDrawer = view(() => {
 
   return (
     <Drawer
-      open={app.drawer}
+      open={rootstore.drawer}
       variant="persistent"
       anchor="left"
       className={classes.drawer}
@@ -33,8 +33,8 @@ export const AppDrawer = view(() => {
           }
           dense
         >
-          {app.favoritePlayer.length ? (
-            app.favoritePlayer.map((player) => (
+          {rootstore.favoritePlayer.length ? (
+            rootstore.favoritePlayer.map((player) => (
               <ListItem
                 button
                 key={player}
