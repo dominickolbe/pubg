@@ -8,8 +8,6 @@ import { Database } from "./database";
 
 const PORT = process.env.PORT;
 
-const compress = require("koa-compress");
-
 const Api = setUpApi({ prefix: "/api" });
 
 const server = async () => {
@@ -17,23 +15,6 @@ const server = async () => {
   if (result.err) process.exit(1);
 
   const app = new Koa();
-
-  app.use(
-    compress({
-      // @ts-ignore
-      filter(content_type) {
-        return /text/i.test(content_type);
-      },
-      threshold: 2048,
-      gzip: {
-        flush: require("zlib").Z_SYNC_FLUSH,
-      },
-      deflate: {
-        flush: require("zlib").Z_SYNC_FLUSH,
-      },
-      br: false, // disable brotli
-    })
-  );
 
   app.use(cors());
 

@@ -13,16 +13,14 @@
     "date-fns": "^2.14.0",
     "dotenv-safe": "^8.2.0",
     "koa": "^2.13.0",
-    "koa-compress": "^4.0.1",
     "koa-router": "^9.1.0",
     "mongoose": "^5.9.21",
-    "option-t": "^22.4.1",
+    "option-t": "^22.4.2",
     "runtypes": "^4.3.0",
     "yup": "^0.29.1"
   },
   "devDependencies": {
     "@types/koa": "^2.11.3",
-    "@types/koa-compress": "^4.0.0",
     "@types/koa-router": "^7.4.1",
     "@types/koa__cors": "^3.0.1",
     "@types/mongoose": "^5.7.29",
