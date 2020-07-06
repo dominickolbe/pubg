@@ -45,7 +45,7 @@ export const SettingsDialog = view(() => {
   const onDeleteAppData = () => {
     rootstore.favoritePlayer = [];
     rootstore.lastVisitedPlayer = [];
-    rootstore.clear();
+    localStorage.clear();
 
     rootstore.notification.msg = "Deleted all app data";
     rootstore.notification.type = "success";
