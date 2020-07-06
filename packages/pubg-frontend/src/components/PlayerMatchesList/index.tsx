@@ -8,10 +8,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Collapse from "@material-ui/core/Collapse";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
@@ -74,8 +70,7 @@ const MatchRowDetail = (props: {
 
   const players = match.players;
   // TODO: refactor
-  const playerStats = getPlayerMatchStats(match, player.pubgId);
-
+  // const playerStats = getPlayerMatchStats(match, player.pubgId);
   // const teams = orderBy(match.teams, ["rank"], ["asc"]);
 
   const teams = generateTeamStats(match);
@@ -164,7 +159,7 @@ const MatchRowDetail = (props: {
               value={tab}
               onChange={(e, newValue) => setTab(newValue)}
             >
-              <Tab label="Kills" />
+              <Tab label="Your kills" />
               <Tab label="Teams" />
               <Tab label="Players" disabled />
             </Tabs>
@@ -172,41 +167,52 @@ const MatchRowDetail = (props: {
 
           {tab === 0 && (
             <Grid item xs={12}>
-              {telemetry.kills.length > 0 && (
-                <List dense>
-                  {telemetry.kills.map((kill) => (
-                    <ListItem
-                      key={
-                        // @ts-ignore
-                        kill.date
-                      }
-                    >
-                      <ListItemText
-                        primary={
-                          <Typography>
-                            {
-                              // @ts-ignore
-                              kill.isBot && (
-                                <FontAwesomeIcon
-                                  icon={faRobot}
-                                  style={{ paddingBottom: 2, marginRight: 8 }}
-                                  size="sm"
-                                />
-                              )
-                            }
-                            {
-                              // @ts-ignore
-                              kill.victim
-                            }
-                          </Typography>
-                        }
-                        secondary={
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
+                            Victim
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                      <TableCell />
+                      <TableCell />
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {telemetry.kills.map((kill) => (
+                      <TableRow
+                        key={
                           // @ts-ignore
-                          kill.how
+                          kill.date
                         }
-                      />
-                      <ListItemSecondaryAction>
-                        <ListItemText>
+                      >
+                        <TableCell>
+                          {
+                            // @ts-ignore
+                            kill.isBot && (
+                              <FontAwesomeIcon
+                                icon={faRobot}
+                                style={{ paddingBottom: 2, marginRight: 8 }}
+                                size="sm"
+                              />
+                            )
+                          }
+                          {
+                            // @ts-ignore
+                            kill.victim
+                          }
+                        </TableCell>
+                        <TableCell>
+                          {
+                            // @ts-ignore
+                            kill.how
+                          }
+                        </TableCell>
+                        <TableCell align="right">
                           {
                             // @ts-ignore
                             formatDistance(
@@ -215,12 +221,19 @@ const MatchRowDetail = (props: {
                               parseISO(kill.date)
                             )
                           }
-                        </ListItemText>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  ))}
-                </List>
-              )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {telemetry.kills.length === 0 && (
+                      <TableRow>
+                        <TableCell colSpan={3} align="center">
+                          You haven't killed anyone.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Grid>
           )}
 
@@ -230,31 +243,24 @@ const MatchRowDetail = (props: {
                 <Table>
                   <TableHead>
                     <TableRow>
+                      <TableCell />
                       <TableCell>
                         <Typography component="div">
-                          <Box
-                            fontWeight="fontWeightMedium"
-                            fontSize={13}
-                          ></Box>
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography component="div">
-                          <Box fontWeight="fontWeightMedium" fontSize={13}>
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
                             Player
                           </Box>
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
                         <Typography component="div">
-                          <Box fontWeight="fontWeightMedium" fontSize={13}>
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
                             Kills
                           </Box>
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
                         <Typography component="div">
-                          <Box fontWeight="fontWeightMedium" fontSize={13}>
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
                             Damage
                           </Box>
                         </Typography>
@@ -273,7 +279,7 @@ const MatchRowDetail = (props: {
                             : "",
                         }}
                       >
-                        <TableCell>{team.rank}</TableCell>
+                        <TableCell># {team.rank}</TableCell>
                         <TableCell>
                           {team.players.map((player) => player.name).join(", ")}
                         </TableCell>
