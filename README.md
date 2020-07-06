@@ -24,16 +24,10 @@ https://api.pubg.lol
 
 ## Production
 
-> info: **If you are using mobile browser**: Be very careful here!
-
 install all necessary dependencies (node_modules)
 
 ```
 $ yarn
-```
-
-```
-$ yarn build:frontend
 ```
 
 build application
@@ -42,7 +36,7 @@ build application
 $ yarn build:frontend
 ```
 
-## Test (coming soon)
+## Tests (coming soon)
 
 make sure the build process of app is working
 

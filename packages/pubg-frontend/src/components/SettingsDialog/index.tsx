@@ -72,7 +72,7 @@ export const SettingsDialog = view(() => {
               primary="Refresh player stats and matches automatically"
               secondary={`Player view updates automatically every ${
                 PLAYER_VIEW_UPDATE_INTERVAL / 1000 / 60
-              }`}
+              }min`}
             />
             <ListItemSecondaryAction>
               <Switch
@@ -127,7 +127,7 @@ export const SettingsDialog = view(() => {
       <DialogActions>
         <Button
           color="inherit"
-          onClick={() => (app.dialog.settings.open = false)}
+          onClick={() => (rootstore.dialog.settings.open = false)}
         >
           Close settings
         </Button>

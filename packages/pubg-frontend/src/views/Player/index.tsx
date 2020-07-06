@@ -110,21 +110,20 @@ export const Player = view(() => {
     };
   }, [id]);
 
-  // useEffect(() => {
-  //   if (intervalFn && !rootstore.app.playerIntervalUpdate
-  //     clearInterval(intervalFn);
-  //   if (rootstore.app.playerIntervalUpdate) {
-  //     if (abortCtrl.signal.aborted) return;
-  //     setIntervalFn(
-  //       setInterval(() => {
-  //         loadPlayer();
-  //       }, PLAYER_VIEW_UPDATE_INTERVAL)
-  //     );
-  //   }
-  //   return () => {
-  //     if (intervalFn) clearInterval(intervalFn);
-  //   };
-  // }, [rootstore.app.playerIntervalUpdate]);
+  useEffect(() => {
+    if (intervalFn && !app.app.playerIntervalUpdate) clearInterval(intervalFn);
+    if (app.app.playerIntervalUpdate) {
+      if (abortCtrl.signal.aborted) return;
+      setIntervalFn(
+        setInterval(() => {
+          loadPlayer();
+        }, PLAYER_VIEW_UPDATE_INTERVAL)
+      );
+    }
+    return () => {
+      if (intervalFn) clearInterval(intervalFn);
+    };
+  }, [app.app.playerIntervalUpdate]);
 
   const totalStats = player ? generateTotalStats(player.stats) : null;
 
