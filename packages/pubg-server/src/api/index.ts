@@ -7,6 +7,7 @@ import {
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import { PlayerDbController, PlayerModel } from "../database/model/player";
+import { auditLog } from "../middlewares/audit";
 import {
   cache,
   duplicatedPlayerCheck,
@@ -19,6 +20,8 @@ export const setUpApi = (params: { prefix: string }) => {
   return {
     init: (app: Koa) => {
       const router = new Router();
+
+      app.use(auditLog);
 
       router.get("/status", async (ctx) => {
         ctx.response.status = HTTP_STATUS_OK;
