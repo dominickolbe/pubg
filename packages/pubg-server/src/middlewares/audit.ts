@@ -5,7 +5,7 @@ export const auditLog = async (ctx: Koa.Context, next: Koa.Next) => {
   try {
     const audit = new AuditModel({
       request: {
-        ip: ctx.ip || "",
+        ip: ctx.request.ip || "",
         method: ctx.request.method,
         path: ctx.request.url,
       },
