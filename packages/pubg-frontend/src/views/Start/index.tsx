@@ -36,7 +36,7 @@ export const Start = view(() => {
   };
 
   useEffect(() => {
-    app.title = "";
+    rootstore.title = "";
   }, []);
 
   return (
@@ -71,8 +71,8 @@ export const Start = view(() => {
                 Your favorite player:
               </Typography>
               <List component="nav">
-                {app.favoritePlayer.length ? (
-                  app.favoritePlayer.map((player) => (
+                {rootstore.favoritePlayer.length ? (
+                  rootstore.favoritePlayer.map((player) => (
                     <ListItem
                       button
                       key={player}
@@ -98,8 +98,8 @@ export const Start = view(() => {
                 Last visited players:
               </Typography>
               <List component="nav">
-                {app.lastVisitedPlayer.length ? (
-                  app.lastVisitedPlayer.map((player) => (
+                {rootstore.lastVisitedPlayer.length ? (
+                  rootstore.lastVisitedPlayer.map((player) => (
                     <ListItem
                       button
                       key={player}
