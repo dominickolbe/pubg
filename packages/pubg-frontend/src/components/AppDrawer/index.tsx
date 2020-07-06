@@ -17,13 +17,13 @@ export const AppDrawer = view(() => {
 
   return (
     <Drawer
+      open={app.drawer}
+      variant="persistent"
+      anchor="left"
       className={classes.drawer}
       classes={{
         paper: classes.drawerPaper,
       }}
-      variant="persistent"
-      anchor="left"
-      open={app.drawer}
     >
       <Toolbar />
       <div className={classes.drawerContainer}>

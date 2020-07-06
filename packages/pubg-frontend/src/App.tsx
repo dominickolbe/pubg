@@ -1,7 +1,10 @@
 import { CssBaseline } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
+import Alert from "@material-ui/lab/Alert";
 import { view } from "@risingstack/react-easy-state";
+import { cx } from "emotion";
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -11,12 +14,10 @@ import {
 } from "react-router-dom";
 import { AppDrawer } from "./components/AppDrawer";
 import { AppHeader } from "./components/AppHeader";
+import { app } from "./components/store";
 import { theme, useStyles } from "./theme";
 import { Player } from "./views/Player";
 import { Start } from "./views/Start";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
-import { app } from "./components/store";
 
 export const App = view(() => {
   const classes = useStyles();
@@ -28,7 +29,11 @@ export const App = view(() => {
         <div className={classes.root}>
           <AppHeader />
           <AppDrawer />
-          <main className={classes.content}>
+          <main
+            className={cx(classes.content, {
+              [classes.contentShift]: app.drawer,
+            })}
+          >
             <Toolbar variant="dense" />
             <Switch>
               <Route path="/" exact>
