@@ -59,22 +59,15 @@ const MatchRowDetail = (props: {
   match: MatchRequest;
   player: PlayerRequest;
 }) => {
-  const { match, player } = props;
-
   const classes = useStyles();
+  const { match, player } = props;
 
   const abortCtrl = new AbortController();
 
   const [loadingText, setLoadingText] = React.useState("Loading...");
   const [tab, setTab] = React.useState(0);
 
-  const players = match.players;
   // TODO: refactor
-  // const playerStats = getPlayerMatchStats(match, player.pubgId);
-  // const teams = orderBy(match.teams, ["rank"], ["asc"]);
-
-  const teams = generateTeamStats(match);
-
   const [telemetry, setTelemetry] = React.useState(() => ({
     kills: [],
     bots: [],
@@ -98,6 +91,8 @@ const MatchRowDetail = (props: {
     };
   }, []);
 
+  const teams = generateTeamStats(match);
+
   return (
     <div className={classes.matchRowDetailContainer}>
       {loadingText ? (
@@ -113,7 +108,9 @@ const MatchRowDetail = (props: {
               <CardHeader
                 title={
                   <Typography component="div">
-                    <Box fontWeight="fontWeightBold">{players.length}</Box>
+                    <Box fontWeight="fontWeightBold">
+                      {match.players.length}
+                    </Box>
                   </Typography>
                 }
                 subheader="Total player"
@@ -161,7 +158,7 @@ const MatchRowDetail = (props: {
             >
               <Tab label="Your kills" />
               <Tab label="Teams" />
-              <Tab label="Players" disabled />
+              <Tab label="Players" />
             </Tabs>
           </Grid>
 
@@ -279,7 +276,9 @@ const MatchRowDetail = (props: {
                             : "",
                         }}
                       >
-                        <TableCell># {team.rank}</TableCell>
+                        <TableCell style={{ width: 65 }}>
+                          # {team.rank}
+                        </TableCell>
                         <TableCell>
                           {team.players.map((player) => player.name).join(", ")}
                         </TableCell>
@@ -296,6 +295,61 @@ const MatchRowDetail = (props: {
                                 .reduce((a, b) => a + b, 0)
                             )
                           )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          )}
+
+          {tab === 2 && (
+            <Grid item xs={12}>
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell>
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
+                            Player
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
+                            Kills
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography component="div">
+                          <Box fontWeight="fontWeightBold" fontSize={12}>
+                            Damage
+                          </Box>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {match.players.map((p) => (
+                      <TableRow
+                        key={p.id}
+                        style={{
+                          backgroundColor:
+                            p.stats.name === player.name ? "#515151" : "",
+                        }}
+                      >
+                        <TableCell style={{ width: 65 }}>
+                          # {p.stats.winPlace}
+                        </TableCell>
+                        <TableCell>{p.stats.name}</TableCell>
+                        <TableCell align="right">{p.stats.kills}</TableCell>
+                        <TableCell align="right">
+                          {formatNumber(Math.ceil(p.stats.damageDealt))}
                         </TableCell>
                       </TableRow>
                     ))}
