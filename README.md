@@ -4,19 +4,19 @@
   <p align="center">simple and clean pubg player stats and matches tracker<p>
 </p>
 
-<p align="center">
-  <img src="preview.png" alt="preview">
-</p>
+![Preview](https://github.com/dominickolbe/pubg/blob/master/preview.png?raw=true "pubg.lol")
 
 ### Preview
 
-The current procution build is served by vercel.com
+[see live version here](https://pubg.lol)
+
+The current production build is served by [vercel.com](https://vercel.com)
 
 ```http
 https://pubg.lol
 ```
 
-the server is running on heroku
+the server is running on [heroku.com](https://heroku.com)
 
 ```http
 https://api.pubg.lol
@@ -26,42 +26,45 @@ https://api.pubg.lol
 
 install all necessary dependencies (node_modules)
 
-```
-$ yarn
+```bash
+yarn install
 ```
 
-build application
+build frontend application
 
-```
-$ yarn build:frontend
+```bash
+yarn build:frontend
 ```
 
 ## Tests (coming soon)
 
 make sure the build process of app is working
 
-```
-$ yarn build:frontend
+```bash
+yarn build:frontend
 ```
 
 ## Commands
 
-import player
+import player by name
 
 ```bash
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/importplayer.ts *PLAYER_NAME*
 ```
 
-update players + matches
+update players and matches
 
 ```bash
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
 ```
 
-run tasks on heroku
+## heroku tasks
 
 ```bash
 heroku run importplayer *PLAYER_NAME* --app pubg-app
+```
+
+```bash
 heroku run updateplayers --app pubg-app
 ```
 
