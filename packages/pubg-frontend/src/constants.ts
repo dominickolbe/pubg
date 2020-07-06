@@ -9,4 +9,4 @@ export const matchRequestDefaults = {
   offset: 0,
 };
 
-export const PLAYER_VIEW_UPDATE_INTERVAL = 60000 * 1; // in minutes
+export const PLAYER_VIEW_UPDATE_INTERVAL = 1000 * 60 * 5; // last number is in "minutes"

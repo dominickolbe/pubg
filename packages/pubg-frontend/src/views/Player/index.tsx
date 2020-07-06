@@ -110,6 +110,7 @@ export const Player = view(() => {
   useEffect(() => {
     if (intervalFn && !app.app.playerIntervalUpdate) clearInterval(intervalFn);
     if (app.app.playerIntervalUpdate) {
+      if (abortCtrl.signal.aborted) return;
       setIntervalFn(
         setInterval(() => {
           loadPlayer();
