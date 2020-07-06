@@ -1,24 +1,50 @@
-# pubg
+<p align="center">
+  <p align="center">:baby_chick: :hatched_chick: :hatching_chick:</p>
+  <h3 align="center">pubg.lol</h3>
+  <p align="center">simple and clean pubg player stats and matches tracker<p>
+</p>
 
-> source of pubg
+<p align="center">
+  <img src="preview.png" alt="preview">
+</p>
 
-## Preview
+### Preview
 
-vercel.com
+The current procution build is served by vercel.com
 
-```
+```http
 https://pubg.lol
 ```
 
-heroku
+the server is running on heroku
 
-```
+```http
 https://api.pubg.lol
 ```
 
 ## Production
 
+> info: **If you are using mobile browser**: Be very careful here!
+
+install all necessary dependencies (node_modules)
+
+```
+$ yarn
+```
+
+```
+$ yarn build:frontend
+```
+
 build application
+
+```
+$ yarn build:frontend
+```
+
+## Test (coming soon)
+
+make sure the build process of app is working
 
 ```
 $ yarn build:frontend
@@ -32,7 +58,7 @@ import player
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/importplayer.ts *PLAYER_NAME*
 ```
 
-update players
+update players + matches
 
 ```bash
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
