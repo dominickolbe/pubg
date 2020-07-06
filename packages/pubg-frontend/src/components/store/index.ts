@@ -1,4 +1,4 @@
-import { store, autoEffect } from "@risingstack/react-easy-state";
+import { autoEffect, store } from "@risingstack/react-easy-state";
 
 // TODO: refactor
 const fromLocalStorage = (key: string, defaultValue: any) => {

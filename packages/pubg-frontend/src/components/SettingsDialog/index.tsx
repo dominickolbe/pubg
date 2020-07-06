@@ -15,11 +15,18 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
+import { PLAYER_VIEW_UPDATE_INTERVAL } from "../../constants";
 import { app } from "../store";
 
 export const SettingsDialog = view(() => {
   const onChangePlayerIntervalUpdate = () => {
     app.app.playerIntervalUpdate = !app.app.playerIntervalUpdate;
+
+    app.notification.msg = `Player view interval updates ${
+      app.app.playerIntervalUpdate ? "activated" : "deactivated"
+    }`;
+    app.notification.type = "success";
+    app.notification.show = true;
   };
   const onDeleteFavoritePlayers = () => {
     app.favoritePlayer = [];
@@ -62,8 +69,10 @@ export const SettingsDialog = view(() => {
         <List dense>
           <ListItem>
             <ListItemText
-              primary="Update player automatically"
-              secondary="You don't need to refresh!"
+              primary="Refresh player stats and matches automatically"
+              secondary={`Player view updates automatically every ${
+                PLAYER_VIEW_UPDATE_INTERVAL / 1000 / 60
+              }`}
             />
             <ListItemSecondaryAction>
               <Switch

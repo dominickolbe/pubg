@@ -9,4 +9,5 @@ export const matchRequestDefaults = {
   offset: 0,
 };
 
-export const PLAYER_VIEW_UPDATE_INTERVAL = 1000 * 60 * 5; // last number is in "minutes"
+// Todo: add different interval value
+export const PLAYER_VIEW_UPDATE_INTERVAL = 1000 * 60 * 5;
