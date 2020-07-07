@@ -61,11 +61,11 @@ yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts
 ## heroku tasks
 
 ```bash
-heroku run importplayer *PLAYER_NAME* --app pubg-app
+heroku run importplayer *PLAYER_NAME* --app pubg-lol
 ```
 
 ```bash
-heroku run updateplayers --app pubg-app
+heroku run updateplayers --app pubg-lol
 ```
 
 ## License
