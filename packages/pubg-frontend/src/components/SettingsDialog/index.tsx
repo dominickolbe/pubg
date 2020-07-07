@@ -72,7 +72,7 @@ export const SettingsDialog = view(() => {
               primary="Player auto refresh"
               secondary={`Players view updates automatically every ${
                 PLAYER_VIEW_UPDATE_INTERVAL / 1000 / 60
-              }min`}
+              } minutes`}
             />
             <ListItemSecondaryAction>
               <Switch
