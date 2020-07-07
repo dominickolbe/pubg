@@ -64,6 +64,9 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,

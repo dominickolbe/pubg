@@ -1,11 +1,11 @@
-import { CssBaseline } from "@material-ui/core";
+import { Backdrop, CircularProgress, CssBaseline } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Alert from "@material-ui/lab/Alert";
 import { view } from "@risingstack/react-easy-state";
 import { cx } from "emotion";
-import React from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -17,8 +17,22 @@ import { AppHeader } from "./components/AppHeader";
 import { SettingsDialog } from "./components/SettingsDialog";
 import { rootstore } from "./components/store";
 import { theme, useStyles } from "./theme";
-import { Player } from "./views/Player";
-import { Start } from "./views/Start";
+
+const Start = React.lazy(() =>
+  import("./views/Start").then((module) => ({ default: module.Start }))
+);
+const Player = React.lazy(() =>
+  import("./views/Player").then((module) => ({ default: module.Player }))
+);
+
+const LayzPreloader = () => {
+  const classes = useStyles();
+  return (
+    <Backdrop open className={classes.backdrop}>
+      <CircularProgress color="primary" />
+    </Backdrop>
+  );
+};
 
 export const App = view(() => {
   const classes = useStyles();
@@ -36,17 +50,19 @@ export const App = view(() => {
             })}
           >
             <Toolbar variant="dense" />
-            <Switch>
-              <Route path="/" exact>
-                <Start />
-              </Route>
-              <Route path="/players/:id" exact>
-                <Player />
-              </Route>
-              <Route path="*">
-                <Redirect to="/" />
-              </Route>
-            </Switch>
+            <Suspense fallback={<LayzPreloader />}>
+              <Switch>
+                <Route path="/" exact>
+                  <Start />
+                </Route>
+                <Route path="/players/:id" exact>
+                  <Player />
+                </Route>
+                <Route path="*">
+                  <Redirect to="/" />
+                </Route>
+              </Switch>
+            </Suspense>
           </main>
           <SettingsDialog />
           <Snackbar
