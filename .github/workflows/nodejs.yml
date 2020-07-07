@@ -8,9 +8,7 @@ on:
       
       jobs:
         build:
-          
           runs-on: ubuntu-latest
-          
           strategy:
             matrix:
               node-version: [12.x, 14.x]
@@ -18,20 +16,19 @@ on:
               steps:
                 - uses: actions/checkout@v2
                 - name: Use Node.js ${{ matrix.node-version }}
-                uses: actions/setup-node@v1
-                with:
-                  node-version: ${{ matrix.node-version }}
+                  uses: actions/setup-node@v1
+                  with:
+                    node-version: ${{ matrix.node-version }}
 
-                  - run: npm install -g yarn
-                  
-                  - name: Install dependencies
-                  run: yarn install --frozen-lockfile
+                - run: npm install -g yarn
+                
+                - name: Install dependencies
+                run: yarn install --frozen-lockfile
 
-                  - name: prettier-check
-                  run: yarn prettier-check
+                - name: prettier-check
+                run: yarn prettier-check
+                
+                - name: build:frontend
+                run: yarn build:frontend
                   
-                  - name: build:frontend
-                  run: yarn build:frontend
-                  
-                  env:
-                    CI: true
+        
