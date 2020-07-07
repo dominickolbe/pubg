@@ -139,15 +139,21 @@ export const PlayerStatsCard = (props: { stats: StatsObject }) => {
           />
           <SingleStatsListItem
             label="Ride distance"
-            value={() => formatNumber(stats.rideDistance)}
+            value={() =>
+              formatNumber(Math.ceil(stats.rideDistance / 1000)) + " km"
+            }
           />
           <SingleStatsListItem
             label="Walk distance"
-            value={() => formatNumber(stats.walkDistance)}
+            value={() =>
+              formatNumber(Math.ceil(stats.walkDistance / 1000)) + " km"
+            }
           />
           <SingleStatsListItem
             label="Swim distance"
-            value={() => formatNumber(stats.swimDistance)}
+            value={() =>
+              formatNumber(Math.ceil(stats.swimDistance / 1000)) + " km"
+            }
           />
         </Collapse>
         <ListItem button onClick={() => setExpanded(!expanded)}>
