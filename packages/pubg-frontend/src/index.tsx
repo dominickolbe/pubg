@@ -5,6 +5,8 @@ import { App } from "./App";
 import { SENTRY_URL } from "./constants";
 import "./index.css";
 
+import * as serviceWorker from "./serviceWorker";
+
 if (process.env.NODE_ENV === "production") {
   if (SENTRY_URL) {
     Sentry.init({
@@ -14,3 +16,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
+
+serviceWorker.register();
