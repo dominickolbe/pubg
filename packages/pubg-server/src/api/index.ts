@@ -15,6 +15,9 @@ import {
   importPlayerStats,
 } from "../utils";
 
+const Mixpanel = require("mixpanel");
+const mixpanel = Mixpanel.init(process.env.MIXPANEL_API_TOKEN);
+
 export const setUpApi = (params: { prefix: string }) => {
   const { prefix } = params;
   return {
@@ -37,6 +40,13 @@ export const setUpApi = (params: { prefix: string }) => {
       });
 
       router.get("/players/:id", duplicatedPlayerCheck, async (ctx, next) => {
+        // TODO: test analytics
+        mixpanel.track("Get player", {
+          distinct_id: ctx.params.id,
+          player: ctx.params.id,
+          createdAt: new Date().toISOString(),
+        });
+
         const returnPlayer = (player: IPlayer) => {
           const resp = player.toObject();
           delete resp.matches;
