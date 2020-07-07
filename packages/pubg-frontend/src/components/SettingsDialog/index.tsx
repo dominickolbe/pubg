@@ -31,14 +31,15 @@ export const SettingsDialog = view(() => {
   const onDeleteFavoritePlayers = () => {
     rootstore.favoritePlayer = [];
 
-    rootstore.notification.msg = "Deleted all favorite player";
+    rootstore.notification.msg = "Successfully deleted all favorite player";
     rootstore.notification.type = "success";
     rootstore.notification.show = true;
   };
   const onDeleteLastVisitedPlayers = () => {
     rootstore.lastVisitedPlayer = [];
 
-    rootstore.notification.msg = "Deleted all last visited players";
+    rootstore.notification.msg =
+      "Successfully deleted all last visited players";
     rootstore.notification.type = "success";
     rootstore.notification.show = true;
   };
@@ -47,7 +48,7 @@ export const SettingsDialog = view(() => {
     rootstore.lastVisitedPlayer = [];
     localStorage.clear();
 
-    rootstore.notification.msg = "Deleted all app data";
+    rootstore.notification.msg = "Successfully deleted all app data";
     rootstore.notification.type = "success";
     rootstore.notification.show = true;
   };
@@ -69,8 +70,8 @@ export const SettingsDialog = view(() => {
         <List dense>
           <ListItem>
             <ListItemText
-              primary="Player auto refresh"
-              secondary={`Players view updates automatically every ${
+              primary="Auto reload player stats and matches"
+              secondary={`Players view gets updated automatically every ${
                 PLAYER_VIEW_UPDATE_INTERVAL / 1000 / 60
               } minutes`}
             />
@@ -98,7 +99,7 @@ export const SettingsDialog = view(() => {
           <Divider />
           <ListItem>
             <ListItemText
-              primary="Clear history"
+              primary="Clear visited players"
               secondary="Deletes all your last visited players"
             />
             <ListItemSecondaryAction>
@@ -113,8 +114,8 @@ export const SettingsDialog = view(() => {
           <Divider />
           <ListItem>
             <ListItemText
-              primary="Clear all your app data"
-              secondary="Deletes all data"
+              primary="Clear all app data"
+              secondary="Deletes all data from local storage"
             />
             <ListItemSecondaryAction>
               <IconButton edge="end" onClick={() => onDeleteAppData()}>

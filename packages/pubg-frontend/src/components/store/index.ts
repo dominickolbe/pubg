@@ -16,6 +16,7 @@ export type NotificationType = "success" | "error" | "warning" | "info";
 
 type rootstoreDefointion = {
   app: {
+    // Refactor to settings
     playerIntervalUpdate: boolean;
   };
   drawer: boolean;
@@ -37,7 +38,7 @@ type rootstoreDefointion = {
 
 const initalStore: rootstoreDefointion = {
   app: {
-    playerIntervalUpdate: fromLocalStorage("playerIntervalUpdate", true),
+    playerIntervalUpdate: fromLocalStorage("playerIntervalUpdate", false),
   },
   drawer: false,
   title: "",
