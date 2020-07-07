@@ -1,3 +1,5 @@
+![Node CI](https://github.com/dominickolbe/pubg/workflows/Node%20CI/badge.svg?branch=master)
+
 <p align="center">
   <p align="center">:baby_chick: :hatched_chick: :hatching_chick:</p>
   <h3 align="center">pubg.lol</h3>
