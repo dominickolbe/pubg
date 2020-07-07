@@ -1,6 +1,7 @@
 require("dotenv-safe").config();
 
 import cors from "@koa/cors";
+import * as Sentry from "@sentry/node";
 import Koa from "koa";
 import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
@@ -17,6 +18,15 @@ const server = async () => {
   const app = new Koa();
 
   app.use(cors());
+
+  app.on("error", (err, ctx) => {
+    Sentry.withScope(function (scope) {
+      scope.addEventProcessor(function (event) {
+        return Sentry.Handlers.parseRequest(event, ctx.request);
+      });
+      Sentry.captureException(err);
+    });
+  });
 
   app.use(async (ctx, next) => {
     ctx.compress = true;
