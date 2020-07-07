@@ -17,4 +17,5 @@ if (process.env.NODE_ENV === "production") {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-serviceWorker.register();
+// TODO: WIP
+serviceWorker.unregister();
