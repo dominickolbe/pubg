@@ -34,7 +34,7 @@ export const importNewPlayer = async (name: string) => {
 
 export const updatePlayerStatsAndMatches = async (
   player: IPlayer
-): Promise<Result<Player, number | null>> => {
+): Promise<Result<IPlayer, number | null>> => {
   const request = await PubgApiDriver.player.getLifetimeStats(player.pubgId);
 
   if (!request.ok) {

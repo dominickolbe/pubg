@@ -1,3 +1,4 @@
+import { isBefore, parseISO, sub } from "date-fns";
 import Koa from "koa";
 import Router from "koa-router";
 import { IPlayer } from "pubg-model/types/Player";
@@ -12,7 +13,7 @@ import {
   cache,
   duplicatedPlayerCheck,
   importNewPlayer,
-  importPlayerStats,
+  updatePlayerStatsAndMatches,
 } from "../utils";
 
 export const setUpApi = (params: { prefix: string }) => {
@@ -44,29 +45,44 @@ export const setUpApi = (params: { prefix: string }) => {
           return next();
         };
 
+        const updatePlayer = async (player: IPlayer) => {
+          const MIN_UPDATE_INTERVAL = 5;
+
+          if (
+            player.statsUpdatedAt === null ||
+            player.matchesUpdatedAt === null ||
+            isBefore(
+              parseISO(player.statsUpdatedAt),
+              sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+            ) ||
+            isBefore(
+              parseISO(player.matchesUpdatedAt),
+              sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+            )
+          ) {
+            const result = await updatePlayerStatsAndMatches(player);
+            if (result.ok) return result.val;
+          }
+          return player;
+        };
+
         const player = await PlayerModel.findOne({
           name: ctx.params.id,
-        }).select("-matches");
+        });
 
         // return player if found
         if (player) {
-          ctx.body = player;
-          return next();
+          const updatedPlayer = await updatePlayer(player);
+          return returnPlayer(updatedPlayer);
         }
 
         // try to import player
-        const newPlayer = await importNewPlayer(ctx.params.id);
+        const importedPlayer = await importNewPlayer(ctx.params.id);
 
-        if (newPlayer.ok) {
-          const result = await importPlayerStats(newPlayer.val);
-          if (result.ok) {
-            // return imported player with stats
-            return returnPlayer(result.val);
-          } else {
-            // return imported player without stats
-            return returnPlayer(newPlayer.val);
-          }
-        } else if (newPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
+        if (importedPlayer.ok) {
+          const updatedPlayer = await updatePlayer(importedPlayer.val);
+          return returnPlayer(updatedPlayer);
+        } else if (importedPlayer.err !== HTTP_STATUS_TOO_MANY_REQUESTS) {
           // TODO check if cache is still working
           // add failed player request to cache
           cache.pubgPlayerNotFound.push(ctx.params.id);

@@ -29,10 +29,10 @@ const server = async () => {
   });
 
   app.use(async (ctx, next) => {
-    ctx.compress = true;
     try {
       await next();
     } catch (err) {
+      console.log(err);
       ctx.status = err.status || HTTP_STATUS_INTERNAL_SERVER_ERROR;
       ctx.app.emit("error", err, ctx);
     }
