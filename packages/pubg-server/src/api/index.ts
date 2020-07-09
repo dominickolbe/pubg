@@ -7,6 +7,7 @@ import {
   HTTP_STATUS_OK,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
+import { ON_THE_FLY_UPDATE_INTERVAL } from "../constants";
 import { PlayerDbController, PlayerModel } from "../database/model/player";
 import { auditLog } from "../middlewares/audit";
 import {
@@ -46,18 +47,16 @@ export const setUpApi = (params: { prefix: string }) => {
         };
 
         const updatePlayer = async (player: IPlayer) => {
-          const MIN_UPDATE_INTERVAL = 5;
-
           if (
             player.statsUpdatedAt === null ||
             player.matchesUpdatedAt === null ||
             isBefore(
               parseISO(player.statsUpdatedAt),
-              sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+              sub(new Date(), { minutes: ON_THE_FLY_UPDATE_INTERVAL })
             ) ||
             isBefore(
               parseISO(player.matchesUpdatedAt),
-              sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+              sub(new Date(), { minutes: ON_THE_FLY_UPDATE_INTERVAL })
             )
           ) {
             const result = await updatePlayerStatsAndMatches(player);
