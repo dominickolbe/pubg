@@ -29,6 +29,7 @@ import {
   formatDistanceToNow,
   parseISO,
 } from "date-fns";
+import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
@@ -92,6 +93,7 @@ const MatchRowDetail = (props: {
   }, []);
 
   const teams = generateTeamStats(match);
+  const players = orderBy(match.players, ["stats.winPlace"], ["asc"]);
 
   return (
     <div className={classes.matchRowDetailContainer}>
@@ -166,19 +168,21 @@ const MatchRowDetail = (props: {
             <Grid item xs={12}>
               <TableContainer>
                 <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>
-                        <Typography component="div">
-                          <Box fontWeight="fontWeightBold" fontSize={12}>
-                            Victim
-                          </Box>
-                        </Typography>
-                      </TableCell>
-                      <TableCell />
-                      <TableCell />
-                    </TableRow>
-                  </TableHead>
+                  {telemetry.kills.length !== 0 && (
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>
+                          <Typography component="div">
+                            <Box fontWeight="fontWeightBold" fontSize={12}>
+                              Victim
+                            </Box>
+                          </Typography>
+                        </TableCell>
+                        <TableCell />
+                        <TableCell />
+                      </TableRow>
+                    </TableHead>
+                  )}
                   <TableBody>
                     {telemetry.kills.map((kill) => (
                       <TableRow
@@ -276,7 +280,7 @@ const MatchRowDetail = (props: {
                             : "",
                         }}
                       >
-                        <TableCell style={{ width: 65 }}>
+                        <TableCell style={{ width: 70 }}>
                           # {team.rank}
                         </TableCell>
                         <TableCell>
@@ -335,7 +339,7 @@ const MatchRowDetail = (props: {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {match.players.map((p) => (
+                    {players.map((p) => (
                       <TableRow
                         key={p.id}
                         style={{
@@ -343,7 +347,7 @@ const MatchRowDetail = (props: {
                             p.stats.name === player.name ? "#515151" : "",
                         }}
                       >
-                        <TableCell style={{ width: 65 }}>
+                        <TableCell style={{ width: 70 }}>
                           # {p.stats.winPlace}
                         </TableCell>
                         <TableCell>{p.stats.name}</TableCell>
