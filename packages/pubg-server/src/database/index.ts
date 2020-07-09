@@ -10,7 +10,7 @@ const options = {
 
 export const Database = {
   connect: async () => {
-    console.log("[Info]: connect to database ...");
+    console.log("[Info]: connecting to database ...");
     try {
       const connection = await mongoose.connect(MONGO_CONNECTION_URI, options);
       console.log("[Info]: successfully connected to database");
