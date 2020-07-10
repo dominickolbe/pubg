@@ -96,8 +96,12 @@ export const Player = view(() => {
           ...rootstore.lastVisitedPlayer.slice(0, 9),
         ];
     } else {
-      setError("Player not found!");
-      rootstore.title = "player not found";
+      if (response.err.response && response.err.response.status === 429) {
+        setError("Too Many Requests. Please try later");
+      } else {
+        setError("Player not found");
+        rootstore.title = "player not found";
+      }
     }
   };
 

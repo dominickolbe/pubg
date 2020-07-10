@@ -85,9 +85,12 @@ export const setUpApi = (params: { prefix: string }) => {
           // TODO check if cache is still working
           // add failed player request to cache
           cache.pubgPlayerNotFound.push(ctx.params.id);
+          ctx.response.status = HTTP_STATUS_NOT_FOUND;
+          return next();
+        } else if (importedPlayer.err === HTTP_STATUS_TOO_MANY_REQUESTS) {
+          ctx.response.status = HTTP_STATUS_TOO_MANY_REQUESTS;
+          return next();
         }
-
-        ctx.response.status = HTTP_STATUS_NOT_FOUND;
       });
 
       // MATCHES
