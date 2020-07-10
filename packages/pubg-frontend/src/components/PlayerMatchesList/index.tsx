@@ -55,6 +55,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     padding: theme.spacing(2),
   },
+  playerChip: {
+    color: "white",
+    background: "#3a3a3a",
+    fontSize: "12px",
+    marginRight: "5px",
+    padding: "3px 5px",
+    textDecoration: "none",
+    transition: "background 200ms ease",
+    "&:hover": {
+      background: "#292929",
+    },
+  },
 }));
 
 const MatchRowDetail = (props: {
@@ -172,14 +184,21 @@ const MatchRowDetail = (props: {
                   {telemetry.kills.length !== 0 && (
                     <TableHead>
                       <TableRow>
+                        <TableCell />
                         <TableCell>
                           <Typography component="div">
                             <Box fontWeight="fontWeightBold" fontSize={12}>
-                              Victim
+                              Player
                             </Box>
                           </Typography>
                         </TableCell>
-                        <TableCell />
+                        <TableCell>
+                          <Typography component="div">
+                            <Box fontWeight="fontWeightBold" fontSize={12}>
+                              Weapon
+                            </Box>
+                          </Typography>
+                        </TableCell>
                         <TableCell />
                       </TableRow>
                     </TableHead>
@@ -192,7 +211,7 @@ const MatchRowDetail = (props: {
                           kill.date
                         }
                       >
-                        <TableCell>
+                        <TableCell style={{ width: 70 }}>
                           {
                             // @ts-ignore
                             kill.isBot && (
@@ -203,9 +222,33 @@ const MatchRowDetail = (props: {
                               />
                             )
                           }
+                        </TableCell>
+                        <TableCell>
                           {
                             // @ts-ignore
-                            kill.victim
+                            kill.isBot ? (
+                              <>
+                                {
+                                  // @ts-ignore
+                                  kill.victim
+                                }
+                              </>
+                            ) : (
+                              <Link
+                                className={classes.playerChip}
+                                to={`/players/${
+                                  // TODO
+                                  // @ts-ignore
+                                  kill.victim
+                                }`}
+                              >
+                                {
+                                  // TODO
+                                  // @ts-ignore
+                                  kill.victim
+                                }
+                              </Link>
+                            )
                           }
                         </TableCell>
                         <TableCell>
@@ -285,7 +328,15 @@ const MatchRowDetail = (props: {
                           # {team.rank}
                         </TableCell>
                         <TableCell>
-                          {team.players.map((player) => player.name).join(", ")}
+                          {team.players.map((player) => (
+                            <Link
+                              key={player.name}
+                              className={classes.playerChip}
+                              to={`/players/${player.name}`}
+                            >
+                              {player.name}
+                            </Link>
+                          ))}
                         </TableCell>
                         <TableCell align="right">
                           {team.players
@@ -353,8 +404,8 @@ const MatchRowDetail = (props: {
                         </TableCell>
                         <TableCell>
                           <Link
+                            className={classes.playerChip}
                             to={`/players/${p.stats.name}`}
-                            style={{ color: "white" }}
                           >
                             {p.stats.name}
                           </Link>
