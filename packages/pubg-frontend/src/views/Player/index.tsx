@@ -20,7 +20,7 @@ import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
-import { PlayerMatchesList } from "../../components/PlayerMatchesList";
+import { MatchTable } from "../../components/MatchTable";
 import {
   PlayerStatsCard,
   PlayerStatsCardLoading,
@@ -232,7 +232,7 @@ export const Player = view(() => {
           </Tooltip>
           <List>
             {player && matches !== null ? (
-              <PlayerMatchesList matches={matches} player={player} />
+              <MatchTable matches={matches} player={player} />
             ) : (
               <Skeleton variant="rect" height={56} />
             )}

@@ -61,7 +61,7 @@ export const SettingsDialog = view(() => {
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle disableTypography style={{ paddingBottom: 0 }}>
+      <DialogTitle disableTypography>
         <Typography component="div" variant="h4">
           <Box fontWeight="fontWeightBold">Settings</Box>
         </Typography>
@@ -130,7 +130,7 @@ export const SettingsDialog = view(() => {
           color="inherit"
           onClick={() => (rootstore.dialog.settings.open = false)}
         >
-          Close settings
+          Close
         </Button>
       </DialogActions>
     </Dialog>
