@@ -30,17 +30,18 @@ const run = async () => {
   // TODO check dates still working
   // only update specfic player
   const playersToUpdate = players.filter(
-    (i) =>
-      i.statsUpdatedAt === null ||
-      isBefore(
-        parseISO(i.statsUpdatedAt),
-        sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
-      ) ||
-      i.matchesUpdatedAt === null ||
-      isBefore(
-        parseISO(i.matchesUpdatedAt),
-        sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
-      )
+    (player) =>
+      player.autoUpdate &&
+      (player.statsUpdatedAt === null ||
+        isBefore(
+          parseISO(player.statsUpdatedAt),
+          sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+        ) ||
+        player.matchesUpdatedAt === null ||
+        isBefore(
+          parseISO(player.matchesUpdatedAt),
+          sub(new Date(), { minutes: MIN_UPDATE_INTERVAL })
+        ))
   );
 
   console.log(`[Info]: ${playersToUpdate.length} players found`);

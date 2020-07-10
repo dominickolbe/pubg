@@ -10,6 +10,7 @@ export const RtPlayer = rt.Record({
   matches: rt.Array(rt.InstanceOf(mongoose.Types.ObjectId)),
   matchesUpdatedAt: rt.String.Or(rt.Null),
   createdAt: rt.String,
+  autoUpdate: rt.Boolean,
 });
 
 export const RtPlayersSearchSingle = rt.Record({
@@ -27,4 +28,5 @@ export const RtPlayerRequest = rt.Record({
   _id: rt.String,
   // matches are removed in player request
   matches: rt.Undefined,
+  autoUpdate: rt.Undefined,
 });

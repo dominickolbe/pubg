@@ -42,6 +42,7 @@ export const setUpApi = (params: { prefix: string }) => {
         const returnPlayer = (player: IPlayer) => {
           const resp = player.toObject();
           delete resp.matches;
+          delete resp.autoUpdate;
           ctx.body = resp;
           return next();
         };

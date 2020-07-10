@@ -33,6 +33,7 @@ import orderBy from "lodash/orderBy";
 import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   formatNumber,
   generateTeamStats,
@@ -350,7 +351,14 @@ const MatchRowDetail = (props: {
                         <TableCell style={{ width: 70 }}>
                           # {p.stats.winPlace}
                         </TableCell>
-                        <TableCell>{p.stats.name}</TableCell>
+                        <TableCell>
+                          <Link
+                            to={`/players/${p.stats.name}`}
+                            style={{ color: "white" }}
+                          >
+                            {p.stats.name}
+                          </Link>
+                        </TableCell>
                         <TableCell align="right">{p.stats.kills}</TableCell>
                         <TableCell align="right">
                           {formatNumber(Math.ceil(p.stats.damageDealt))}

@@ -133,8 +133,7 @@ export const Player = view(() => {
   const totalStats = player ? generateTotalStats(player.stats) : null;
 
   const isNewPlayer =
-    player &&
-    isBefore(sub(new Date(), { minutes: 60 }), parseISO(player.createdAt));
+    player?.matchesUpdatedAt === null || player?.statsUpdatedAt === null;
 
   const onChangeFavorite = () => {
     if (rootstore.favoritePlayer.includes(id)) {

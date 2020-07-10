@@ -42,6 +42,10 @@ const PlayerSchema = new mongoose.Schema(
       type: Date,
       default: () => new Date(),
     },
+    autoUpdate: {
+      type: Boolean,
+      default: false,
+    },
   },
   { versionKey: false }
 );
