@@ -1,6 +1,8 @@
 import orderBy from "lodash/orderBy";
 import { MatchRequest } from "pubg-model/types/Match";
 import { Stats, StatsObject } from "pubg-model/types/Stats";
+import { Telemtry } from "pubg-model/types/Telemtry";
+import { ITelemtryPlayer } from "pubg-model/types/Telemtry";
 import damageCauserName from "./damageCauserName";
 
 export const generateEmptyStats = (): StatsObject => ({
@@ -231,4 +233,49 @@ export const generateTeamStats = (match: MatchRequest) => {
   }
 
   return orderBy(teams, ["rank"], ["asc"]);
+};
+
+export const parseMatchTelemetryByPlayer = (
+  telemtry: Telemtry,
+  playerId: string
+) => {
+  const data: ITelemtryPlayer = {
+    kills: [],
+    totalBots: 0,
+  };
+
+  const bots: string[] = [];
+
+  telemtry.forEach((event) => {
+    // This is a workaround to fix the typescript issue
+    // with different event types
+    if ("_T" in event) {
+      switch (event._T) {
+        case "LogPlayerKill":
+          // Player killed by bluezone
+          // damageTypeCategory ="Damage_BlueZone"
+          if (event.killer === null) return;
+          if (event.killer.accountId !== playerId) return;
+          data.kills.push({
+            victim: {
+              name: event.victim.name,
+              isBot: !!event.victim.accountId.includes("ai."),
+            },
+            damageTypeCategory: event.damageTypeCategory,
+            damageCauserName:
+              // @ts-ignore
+              damageCauserName[event.damageCauserName] ||
+              event.damageCauserName,
+            timestamp: event._D,
+          });
+          break;
+        case "LogPlayerPosition":
+          if (!event.character.accountId.includes("ai.")) return;
+          if (bots.indexOf(event.character.accountId) !== -1) return;
+          bots.push(event.character.accountId);
+      }
+    }
+  });
+  data.totalBots = bots.length;
+  return data;
 };

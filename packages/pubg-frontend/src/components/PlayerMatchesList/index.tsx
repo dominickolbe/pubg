@@ -40,9 +40,10 @@ import {
   getGameMode,
   getMapName,
   getPlayerMatchStats,
-  parseTelemetry,
+  parseMatchTelemetryByPlayer,
 } from "../../utils";
 import { ApiController } from "../ApiController";
+import { ITelemtryPlayer } from "pubg-model/types/Telemtry";
 
 const useStyles = makeStyles((theme) => ({
   tableRowRoot: {
@@ -78,23 +79,21 @@ const MatchRowDetail = (props: {
 
   const abortCtrl = new AbortController();
 
-  const [loadingText, setLoadingText] = React.useState("Loading...");
+  const [message, setMessage] = React.useState("Loading...");
   const [tab, setTab] = React.useState(0);
 
-  // TODO: refactor
-  const [telemetry, setTelemetry] = React.useState(() => ({
-    kills: [],
-    bots: [],
-  }));
+  const [telemetry, setTelemetry] = React.useState<ITelemtryPlayer | null>(
+    null
+  );
 
   const loadTelemetry = async () => {
     const telemetry = await ApiController.getTelemetry(match.telemetry);
     if (abortCtrl.signal.aborted) return;
     if (telemetry.ok) {
-      setTelemetry(parseTelemetry(telemetry.val, player.pubgId));
-      setLoadingText("");
+      const parsed = parseMatchTelemetryByPlayer(telemetry.val, player.pubgId);
+      setTelemetry(parsed);
     } else {
-      setLoadingText("Coudln't load match telemetry data!");
+      setMessage("Coudln't load match telemetry data!");
     }
   };
 
@@ -110,10 +109,10 @@ const MatchRowDetail = (props: {
 
   return (
     <div className={classes.matchRowDetailContainer}>
-      {loadingText ? (
+      {telemetry === null ? (
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" fontSize={13}>
-            {loadingText}
+            {message}
           </Box>
         </Typography>
       ) : (
@@ -138,9 +137,7 @@ const MatchRowDetail = (props: {
               <CardHeader
                 title={
                   <Typography component="div">
-                    <Box fontWeight="fontWeightBold">
-                      {telemetry.bots.length}
-                    </Box>
+                    <Box fontWeight="fontWeightBold">{telemetry.totalBots}</Box>
                   </Typography>
                 }
                 subheader="Total bots"
@@ -205,67 +202,34 @@ const MatchRowDetail = (props: {
                   )}
                   <TableBody>
                     {telemetry.kills.map((kill) => (
-                      <TableRow
-                        key={
-                          // @ts-ignore
-                          kill.date
-                        }
-                      >
+                      <TableRow key={kill.timestamp}>
                         <TableCell style={{ width: 70 }}>
-                          {
-                            // @ts-ignore
-                            kill.isBot && (
-                              <FontAwesomeIcon
-                                icon={faRobot}
-                                style={{ paddingBottom: 2, marginRight: 8 }}
-                                size="sm"
-                              />
-                            )
-                          }
+                          {kill.victim.isBot && (
+                            <FontAwesomeIcon
+                              icon={faRobot}
+                              style={{ paddingBottom: 2, marginRight: 8 }}
+                              size="sm"
+                            />
+                          )}
                         </TableCell>
                         <TableCell>
-                          {
-                            // @ts-ignore
-                            kill.isBot ? (
-                              <>
-                                {
-                                  // @ts-ignore
-                                  kill.victim
-                                }
-                              </>
-                            ) : (
-                              <Link
-                                className={classes.playerChip}
-                                to={`/players/${
-                                  // TODO
-                                  // @ts-ignore
-                                  kill.victim
-                                }`}
-                              >
-                                {
-                                  // TODO
-                                  // @ts-ignore
-                                  kill.victim
-                                }
-                              </Link>
-                            )
-                          }
+                          {kill.victim.isBot ? (
+                            <>{kill.victim.name}</>
+                          ) : (
+                            <Link
+                              className={classes.playerChip}
+                              to={`/players/${kill.victim.name}`}
+                            >
+                              {kill.victim.name}
+                            </Link>
+                          )}
                         </TableCell>
-                        <TableCell>
-                          {
-                            // @ts-ignore
-                            kill.how
-                          }
-                        </TableCell>
+                        <TableCell>{kill.damageCauserName}</TableCell>
                         <TableCell align="right">
-                          {
-                            // @ts-ignore
-                            formatDistance(
-                              parseISO(match.createdAt),
-                              // @ts-ignore
-                              parseISO(kill.date)
-                            )
-                          }
+                          {formatDistance(
+                            parseISO(match.createdAt),
+                            parseISO(kill.timestamp)
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}

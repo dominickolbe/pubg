@@ -3,6 +3,7 @@ import axios from "axios";
 import { createErr, createOk } from "option-t/cjs/PlainResult";
 import { RtPlayerRequest } from "pubg-model/runtypes/Player";
 import { RtMatchesRequest } from "pubg-model/runtypes/Match";
+import { RtTelemtry } from "pubg-model/runtypes/Telemtry";
 import { API_BASE } from "../../constants";
 
 export const ApiController = {
@@ -56,7 +57,14 @@ export const ApiController = {
   getTelemetry: async (url: string) => {
     try {
       const response = await axios.get(url);
-      return createOk(response.data);
+      try {
+        const telemetry = RtTelemtry.check(response.data);
+        return createOk(telemetry);
+      } catch (error) {
+        Sentry.captureException(error);
+        console.log(error);
+        return createErr(error);
+      }
     } catch (error) {
       console.log(error);
       return createErr(error);
