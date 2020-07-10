@@ -25,7 +25,7 @@ const Player = React.lazy(() =>
   import("./views/Player").then((module) => ({ default: module.Player }))
 );
 
-const LayzPreloader = () => {
+const LazyPreloader = () => {
   const classes = useStyles();
   return (
     <Backdrop open className={classes.backdrop}>
@@ -50,7 +50,7 @@ export const App = view(() => {
             })}
           >
             <Toolbar variant="dense" />
-            <Suspense fallback={<LayzPreloader />}>
+            <Suspense fallback={<LazyPreloader />}>
               <Switch>
                 <Route path="/" exact>
                   <Start />
