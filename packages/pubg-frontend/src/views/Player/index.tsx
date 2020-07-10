@@ -14,7 +14,7 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import Alert from "@material-ui/lab/Alert";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { view } from "@risingstack/react-easy-state";
-import { formatDistanceToNow, isBefore, parseISO, sub } from "date-fns";
+import { formatDistanceToNow, parseISO } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
