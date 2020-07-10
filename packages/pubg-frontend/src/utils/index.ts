@@ -131,61 +131,6 @@ export const getPlayerMatchStats2 = (match: object, playerToFind: string) => {
   };
 };
 
-export const parseTelemetry = (data: object[], playerId: string) => {
-  const parsedTelemetry = {
-    bots: [],
-    kills: [],
-  };
-
-  // console.log(data);
-
-  try {
-  } catch {}
-
-  // TODO: count bots
-
-  data.forEach((event) => {
-    // @ts-ignore
-    // console.log(event._T);
-    // @ts-ignore
-    if (event._T.includes("LogPlayerKill")) {
-      // @ts-ignore
-      if (event.victim.accountId.includes("ai.")) {
-        // @ts-ignore
-        if (parsedTelemetry.bots.indexOf(event.victim.accountId) === -1)
-          // @ts-ignore
-          parsedTelemetry.bots.push(event.victim.accountId);
-      }
-    }
-    // @ts-ignore
-    if (event._T === "LogPlayerKill") {
-      if (
-        // @ts-ignore
-        event.killer &&
-        // @ts-ignore
-        event.killer.accountId === playerId &&
-        // @ts-ignore
-        event.victim.accountId !== playerId
-      ) {
-        parsedTelemetry.kills.push({
-          // @ts-ignore
-          victim: event.victim.name,
-          // @ts-ignore
-          isBot: event.victim.accountId.includes("ai."),
-          // @ts-ignore
-          date: event._D,
-          // @ts-ignore
-          how:
-            // @ts-ignore
-            damageCauserName[event.damageCauserName] || event.damageCauserName,
-        });
-      }
-    }
-  });
-
-  return parsedTelemetry;
-};
-
 // ----
 
 export const formatNumber = (number: number) =>
@@ -244,8 +189,6 @@ export const parseMatchTelemetryByPlayer = (
     totalBots: 0,
   };
 
-  const bots: string[] = [];
-
   telemtry.forEach((event) => {
     // This is a workaround to fix the typescript issue
     // with different event types
@@ -269,13 +212,12 @@ export const parseMatchTelemetryByPlayer = (
             timestamp: event._D,
           });
           break;
-        case "LogPlayerPosition":
-          if (!event.character.accountId.includes("ai.")) return;
-          if (bots.indexOf(event.character.accountId) !== -1) return;
-          bots.push(event.character.accountId);
+        case "LogMatchEnd":
+          data.totalBots = event.characters.filter((player) =>
+            player.character.accountId.includes("ai.")
+          ).length;
       }
     }
   });
-  data.totalBots = bots.length;
   return data;
 };

@@ -52,8 +52,22 @@ export const RtTelemtryEvent_PlayerPosition = rt.Record({
   }),
 });
 
+export const RtTelemtryEvent_LogMatchEnd = rt.Record({
+  _T: rt.Literal("LogMatchEnd"),
+  _D: rt.String,
+  characters: rt.Array(
+    rt.Record({
+      character: rt.Record({
+        name: rt.String,
+        accountId: rt.String,
+      }),
+    })
+  ),
+});
+
 export const RtTelemtry = rt.Array(
   RtTelemtryEvent_Any.Or(RtTelemtryEvent_PlayerKill)
     .Or(RtTelemtryEvent_PlayerTakeDamage)
     .Or(RtTelemtryEvent_PlayerPosition)
+    .Or(RtTelemtryEvent_LogMatchEnd)
 );
