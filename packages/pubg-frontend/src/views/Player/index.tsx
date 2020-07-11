@@ -110,6 +110,8 @@ export const Player = view(() => {
     setError(null);
     loadPlayer();
 
+    window.scrollTo(0, 0);
+
     return () => {
       abortCtrl.abort();
     };
