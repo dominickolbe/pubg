@@ -61,15 +61,14 @@ export const theme = createMuiTheme({
 const drawerWidth = 200;
 
 export const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
+  root: {},
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
+    position: "fixed",
     width: drawerWidth,
-    flexShrink: 0,
+    zIndex: theme.zIndex.drawer,
   },
   drawerContainer: {
     overflow: "auto",
@@ -85,13 +84,14 @@ export const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: 0,
+    minWidth: 300,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: drawerWidth,
   },
 }));
