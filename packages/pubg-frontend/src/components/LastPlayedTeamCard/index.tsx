@@ -4,11 +4,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import Skeleton from "@material-ui/lab/Skeleton";
 import { css } from "emotion";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { getRecentlyPlayedWith } from "../../utils";
 
 export const LastPlayedTeamCard = (props: {
@@ -27,7 +27,20 @@ export const LastPlayedTeamCard = (props: {
         {recently.length >= 1 ? (
           recently.map((player) => (
             <ListItem key={player.name} component="div">
-              <ListItemText primary={player.name} />
+              <ListItemText
+                primary={
+                  <Link
+                    key={player.name}
+                    className={css`
+                      color: white;
+                      text-decoration: none;
+                    `}
+                    to={`/players/${player.name}`}
+                  >
+                    {player.name}
+                  </Link>
+                }
+              />
               <ListItemText
                 className={css`
                   display: flex;
