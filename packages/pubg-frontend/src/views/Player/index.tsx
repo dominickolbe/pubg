@@ -190,38 +190,45 @@ export const Player = view(() => {
         )}
 
         <Grid item md={3} xs={12}>
-          <Tooltip
-            title={
-              player && player.statsUpdatedAt
-                ? "Updated " +
-                  formatDistanceToNow(parseISO(player.statsUpdatedAt), {
-                    addSuffix: true,
-                  })
-                : "Updated: never"
-            }
-            placement="top-start"
-            enterDelay={500}
-            enterNextDelay={500}
-            disableFocusListener
-          >
-            <Typography variant="subtitle1">Total stats</Typography>
-          </Tooltip>
-          <List>
-            {player && totalStats ? (
-              <PlayerStatsCard stats={totalStats} />
-            ) : (
-              <PlayerStatsCardLoading />
-            )}
-          </List>
-          <List>
-            {player && matches !== null ? (
-              <>
-                <LastPlayedTeamCard matches={matches} player={player} />
-              </>
-            ) : (
-              <PlayerStatsCardLoading />
-            )}
-          </List>
+          <Grid container spacing={2}>
+            <Grid item md={12} sm={6} xs={12}>
+              <Tooltip
+                title={
+                  player && player.statsUpdatedAt
+                    ? "Updated " +
+                      formatDistanceToNow(parseISO(player.statsUpdatedAt), {
+                        addSuffix: true,
+                      })
+                    : "Updated: never"
+                }
+                placement="top-start"
+                enterDelay={500}
+                enterNextDelay={500}
+                disableFocusListener
+              >
+                <Typography variant="subtitle1">Total stats</Typography>
+              </Tooltip>
+              <List>
+                {player && totalStats ? (
+                  <PlayerStatsCard stats={totalStats} />
+                ) : (
+                  <PlayerStatsCardLoading />
+                )}
+              </List>
+            </Grid>
+            <Grid item md={12} sm={6} xs={12}>
+              <Typography variant="subtitle1">Recently Played With</Typography>
+              <List>
+                {player && matches !== null ? (
+                  <>
+                    <LastPlayedTeamCard matches={matches} player={player} />
+                  </>
+                ) : (
+                  <PlayerStatsCardLoading />
+                )}
+              </List>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item md={9} xs={12}>
           <Tooltip
