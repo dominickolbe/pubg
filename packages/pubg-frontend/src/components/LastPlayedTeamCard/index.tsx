@@ -34,6 +34,9 @@ export const LastPlayedTeamCard = (props: {
                     className={css`
                       color: white;
                       text-decoration: none;
+                      &:hover {
+                        text-decoration: underline;
+                      }
                     `}
                     to={`/players/${player.name}`}
                   >
