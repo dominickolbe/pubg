@@ -1,8 +1,8 @@
+import { isAfter, parseISO, sub } from "date-fns";
 import orderBy from "lodash/orderBy";
-import { MatchRequest } from "pubg-model/types/Match";
+import { MatchesRequest, MatchRequest } from "pubg-model/types/Match";
 import { Stats, StatsObject } from "pubg-model/types/Stats";
-import { Telemtry } from "pubg-model/types/Telemtry";
-import { ITelemtryPlayer } from "pubg-model/types/Telemtry";
+import { ITelemtryPlayer, Telemtry } from "pubg-model/types/Telemtry";
 import damageCauserName from "./damageCauserName";
 
 export const generateEmptyStats = (): StatsObject => ({
@@ -148,10 +148,11 @@ interface ITeams {
   players: IPlayer[];
 }
 
-export const findPlayer = (match: MatchRequest, id: string) => {
-  const player = match.players.find((player) => player.id === id) || null;
-  return player;
-};
+export const findPlayerById = (match: MatchRequest, id: string) =>
+  match.players.find((player) => player.id === id) || null;
+
+export const findPlayerByPubgId = (match: MatchRequest, playerId: string) =>
+  match.players.find((player) => player.stats.playerId === playerId) || null;
 
 export const generateTeamStats = (match: MatchRequest) => {
   const teams: ITeams[] = [];
@@ -162,7 +163,7 @@ export const generateTeamStats = (match: MatchRequest) => {
         id: team.id,
         rank: team.rank,
         players: team.players.map((player) => {
-          const p = findPlayer(match, player);
+          const p = findPlayerById(match, player);
           if (!p) throw new Error();
           return {
             id: p.id,
@@ -220,4 +221,42 @@ export const parseMatchTelemetryByPlayer = (
     }
   });
   return data;
+};
+
+export const getRecentlyPlayedWith = (
+  matches: MatchesRequest,
+  playerId: string,
+  limit: number
+) => {
+  const teamPlayer: { name: string; matches: number }[] = [];
+
+  matches
+    .filter((match) =>
+      // TODO: create constant
+      isAfter(parseISO(match.createdAt), sub(new Date(), { days: 14 }))
+    )
+    .forEach((match) => {
+      const player = findPlayerByPubgId(match, playerId);
+      if (!player) throw new Error();
+
+      const team = match.teams.find((team) => team.players.includes(player.id));
+      if (!team) throw new Error();
+
+      team.players.forEach((p) => {
+        if (p === player.id) return; // skip same player
+        const t = findPlayerById(match, p);
+        if (!t) throw new Error();
+        const fIndex = teamPlayer.findIndex((i) => i.name === t.stats.name);
+        if (fIndex !== -1) {
+          teamPlayer[fIndex].matches += 1;
+        } else {
+          teamPlayer.push({
+            name: t.stats.name,
+            matches: 0,
+          });
+        }
+      });
+    });
+
+  return orderBy(teamPlayer, ["matches"], ["desc"]).slice(0, limit);
 };

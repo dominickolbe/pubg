@@ -25,6 +25,7 @@ import {
   PlayerStatsCard,
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
+import { LastPlayedTeamCard } from "../../components/LastPlayedTeamCard";
 import { rootstore } from "../../components/store";
 import {
   matchRequestDefaults,
@@ -208,6 +209,15 @@ export const Player = view(() => {
           <List>
             {player && totalStats ? (
               <PlayerStatsCard stats={totalStats} />
+            ) : (
+              <PlayerStatsCardLoading />
+            )}
+          </List>
+          <List>
+            {player && matches !== null ? (
+              <>
+                <LastPlayedTeamCard matches={matches} player={player} />
+              </>
             ) : (
               <PlayerStatsCardLoading />
             )}
