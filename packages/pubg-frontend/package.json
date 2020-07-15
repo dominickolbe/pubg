@@ -21,7 +21,7 @@
     "date-fns": "^2.14.0",
     "emotion": "^10.0.27",
     "lodash": "^4.17.19",
-    "option-t": "^22.4.1",
+    "option-t": "^22.4.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
