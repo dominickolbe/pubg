@@ -129,7 +129,6 @@ export const importMatchById = async (id: string) => {
   const request = await PubgApiDriver.matches.getById(id);
 
   if (!request.ok) {
-    console.log(`[Error]: pubg api request failed`);
     return createErr(request.err);
   }
 

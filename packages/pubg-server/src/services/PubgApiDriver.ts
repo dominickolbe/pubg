@@ -120,8 +120,16 @@ export const PubgApiDriver = {
         }
         return createOk(response.data);
       } catch (error) {
-        console.log(error);
-        return createErr(null);
+        if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
+          console.log(
+            `[Warn]: PubgApiDriver.matches.getById HTTP_STATUS_NOT_FOUND`
+          );
+          return createErr(HTTP_STATUS_NOT_FOUND);
+        } else {
+          console.log(`[Error]: PubgApiDriver.matches.getById error`);
+          console.log(error);
+          return createErr(null);
+        }
       }
     },
   },
