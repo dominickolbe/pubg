@@ -4,7 +4,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "mongoose": "^5.9.26",
+    "mongoose": "^5.9.27",
     "option-t": "^22.4.3",
     "runtypes": "^5.0.1"
   },
