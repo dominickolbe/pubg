@@ -24,7 +24,7 @@
     "@types/koa": "^2.11.3",
     "@types/koa-router": "^7.4.1",
     "@types/koa__cors": "^3.0.1",
-    "@types/mongoose": "^5.7.34",
+    "@types/mongoose": "^5.7.35",
     "@types/node": "^14.0.27",
     "@types/yup": "^0.29.3",
     "nodemon": "^2.0.4",
