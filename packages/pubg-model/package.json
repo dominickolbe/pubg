@@ -4,12 +4,12 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "mongoose": "^5.9.27",
+    "mongoose": "^5.9.28",
     "option-t": "^22.4.3",
     "runtypes": "^5.0.1"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.7.34",
+    "@types/mongoose": "^5.7.36",
     "typescript": "^3.9.7"
   }
 }
