@@ -15,7 +15,7 @@
     "dotenv-safe": "^8.2.0",
     "koa": "^2.13.0",
     "koa-router": "^9.4.0",
-    "mongoose": "^5.9.28",
+    "mongoose": "^5.9.29",
     "option-t": "^22.4.3",
     "runtypes": "^5.0.1",
     "yup": "^0.29.3"
