@@ -21,7 +21,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
-    "@types/koa": "^2.11.3",
+    "@types/koa": "^2.11.4",
     "@types/koa-router": "^7.4.1",
     "@types/koa__cors": "^3.0.1",
     "@types/mongoose": "^5.7.36",
