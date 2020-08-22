@@ -252,7 +252,7 @@ export const getRecentlyPlayedWith = (
         } else {
           teamPlayer.push({
             name: t.stats.name,
-            matches: 0,
+            matches: 1,
           });
         }
       });
