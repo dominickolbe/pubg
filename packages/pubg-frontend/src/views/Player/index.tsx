@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Player = view(() => {
+  // @ts-ignore
   const { id } = useParams();
   const classes = useStyles();
 
