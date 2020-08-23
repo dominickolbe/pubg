@@ -78,7 +78,7 @@ export const MatchTable = (props: {
             {matches.length === 0 && (
               <TableRow>
                 <TableCell colSpan={7} align="center">
-                  no matches found
+                  no matches found in the last 14 days
                 </TableCell>
               </TableRow>
             )}
