@@ -12,6 +12,7 @@
     "@sentry/node": "^5.22.3",
     "axios": "^0.20.0",
     "date-fns": "^2.16.1",
+    "discord.js": "^12.3.1",
     "dotenv-safe": "^8.2.0",
     "koa": "^2.13.0",
     "koa-router": "^9.4.0",
