@@ -6,12 +6,7 @@ import Koa from "koa";
 import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
 import { Database } from "./database";
-
-import Discord from "discord.js";
-const DISCORD_ID = process.env.DISCORD_ID || "";
-const DISCORD_TOKEN = process.env.DISCORD_TOKEN || "";
-
-const hook = new Discord.WebhookClient(DISCORD_ID, DISCORD_TOKEN);
+import { DiscordNotifier } from "./utils/discord";
 
 const PORT = process.env.PORT;
 
@@ -48,9 +43,7 @@ const server = async () => {
 
   app.listen(PORT, () => {
     console.log(`[Info]: server is running on port ${PORT}`);
-    hook.send(
-      `${new Date().toISOString()} - [Info]: server is running on port ${PORT}`
-    );
+    DiscordNotifier(`[Info]: server started on port ${PORT}`);
   });
 };
 
