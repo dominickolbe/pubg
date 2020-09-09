@@ -17,13 +17,8 @@ import { AppHeader } from "./components/AppHeader";
 import { SettingsDialog } from "./components/SettingsDialog";
 import { rootstore } from "./components/store";
 import { theme, useStyles } from "./theme";
-
-const Start = React.lazy(() =>
-  import("./views/Start").then((module) => ({ default: module.Start }))
-);
-const Player = React.lazy(() =>
-  import("./views/Player").then((module) => ({ default: module.Player }))
-);
+import { Player } from "./views/Player";
+import { Start } from "./views/Start";
 
 const LazyPreloader = () => {
   const classes = useStyles();
