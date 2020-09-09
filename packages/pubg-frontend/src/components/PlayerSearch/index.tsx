@@ -56,6 +56,7 @@ export const PlayerSearch = (props: { onSubmit: (value: string) => void }) => {
       value={value}
       options={options}
       getOptionLabel={(option) => option && option.name}
+      noOptionsText="Type player name ..."
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
