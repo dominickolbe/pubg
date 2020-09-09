@@ -1,6 +1,6 @@
 import Koa from "koa";
 import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
-import { IPlayer, Player } from "pubg-model/types/Player";
+import { IPlayer } from "pubg-model/types/Player";
 import { HTTP_STATUS_NOT_FOUND } from "pubg-utils/src";
 import { MatchDbController } from "../database/model/match";
 import { PlayerModel } from "../database/model/player";
