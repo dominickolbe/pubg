@@ -148,7 +148,7 @@ export const MatchTableRowDetails = (props: {
               value={tab}
               onChange={(e, newValue) => setTab(newValue)}
             >
-              <Tab label="Your kills" />
+              <Tab label="Your stats" />
               <Tab label="Teams" />
               <Tab label="Players" />
             </Tabs>
