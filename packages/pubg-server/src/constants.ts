@@ -2,4 +2,4 @@ export const MONGO_CONNECTION_URI = `mongodb://${process.env.DATABASE_USER}:${pr
 
 export const PUBG_API_BASE = "https://api.pubg.com/shards/steam";
 
-export const ON_THE_FLY_UPDATE_INTERVAL = 5;
+export const ON_THE_FLY_UPDATE_INTERVAL = 30;
