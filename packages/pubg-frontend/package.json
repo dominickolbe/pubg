@@ -23,7 +23,7 @@
     "lodash": "^4.17.20",
     "option-t": "^23.0.1",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.0",
     "react-use": "^15.3.4",
     "runtypes": "^5.0.1",
