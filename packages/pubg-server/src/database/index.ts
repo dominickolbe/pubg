@@ -6,6 +6,7 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
+  retryWrites: false,
 };
 
 export const Database = {
