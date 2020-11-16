@@ -16,7 +16,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
     "@risingstack/react-easy-state": "^6.3.0",
-    "@sentry/browser": "^5.27.3",
+    "@sentry/browser": "^5.27.4",
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "emotion": "^10.0.27",
