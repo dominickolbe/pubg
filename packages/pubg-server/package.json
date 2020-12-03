@@ -16,18 +16,18 @@
     "dotenv-safe": "^8.2.0",
     "koa": "^2.13.0",
     "koa-router": "^10.0.0",
-    "mongoose": "^5.11.2",
-    "option-t": "^23.0.2",
+    "mongoose": "^5.11.3",
+    "option-t": "^24.0.0",
     "runtypes": "^5.0.1",
-    "yup": "^0.29.3"
+    "yup": "^0.32.0"
   },
   "devDependencies": {
     "@types/koa": "^2.11.6",
     "@types/koa-router": "^7.4.1",
     "@types/koa__cors": "^3.0.2",
-    "@types/mongoose": "^5.10.1",
+    "@types/mongoose": "^5.10.2",
     "@types/node": "^14.14.10",
-    "@types/yup": "^0.29.9",
+    "@types/yup": "^0.29.10",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.0",
