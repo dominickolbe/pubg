@@ -41,9 +41,8 @@ export const setUpApi = (params: { prefix: string }) => {
       router.get("/players/:id", duplicatedPlayerCheck, async (ctx, next) => {
         const returnPlayer = (player: IPlayer) => {
           const resp = player.toObject();
-          delete resp.matches;
-          delete resp.autoUpdate;
-          ctx.body = resp;
+          const { matches, autoUpdate, ...rest } = resp;
+          ctx.body = rest;
           return next();
         };
 
