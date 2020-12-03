@@ -8499,10 +8499,10 @@ optimize-css-assets-webpack-plugin@5.0.3:
     cssnano "^4.1.10"
     last-call-webpack-plugin "^3.0.0"
 
-option-t@^23.0.2:
-  version "23.0.2"
-  resolved "https://registry.yarnpkg.com/option-t/-/option-t-23.0.2.tgz#ca8aa33be58f020d9997b80cb00d91b2c6c05033"
-  integrity sha512-t9YtK1IwW094HS9X9sk6eDl5BF3deJk10HOtFdGhjsFmU3TcAcN7MiFZCcIuIyrluYkETPGlm4gXtjikbbG7oQ==
+option-t@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/option-t/-/option-t-24.0.0.tgz#34f9df3d9f171faafda5e8422c346b3a70eef8bc"
+  integrity sha512-4ccukeBsOWoGdP2RypnSv1c0+MUAmFiDpDgTTTFnu0p0HEyspaSRGn2tC2R7XkqP91O8e2N3p1YOLrc8YRn+XQ==
 
 optionator@^0.8.1, optionator@^0.8.3:
   version "0.8.3"

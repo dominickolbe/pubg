@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "mongoose": "^5.11.2",
-    "option-t": "^23.0.2",
+    "option-t": "^24.0.0",
     "runtypes": "^5.0.1"
   },
   "devDependencies": {
