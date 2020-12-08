@@ -19,7 +19,7 @@
     "prettier-check": "prettier --check packages/"
   },
   "dependencies": {
-    "ts-node": "^9.1.0",
+    "ts-node": "^9.1.1",
     "typescript": "^4.1.2"
   },
   "engines": {
