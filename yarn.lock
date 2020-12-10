@@ -12545,10 +12545,10 @@ yn@3.1.1:
   resolved "https://registry.yarnpkg.com/yn/-/yn-3.1.1.tgz#1e87401a09d767c1d5eab26a6e4c185182d2eb50"
   integrity sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 
-yup@^0.32.0:
-  version "0.32.0"
-  resolved "https://registry.yarnpkg.com/yup/-/yup-0.32.0.tgz#1d44b566e6172fa89df1e034613ac8077e9634b3"
-  integrity sha512-J6zDSGozP6+1rhYHCfVqHvDfASOmasi4HvyafwLT4pudAuzmYQ8rWowuA5cchxfi/HxOJi6uK1gmdat9M8GNCw==
+yup@^0.32.6:
+  version "0.32.6"
+  resolved "https://registry.yarnpkg.com/yup/-/yup-0.32.6.tgz#7fd924536cdf61ec5df7a4bd0576d0a3954b03f6"
+  integrity sha512-i5poB/ZWU0zGoCwViLw++NQbUFy+X9xfoSSK31JOLh3RoBVUaYrNlYIyxqK8HGrxTHPIl5BBNu/mJYKNeFVvdA==
   dependencies:
     "@babel/runtime" "^7.10.5"
     "@types/lodash" "^4.14.165"
