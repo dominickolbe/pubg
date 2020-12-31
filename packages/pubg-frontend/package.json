@@ -35,7 +35,7 @@
     "@types/node": "^14.14.16",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@types/react-router-dom": "^5.1.6",
+    "@types/react-router-dom": "^5.1.7",
     "react-scripts": "3.4.4"
   },
   "eslintConfig": {
