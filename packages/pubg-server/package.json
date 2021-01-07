@@ -19,7 +19,7 @@
     "mongoose": "^5.11.10",
     "option-t": "^24.1.0",
     "runtypes": "^5.0.1",
-    "yup": "^0.32.0"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@types/koa": "^2.11.6",
