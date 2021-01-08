@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "pubg",
+      "script": "yarn",
+      "args": "start",
+      "watch": false,
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
