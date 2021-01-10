@@ -72,4 +72,4 @@ heroku run updateplayers --app pubg-lol
 
 ## License
 
-Copyright (c) 2020 [Dominic Kolbe](https://dominickolbe.dk)
+Copyright (c) 2021 [Dominic Kolbe](https://dominickolbe.dk)
