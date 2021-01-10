@@ -60,6 +60,12 @@ update players and matches
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
 ```
 
+run update players task
+
+```bash
+yarn workspace pubg-server ts-node --transpile-only ./src/tasks/run-update-players.ts
+```
+
 ## License
 
 Copyright (c) 2021 [Dominic Kolbe](https://dominickolbe.dk)
