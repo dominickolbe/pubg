@@ -8,7 +8,11 @@ import {
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import { ON_THE_FLY_UPDATE_INTERVAL } from "../constants";
-import { PlayerDbController, PlayerModel } from "../database/model/player";
+import {
+  PlayerDbController,
+  PlayerModel,
+} from "../database/mongo/model/player";
+import { RedisDatabase } from "../database/redis";
 import {
   cache,
   duplicatedPlayerCheck,
@@ -21,6 +25,8 @@ export const setUpApi = (params: { prefix: string }) => {
   return {
     init: (app: Koa) => {
       const router = new Router();
+
+      const redis = RedisDatabase();
 
       router.get("/status", async (ctx) => {
         ctx.response.status = HTTP_STATUS_OK;
@@ -40,6 +46,11 @@ export const setUpApi = (params: { prefix: string }) => {
           const resp = player.toObject();
           const { matches, autoUpdate, ...rest } = resp;
           ctx.body = rest;
+          redis.setWithEx(
+            "players." + resp.name,
+            JSON.stringify(rest),
+            60 * 10
+          );
           return next();
         };
 
@@ -61,6 +72,13 @@ export const setUpApi = (params: { prefix: string }) => {
           }
           return player;
         };
+
+        const cacheValue = await redis.get("players." + ctx.params.id);
+        if (cacheValue !== null) {
+          // @ts-ignore
+          ctx.body = JSON.parse(cacheValue);
+          return next();
+        }
 
         const player = await PlayerModel.findOne({
           name: ctx.params.id,
@@ -96,6 +114,13 @@ export const setUpApi = (params: { prefix: string }) => {
         const limit = parseInt(ctx.query.limit) ?? 10;
         const offset = parseInt(ctx.query.offset) ?? 0;
 
+        const cacheValue = await redis.get("matches." + ctx.params.id);
+        if (cacheValue !== null) {
+          // @ts-ignore
+          ctx.body = JSON.parse(cacheValue);
+          return next();
+        }
+
         const matches = await PlayerDbController.findMatches(
           { name: ctx.params.id },
           limit,
@@ -104,6 +129,11 @@ export const setUpApi = (params: { prefix: string }) => {
 
         if (matches.ok) {
           ctx.body = matches.val;
+          redis.setWithEx(
+            "matches." + ctx.params.id,
+            JSON.stringify(matches.val),
+            60 * 10
+          );
           return next();
         }
 

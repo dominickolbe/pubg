@@ -2,8 +2,8 @@ require("dotenv-safe").config();
 
 import { isBefore, parseISO, sub } from "date-fns";
 import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
-import { Database } from "../database";
-import { PlayerModel } from "../database/model/player";
+import { Database } from "../database/mongo";
+import { PlayerModel } from "../database/mongo/model/player";
 import { updatePlayerStatsAndMatches } from "../utils";
 
 // min update interval in minutes

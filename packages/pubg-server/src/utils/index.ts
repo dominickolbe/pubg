@@ -2,8 +2,8 @@ import Koa from "koa";
 import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
 import { IPlayer } from "pubg-model/types/Player";
 import { HTTP_STATUS_NOT_FOUND } from "pubg-utils/src";
-import { MatchDbController } from "../database/model/match";
-import { PlayerModel } from "../database/model/player";
+import { MatchDbController } from "../database/mongo/model/match";
+import { PlayerModel } from "../database/mongo/model/player";
 import { MATCH_TYPES, PubgApiDriver } from "../services/PubgApiDriver";
 
 export const importNewPlayer = async (name: string) => {

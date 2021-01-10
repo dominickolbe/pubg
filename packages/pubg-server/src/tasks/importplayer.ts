@@ -1,7 +1,7 @@
 require("dotenv-safe").config();
 
-import { Database } from "../database";
-import { PlayerModel } from "../database/model/player";
+import { Database } from "../database/mongo";
+import { PlayerModel } from "../database/mongo/model/player";
 import { importNewPlayer, importPlayerStats } from "../utils";
 
 const run = async () => {

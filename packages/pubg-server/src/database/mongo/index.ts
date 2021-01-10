@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { createErr, createOk } from "option-t/cjs/PlainResult";
-import { MONGO_CONNECTION_URI } from "../constants";
+import { MONGO_CONNECTION_URI } from "../../constants";
 
 const options = {
   useNewUrlParser: true,
