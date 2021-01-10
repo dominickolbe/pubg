@@ -1,7 +1,7 @@
 import redis from "redis";
 import { REDIS_HOST } from "../../constants";
 
-export const RedisDatabase = () => {
+const RedisDatabase = () => {
   const client = redis.createClient(REDIS_HOST);
 
   client.on("connect", () => console.log(`[Info]: connected to redis`));
@@ -9,6 +9,9 @@ export const RedisDatabase = () => {
   client.on("error", function (error) {
     console.error(error);
   });
+
+  // flush db on server start
+  client.flushdb();
 
   return {
     get: async (key: string) => {
@@ -29,3 +32,5 @@ export const RedisDatabase = () => {
     },
   };
 };
+
+export const redisDatabase = RedisDatabase();
