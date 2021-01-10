@@ -9,7 +9,6 @@ import {
 } from "pubg-utils/src";
 import { ON_THE_FLY_UPDATE_INTERVAL } from "../constants";
 import { PlayerDbController, PlayerModel } from "../database/model/player";
-import { auditLog } from "../middlewares/audit";
 import {
   cache,
   duplicatedPlayerCheck,
@@ -22,8 +21,6 @@ export const setUpApi = (params: { prefix: string }) => {
   return {
     init: (app: Koa) => {
       const router = new Router();
-
-      app.use(auditLog);
 
       router.get("/status", async (ctx) => {
         ctx.response.status = HTTP_STATUS_OK;
