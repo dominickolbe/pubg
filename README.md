@@ -60,16 +60,6 @@ update players and matches
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
 ```
 
-## heroku tasks
-
-```bash
-heroku run importplayer *PLAYER_NAME* --app pubg-lol
-```
-
-```bash
-heroku run updateplayers --app pubg-lol
-```
-
 ## License
 
 Copyright (c) 2021 [Dominic Kolbe](https://dominickolbe.dk)
