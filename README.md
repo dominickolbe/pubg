@@ -63,7 +63,7 @@ yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts
 run update players task
 
 ```bash
-yarn workspace pubg-server ts-node --transpile-only ./src/tasks/run-update-players.ts
+NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only ./src/tasks/run-update-players.ts
 ```
 
 ## License

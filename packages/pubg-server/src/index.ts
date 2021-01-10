@@ -6,6 +6,7 @@ import Koa from "koa";
 import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
 import { Database } from "./database/mongo";
+import { redisDatabase } from "./database/redis";
 import { DiscordNotifier } from "./utils/discord";
 
 const PORT = process.env.PORT;
@@ -15,6 +16,8 @@ const Api = setUpApi({ prefix: "/api" });
 const server = async () => {
   const result = await Database.connect();
   if (result.err) process.exit(1);
+
+  redisDatabase.flushdb();
 
   const app = new Koa();
 

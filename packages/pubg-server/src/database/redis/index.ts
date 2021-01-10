@@ -10,9 +10,6 @@ const RedisDatabase = () => {
     console.error(error);
   });
 
-  // flush db on server start
-  client.flushdb();
-
   return {
     get: async (key: string) => {
       return new Promise((resolve, reject) => {
@@ -29,6 +26,10 @@ const RedisDatabase = () => {
     },
     delete: (key: string) => {
       client.del(key);
+    },
+    flushdb: () => {
+      console.log(`[Info]: flush redis db`);
+      client.flushdb();
     },
   };
 };
