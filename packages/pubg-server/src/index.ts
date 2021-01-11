@@ -1,10 +1,11 @@
 require("dotenv-safe").config();
 
-import cors from "@koa/cors";
+import KoaCors from "@koa/cors";
 import * as Sentry from "@sentry/node";
 import Koa from "koa";
 import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
+import { CLIENT_ORIGIN } from "./constants";
 import { Database } from "./database/mongo";
 import { redisDatabase } from "./database/redis";
 
@@ -20,7 +21,13 @@ const server = async () => {
 
   const app = new Koa();
 
-  app.use(cors());
+  app.use(
+    KoaCors({
+      credentials: true,
+      origin: CLIENT_ORIGIN,
+      allowMethods: "GET",
+    })
+  );
 
   app.on("error", (err, ctx) => {
     Sentry.withScope(function (scope) {

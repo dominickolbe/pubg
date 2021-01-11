@@ -31,8 +31,6 @@ export const setUpApi = (params: { prefix: string }) => {
     init: (app: Koa) => {
       const router = new Router();
 
-      // const redis = RedisDatabase();
-
       router.get("/status", async (ctx) => {
         ctx.response.status = HTTP_STATUS_OK;
       });

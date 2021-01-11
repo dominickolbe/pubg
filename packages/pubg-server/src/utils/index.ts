@@ -183,6 +183,7 @@ export const cache: {
   pubgPlayerNotFound: [],
 };
 
+// TODO: refactor
 export const duplicatedPlayerCheck = (ctx: Koa.Context, next: Koa.Next) => {
   if (cache.pubgPlayerNotFound.includes(ctx.params.id)) {
     ctx.response.status = HTTP_STATUS_NOT_FOUND;
