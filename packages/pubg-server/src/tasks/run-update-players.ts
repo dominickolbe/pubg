@@ -13,6 +13,7 @@ const run = async () => {
   logger.info("start job");
 
   const exit = async (exitCode: number) => {
+    redisDatabase.end();
     await Database.disconnect();
     logger.info("end job");
     process.exit(exitCode);

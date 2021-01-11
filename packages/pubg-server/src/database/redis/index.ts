@@ -31,6 +31,10 @@ const RedisDatabase = () => {
       console.log(`[Info]: flush redis db`);
       client.flushdb();
     },
+    end: () => {
+      console.log(`[Info]: end redis connection`);
+      client.end(false);
+    },
   };
 };
 

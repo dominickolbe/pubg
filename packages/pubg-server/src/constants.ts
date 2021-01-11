@@ -8,4 +8,4 @@ export const ON_THE_FLY_UPDATE_INTERVAL = 30;
 
 // CACHE
 export const CACHE_TTL_PLAYER = 60 * 10;
-export const CACHE_TTL_MATCHES = 60 * 2;
+export const CACHE_TTL_MATCHES = 60 * 5;
