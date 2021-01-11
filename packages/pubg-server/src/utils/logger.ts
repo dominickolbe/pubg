@@ -9,8 +9,12 @@ export const Logger = (params: { namespace: string }) => {
   const { namespace } = params;
   const logger = createLogger({
     format: combine(label({ label: namespace }), timestamp(), customFormat),
-    transports: [new transports.File({ filename: namespace + ".log" })],
+    transports: [new transports.Console({})],
   });
+
+  if (process.env.NODE_ENV === "production") {
+    logger.add(new transports.File({ filename: namespace + ".log" }));
+  }
 
   return logger;
 };
