@@ -9,3 +9,5 @@ yarn-error.log*
 .eslintcache
 dump/
 packages/pubg-frontend/build
+
+run-update-players.log
