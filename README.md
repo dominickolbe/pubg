@@ -18,7 +18,7 @@ The current production build is served by [vercel.com](https://vercel.com)
 https://pubg.lol
 ```
 
-the server is running on [heroku.com](https://heroku.com)
+the server is running on ubuntu
 
 ```http
 https://api.pubg.lol
