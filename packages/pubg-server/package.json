@@ -10,6 +10,7 @@
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "@sentry/node": "^5.29.2",
+    "agenda": "^3.1.0",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "discord.js": "^12.5.1",
@@ -24,6 +25,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
+    "@types/agenda": "^3.0.2",
     "@types/koa": "^2.11.6",
     "@types/koa-router": "^7.4.1",
     "@types/koa__cors": "^3.0.2",
