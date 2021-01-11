@@ -54,12 +54,6 @@ import player by name
 yarn workspace pubg-server ts-node --transpile-only ./src/tasks/importplayer.ts *PLAYER_NAME*
 ```
 
-update players and matches
-
-```bash
-yarn workspace pubg-server ts-node --transpile-only ./src/tasks/updateplayers.ts *UPDATE_INTERVAL optional*
-```
-
 run update players task
 
 ```bash
