@@ -7,7 +7,6 @@ import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
 import { Database } from "./database/mongo";
 import { redisDatabase } from "./database/redis";
-import { DiscordNotifier } from "./utils/discord";
 
 const PORT = process.env.PORT;
 
@@ -46,7 +45,6 @@ const server = async () => {
 
   app.listen(PORT, () => {
     console.log(`[Info]: server is running on port ${PORT}`);
-    DiscordNotifier(`[Info]: server started on port ${PORT}`);
   });
 };
 

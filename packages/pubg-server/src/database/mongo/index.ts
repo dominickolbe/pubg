@@ -11,18 +11,18 @@ const options = {
 
 export const Database = {
   connect: async () => {
-    console.log("[Info]: connecting to database ...");
+    console.log("[Info]: (mongo) connecting ...");
     try {
       const connection = await mongoose.connect(MONGO_CONNECTION_URI, options);
-      console.log("[Info]: successfully connected to database");
+      console.log("[Info]: (mongo) successfully connected");
       return createOk(connection);
     } catch (error) {
-      console.log("[Error]: connection to database failed");
+      console.log("[Error]: (mongo) connection failed");
       return createErr(error);
     }
   },
   disconnect: async () => {
-    console.log("[Info]: close connection to database ...");
+    console.log("[Info]: (mongo) close connection ...");
     return mongoose.disconnect();
   },
 };

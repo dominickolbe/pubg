@@ -4,7 +4,9 @@ import { REDIS_HOST } from "../../constants";
 const RedisDatabase = () => {
   const client = redis.createClient(REDIS_HOST);
 
-  client.on("connect", () => console.log(`[Info]: connected to redis`));
+  client.on("connect", () =>
+    console.log(`[Info]: (redis) successfully connected`)
+  );
 
   client.on("error", function (error) {
     console.error(error);
@@ -28,11 +30,11 @@ const RedisDatabase = () => {
       client.del(key);
     },
     flushdb: () => {
-      console.log(`[Info]: flush redis db`);
+      console.log(`[Info]: (redis) flush db`);
       client.flushdb();
     },
     end: () => {
-      console.log(`[Info]: end redis connection`);
+      console.log(`[Info]: (redis) end connection`);
       client.end(false);
     },
   };
