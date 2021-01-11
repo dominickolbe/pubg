@@ -5,7 +5,6 @@ import * as Sentry from "@sentry/node";
 import Koa from "koa";
 import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
-import { CLIENT_ORIGIN } from "./constants";
 import { Database } from "./database/mongo";
 import { redisDatabase } from "./database/redis";
 
