@@ -1,5 +1,3 @@
-require("dotenv-safe").config();
-
 import { Database } from "../database/mongo";
 import { PlayerModel } from "../database/mongo/model/player";
 import { importNewPlayer, importPlayerStats } from "../utils";

@@ -5,7 +5,7 @@ const RedisDatabase = () => {
   const client = redis.createClient(REDIS_HOST);
 
   client.on("connect", () =>
-    console.log(`[Info]: (redis) successfully connected`)
+    console.log(`[Info]: (redis) successfully connected.`)
   );
 
   client.on("error", function (error) {

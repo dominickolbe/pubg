@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  redis:
+    container_name: pubg-redis
+    image: redis:alpine
+    restart: always
+    networks:
+      - pubg-network
+    # just for testing
+    ports:
+      - 6379:6379
+  server:
+    container_name: pubg-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - PORT=${PORT}
+      - CLIENT_ORIGIN=${CLIENT_ORIGIN}
+      - REDIS_HOST=redis://pubg-redis
+      - PUBG_API_TOKEN=${PUBG_API_TOKEN}
+    depends_on:
+      - redis
+    ports:
+      - ${PORT}:${PORT}
+    # volumes:
+    #   - server-data:/usr/src/app
+    networks:
+      - pubg-network
+
+networks:
+  pubg-network:
+    driver: bridge
+# volumes:
+#   server-data:

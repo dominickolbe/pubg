@@ -1,5 +1,3 @@
-require("dotenv-safe").config();
-
 import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
 import { Database } from "../database/mongo";
 import { PlayerModel } from "../database/mongo/model/player";
