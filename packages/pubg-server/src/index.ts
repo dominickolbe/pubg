@@ -51,10 +51,4 @@ const server = async () => {
   });
 };
 
-// server();
-
-const test = () => {
-  redisDatabase.flushdb();
-};
-
-test();
+server();

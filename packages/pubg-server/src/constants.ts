@@ -5,7 +5,7 @@ export const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
 // DATABASE
 
-export const MONGO_CONNECTION_URI = `${process.env.DATABASE_CONNECTION_URI}`;
+export const MONGO_HOST = `${process.env.MONGO_HOST}`;
 export const REDIS_HOST = `${process.env.REDIS_HOST}`;
 
 // API

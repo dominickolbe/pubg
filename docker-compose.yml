@@ -7,9 +7,22 @@ services:
     restart: always
     networks:
       - pubg-network
-    # just for testing
-    ports:
-      - 6379:6379
+    volumes:
+      - redis-data:/data
+      - redis-dump:/var/lib/redis
+    # ports:
+    #   - 6379:6379
+
+  mongo:
+    container_name: pubg-mongo
+    image: mongo
+    networks:
+      - pubg-network
+    volumes:
+      - mongo-data:/data/db
+    # ports:
+    #   - 27017:27017
+
   server:
     container_name: pubg-server
     build:
@@ -20,9 +33,11 @@ services:
       - PORT=${PORT}
       - CLIENT_ORIGIN=${CLIENT_ORIGIN}
       - REDIS_HOST=redis://pubg-redis
+      - MONGO_HOST=mongodb://mongo:27017/pubg-mongo
       - PUBG_API_TOKEN=${PUBG_API_TOKEN}
     depends_on:
       - redis
+      - mongo
     ports:
       - ${PORT}:${PORT}
     # volumes:
@@ -33,5 +48,8 @@ services:
 networks:
   pubg-network:
     driver: bridge
-# volumes:
-#   server-data:
+
+volumes:
+  mongo-data:
+  redis-data:
+  redis-dump:
