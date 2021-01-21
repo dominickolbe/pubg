@@ -84,6 +84,8 @@ docker-compose --env-file packages/pubg-server/.env up
 docker-compose --env-file packages/pubg-server/.env down
 ```
 
+---
+
 ## Commands
 
 import player by name
