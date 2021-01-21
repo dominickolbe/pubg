@@ -18,32 +18,70 @@ The current production build is served by [vercel.com](https://vercel.com)
 https://pubg.lol
 ```
 
-the server is running on ubuntu
+the server is running on AWS
 
 ```http
 https://api.pubg.lol
 ```
 
-## Production
+## Getting Started
 
-install all necessary dependencies (node_modules)
+### Prerequisites
+
+I build this entire project with the following setup:
+
+- macOS Big Sur version 11.1
+- node v14.15.4
+- npm 6.14.10
+- yarn v1.22.10
+- Docker version 20.10.2, build 2291f61
+
+---
+
+### Development
+
+1. create your `.env` file based on the `.env.example`
+
+2. install all necessary dependencies
 
 ```bash
 yarn install
 ```
 
-build frontend application
+3. start frontend
 
 ```bash
-yarn build:frontend
+yarn start:dev:frontend
 ```
 
-## Tests (coming soon)
-
-make sure the build process of app is working
+4. start server
 
 ```bash
-yarn build:frontend
+yarn start:dev:server
+```
+
+---
+
+## Production
+
+1. create your `.env` file based on the `.env.example`
+
+2. build docker application
+
+```bash
+docker-compose --env-file packages/pubg-server/.env build
+```
+
+3. start docker application
+
+```bash
+docker-compose --env-file packages/pubg-server/.env up
+```
+
+4. stop docker application
+
+```bash
+docker-compose --env-file packages/pubg-server/.env down
 ```
 
 ## Commands
@@ -60,6 +98,8 @@ run update players task
 NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only ./src/tasks/run-update-players.ts
 ```
 
-## License
+---
 
-Copyright (c) 2021 [Dominic Kolbe](https://dominickolbe.dk)
+## The MIT License (MIT)
+
+Copyright © 2021 [Dominic Kolbe](https://dominickolbe.dk) :de:
