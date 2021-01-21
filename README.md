@@ -98,6 +98,10 @@ run update players task
 NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only ./src/tasks/run-update-players.ts
 ```
 
+```bash
+*/5 * * * * cd ~/apps/pubg/ && bash scripts/run-update-players.sh >/dev/null 2>&1
+```
+
 ---
 
 ## The MIT License (MIT)
