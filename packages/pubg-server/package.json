@@ -19,7 +19,6 @@
     "option-t": "^24.1.0",
     "redis": "^3.0.2",
     "runtypes": "^5.0.1",
-    "winston": "^3.3.3",
     "yup": "^0.32.8"
   },
   "devDependencies": {
