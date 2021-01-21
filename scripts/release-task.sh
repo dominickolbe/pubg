@@ -2,16 +2,17 @@
 
 echo "# # # Start release task # # #"
 
+echo "1. Stop docker instance"
+sudo docker-compose --env-file packages/pubg-server/.env down
 
-echo "1. Fetch repository ..."
+echo "2. Fetch repository ..."
 git fetch origin
 git reset --hard origin/master
 
-echo "2. Install dependencies ..."
-yarn install --frozen-lockfile
+echo "3. Rebuild docker instance"
+sudo docker-compose --env-file packages/pubg-server/.env build
 
-echo "3. Restart app ..."
-pm2 restart pm2.json
-
+echo "4. Restart docker instance"
+sudo docker-compose --env-file packages/pubg-server/.env up -d
 
 echo "# # # Finished release task # # #"
