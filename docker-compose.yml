@@ -4,6 +4,7 @@ services:
   mongo:
     container_name: pubg-mongo
     image: mongo
+    restart: unless-stopped
     networks:
       - pubg-network
     volumes:
@@ -12,6 +13,7 @@ services:
   redis:
     container_name: pubg-redis
     image: redis:alpine
+    restart: unless-stopped
     networks:
       - pubg-network
     volumes:
@@ -27,6 +29,7 @@ services:
     depends_on:
       - mongo
       - redis
+    restart: unless-stopped
     networks:
       - pubg-network
     ports:
