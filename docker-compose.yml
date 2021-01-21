@@ -20,9 +20,7 @@ services:
 
   server:
     container_name: pubg-server
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     environment:
       - REDIS_HOST=redis://pubg-redis
       - MONGO_HOST=mongodb://mongo:27017/pubg-mongo
@@ -33,8 +31,6 @@ services:
       - pubg-network
     ports:
       - ${PORT}:${PORT}
-    # volumes:
-    #   - server-data:/usr/src/app
 
 networks:
   pubg-network:
