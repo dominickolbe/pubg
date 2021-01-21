@@ -1,3 +1,4 @@
+import { css } from "@emotion/css";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Collapse from "@material-ui/core/Collapse";
@@ -8,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { css } from "emotion";
 import { StatsObject } from "pubg-model/types/Stats";
 import React, { ReactNode } from "react";
 import { useLocalStorage } from "react-use";

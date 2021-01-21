@@ -1,10 +1,10 @@
+import { css } from "@emotion/css";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import { css } from "emotion";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useState } from "react";
