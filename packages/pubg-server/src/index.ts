@@ -4,7 +4,7 @@ import KoaCors from "@koa/cors";
 import Koa from "koa";
 import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
-import { PORT } from "./constants";
+import { CLIENT_ORIGIN, PORT } from "./constants";
 import { Database } from "./database/mongo";
 import { redisDatabase } from "./database/redis";
 
@@ -21,6 +21,8 @@ const server = async () => {
   app.use(
     KoaCors({
       credentials: true,
+      origin: CLIENT_ORIGIN,
+      allowMethods: "GET",
     })
   );
 
