@@ -9,6 +9,8 @@ services:
       - pubg-network
     volumes:
       - mongo-data:/data/db
+    ports:
+      - ${MONGO_PORT}:27017
 
   redis:
     container_name: pubg-redis
@@ -19,6 +21,8 @@ services:
     volumes:
       - redis-data:/data
       - redis-dump:/var/lib/redis
+    ports:
+      - ${REDIS_PORT}:6379
 
   server:
     container_name: pubg-server

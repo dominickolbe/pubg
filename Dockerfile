@@ -12,6 +12,6 @@ COPY yarn.lock yarn.lock
 
 RUN yarn install --frozen-lockfile
 
-COPY . .
+COPY packages packages
 
 CMD ["yarn", "start"]
