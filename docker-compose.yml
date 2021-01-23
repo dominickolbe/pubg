@@ -28,7 +28,7 @@ services:
     container_name: pubg-server
     build: .
     environment:
-      - MONGO_HOST=mongodb://mongo:27017/pubg-mongo
+      - MONGO_HOST=mongodb://mongo:27017/pubg
       - REDIS_HOST=redis://pubg-redis
     depends_on:
       - mongo
