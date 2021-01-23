@@ -18,11 +18,7 @@ const server = async () => {
 
   const app = new Koa();
 
-  app.use(
-    KoaCors({
-      origin: "*",
-    })
-  );
+  app.use(KoaCors());
 
   app.use(async (ctx, next) => {
     try {
