@@ -1,3 +1,9 @@
 .git
 */node_modules
-.DS_Store
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+README.md
+.eslintcache
