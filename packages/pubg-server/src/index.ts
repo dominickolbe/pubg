@@ -20,7 +20,7 @@ const server = async () => {
 
   app.use(
     KoaCors({
-      credentials: true,
+      origin: "*",
     })
   );
 
