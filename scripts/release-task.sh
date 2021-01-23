@@ -16,6 +16,6 @@ echo "4. Restart docker instance"
 sudo docker-compose --env-file packages/pubg-server/.env up -d
 
 echo "5. make scripts executable"
-sudo chmod +x -R scripts/
+sudo chmod +x scripts/*.sh
 
 echo "# # # Finished release task # # #"
