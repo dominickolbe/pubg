@@ -39,7 +39,7 @@ export const setUpApi = (params: { prefix: string }) => {
         };
       });
 
-      router.get("/__headers", hasAuthHeader, async (ctx) => {
+      router.get("/__headers", async (ctx) => {
         ctx.body = ctx.request.headers;
       });
 
