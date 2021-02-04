@@ -3,6 +3,10 @@
 export const PORT = process.env.PORT;
 export const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
+// AUTH
+
+export const AUTH_API_KEY = `${process.env.AUTH_API_KEY}`;
+
 // DATABASE
 
 export const MONGO_HOST = `${process.env.MONGO_HOST}`;

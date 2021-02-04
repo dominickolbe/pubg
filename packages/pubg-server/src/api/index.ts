@@ -4,7 +4,6 @@ import Router from "koa-router";
 import { IPlayer } from "pubg-model/types/Player";
 import {
   HTTP_STATUS_NOT_FOUND,
-  HTTP_STATUS_OK,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
 import {
@@ -18,6 +17,7 @@ import {
 } from "../database/mongo/model/player";
 import { redisDatabase } from "../database/redis";
 import { returnCache } from "../middleware";
+import { hasAuthHeader } from "../middleware/auth";
 import {
   cache,
   duplicatedPlayerCheck,
@@ -31,7 +31,7 @@ export const setUpApi = (params: { prefix: string }) => {
     init: (app: Koa) => {
       const router = new Router();
 
-      router.get("/__status", async (ctx) => {
+      router.get("/__status", hasAuthHeader, async (ctx) => {
         const uptime = Math.floor(process.uptime());
         ctx.body = {
           status: "success",
@@ -39,7 +39,7 @@ export const setUpApi = (params: { prefix: string }) => {
         };
       });
 
-      router.get("/__headers", async (ctx) => {
+      router.get("/__headers", hasAuthHeader, async (ctx) => {
         ctx.body = ctx.request.headers;
       });
 
