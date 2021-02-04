@@ -106,6 +106,6 @@ NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only ./src/ta
 
 ---
 
-## The MIT License (MIT)
+## LICENSE
 
 Copyright © 2021 [Dominic Kolbe](https://dominickolbe.dk) :de:
