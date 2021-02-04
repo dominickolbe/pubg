@@ -31,8 +31,16 @@ export const setUpApi = (params: { prefix: string }) => {
     init: (app: Koa) => {
       const router = new Router();
 
-      router.get("/status", async (ctx) => {
-        ctx.response.status = HTTP_STATUS_OK;
+      router.get("/__status", async (ctx) => {
+        const uptime = Math.floor(process.uptime());
+        ctx.body = {
+          status: "success",
+          uptime,
+        };
+      });
+
+      router.get("/__headers", async (ctx) => {
+        ctx.body = ctx.request.headers;
       });
 
       // PLAYERS
