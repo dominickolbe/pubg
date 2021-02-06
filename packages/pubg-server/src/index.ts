@@ -7,7 +7,7 @@ import { setUpApi } from "./api";
 import { CLIENT_ORIGIN, PORT } from "./constants";
 import { Database } from "./database/mongo";
 import { redisDatabase } from "./database/redis";
-import { useCache } from "./middleware/useCache";
+import { checkCacheHeader } from "./middleware/cache";
 
 const Api = setUpApi({ prefix: "/api" });
 
@@ -19,7 +19,7 @@ const server = async () => {
 
   const app = new Koa();
 
-  app.use(useCache);
+  app.use(checkCacheHeader);
 
   app.use(
     KoaCors({

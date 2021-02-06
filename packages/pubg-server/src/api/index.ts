@@ -16,8 +16,8 @@ import {
   PlayerModel,
 } from "../database/mongo/model/player";
 import { redisDatabase } from "../database/redis";
-import { returnCache } from "../middleware";
 import { hasAuthHeader } from "../middleware/auth";
+import { useCache } from "../middleware/cache";
 import {
   cache,
   duplicatedPlayerCheck,
@@ -55,7 +55,7 @@ export const setUpApi = (params: { prefix: string }) => {
       router.get(
         "/players/:id",
         duplicatedPlayerCheck,
-        returnCache,
+        useCache,
         async (ctx, next) => {
           const returnPlayer = (player: IPlayer) => {
             const resp = player.toObject();
@@ -119,7 +119,7 @@ export const setUpApi = (params: { prefix: string }) => {
 
       // MATCHES
 
-      router.get("/matches/:id", returnCache, async (ctx, next) => {
+      router.get("/matches/:id", useCache, async (ctx, next) => {
         const limit = parseInt(ctx.query.limit) ?? 10;
         const offset = parseInt(ctx.query.offset) ?? 0;
 
