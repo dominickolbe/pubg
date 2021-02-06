@@ -7,6 +7,7 @@ import { setUpApi } from "./api";
 import { CLIENT_ORIGIN, PORT } from "./constants";
 import { Database } from "./database/mongo";
 import { redisDatabase } from "./database/redis";
+import { useCache } from "./middleware/useCache";
 
 const Api = setUpApi({ prefix: "/api" });
 
@@ -17,6 +18,8 @@ const server = async () => {
   redisDatabase.flushdb();
 
   const app = new Koa();
+
+  app.use(useCache);
 
   app.use(
     KoaCors({

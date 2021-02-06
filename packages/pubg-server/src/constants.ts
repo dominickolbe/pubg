@@ -3,6 +3,11 @@
 export const PORT = process.env.PORT;
 export const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
+export const CUSTOM_HEADER = {
+  API_KEY: "x-api-key",
+  CACHE_CONTROL: "x-cache-control",
+};
+
 // AUTH
 
 export const AUTH_API_KEY = `${process.env.AUTH_API_KEY}`;
