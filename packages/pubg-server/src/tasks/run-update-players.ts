@@ -3,14 +3,14 @@ require("dotenv-safe").config();
 import { HTTP_STATUS_TOO_MANY_REQUESTS } from "pubg-utils/src";
 import { Database } from "../database/mongo";
 import { PlayerModel } from "../database/mongo/model/player";
-import { redisDatabase } from "../database/redis";
+import { RedisCtrl } from "../database/redis";
 import { updatePlayerStatsAndMatches } from "../utils";
 
 const run = async () => {
   console.log("start job");
 
   const exit = async (exitCode: number) => {
-    redisDatabase.end();
+    RedisCtrl.end();
     await Database.disconnect();
     console.log("end job");
     process.exit(exitCode);
@@ -36,9 +36,8 @@ const run = async () => {
       console.log(`[Error]: STOP importer. PUBG API LIMIT REACHED.`);
       await exit(0);
     }
+    RedisCtrl.flushdb();
   }
-
-  redisDatabase.flushdb();
 
   await exit(0);
 };

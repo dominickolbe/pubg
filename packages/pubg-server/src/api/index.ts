@@ -15,9 +15,8 @@ import {
   PlayerDbController,
   PlayerModel,
 } from "../database/mongo/model/player";
-import { redisDatabase } from "../database/redis";
 import { hasAuthHeader } from "../middleware/auth";
-import { useCache } from "../middleware/cache";
+import { getCache, setCache } from "../middleware/cache";
 import {
   cache,
   duplicatedPlayerCheck,
@@ -55,17 +54,13 @@ export const setUpApi = (params: { prefix: string }) => {
       router.get(
         "/players/:id",
         duplicatedPlayerCheck,
-        useCache,
+        getCache,
         async (ctx, next) => {
           const returnPlayer = (player: IPlayer) => {
             const resp = player.toObject();
             const { matches, autoUpdate, ...rest } = resp;
             ctx.body = rest;
-            redisDatabase.setWithEx(
-              ctx.request.url,
-              JSON.stringify(rest),
-              CACHE_TTL_PLAYER
-            );
+
             return next();
           };
 
@@ -114,33 +109,34 @@ export const setUpApi = (params: { prefix: string }) => {
             ctx.response.status = HTTP_STATUS_TOO_MANY_REQUESTS;
             return next();
           }
-        }
+        },
+        setCache
       );
 
       // MATCHES
 
-      router.get("/matches/:id", useCache, async (ctx, next) => {
-        const limit = parseInt(ctx.query.limit) ?? 10;
-        const offset = parseInt(ctx.query.offset) ?? 0;
+      router.get(
+        "/matches/:id",
+        getCache,
+        async (ctx, next) => {
+          const limit = parseInt(ctx.query.limit) ?? 10;
+          const offset = parseInt(ctx.query.offset) ?? 0;
 
-        const matches = await PlayerDbController.findMatches(
-          { name: ctx.params.id },
-          limit,
-          offset
-        );
-
-        if (matches.ok) {
-          ctx.body = matches.val;
-          redisDatabase.setWithEx(
-            ctx.request.url,
-            JSON.stringify(matches.val),
-            CACHE_TTL_MATCHES
+          const matches = await PlayerDbController.findMatches(
+            { name: ctx.params.id },
+            limit,
+            offset
           );
-          return next();
-        }
 
-        ctx.response.status = HTTP_STATUS_NOT_FOUND;
-      });
+          if (matches.ok) {
+            ctx.body = matches.val;
+            return next();
+          }
+
+          ctx.response.status = HTTP_STATUS_NOT_FOUND;
+        },
+        setCache
+      );
 
       router.allowedMethods();
       router.prefix(prefix);

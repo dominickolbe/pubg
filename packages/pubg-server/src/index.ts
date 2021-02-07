@@ -6,7 +6,7 @@ import { HTTP_STATUS_INTERNAL_SERVER_ERROR } from "pubg-utils/src";
 import { setUpApi } from "./api";
 import { CLIENT_ORIGIN, PORT } from "./constants";
 import { Database } from "./database/mongo";
-import { redisDatabase } from "./database/redis";
+import { RedisCtrl } from "./database/redis";
 import { checkCacheHeader } from "./middleware/cache";
 
 const Api = setUpApi({ prefix: "/api" });
@@ -15,7 +15,7 @@ const server = async () => {
   const result = await Database.connect();
   if (result.err) process.exit(1);
 
-  redisDatabase.flushdb();
+  RedisCtrl.flushdb();
 
   const app = new Koa();
 

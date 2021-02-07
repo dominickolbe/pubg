@@ -1,11 +1,12 @@
+import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
 import redis from "redis";
 import { REDIS_HOST } from "../../constants";
 
-const RedisDatabase = () => {
-  const client = redis.createClient(REDIS_HOST);
+const client = redis.createClient(REDIS_HOST);
 
+const init = () => {
   client.on("connect", () =>
-    console.log(`[Info]: (redis) successfully connected.`)
+    console.log(`[Info]: (redis) successfully connected`)
   );
 
   client.on("error", function (error) {
@@ -13,18 +14,34 @@ const RedisDatabase = () => {
   });
 
   return {
-    get: async (key: string) => {
-      return new Promise((resolve, reject) => {
+    get: async (key: string): Promise<Result<string, Error | null>> => {
+      return new Promise((resolve) => {
         client.get(key, (error, value) => {
-          return resolve(value);
+          if (error) return resolve(createErr(error));
+          if (value == null) return resolve(createErr(null));
+          return resolve(createOk(value));
         });
       });
     },
-    set: (key: string, value: string) => {
-      client.set(key, value);
+    set: async (key: string, value: string): Promise<Result<true, Error>> => {
+      return new Promise((resolve) => {
+        client.set(key, value, (error) => {
+          if (error) return resolve(createErr(error));
+          return resolve(createOk(true));
+        });
+      });
     },
-    setWithEx: (key: string, value: string, expires: number) => {
-      client.set(key, value, "EX", expires);
+    setWithEx: async (
+      key: string,
+      value: string,
+      expires: number
+    ): Promise<Result<true, Error>> => {
+      return new Promise((resolve) => {
+        client.set(key, value, "EX", expires, (error) => {
+          if (error) return resolve(createErr(error));
+          return resolve(createOk(true));
+        });
+      });
     },
     delete: (key: string) => {
       client.del(key);
@@ -40,4 +57,4 @@ const RedisDatabase = () => {
   };
 };
 
-export const redisDatabase = RedisDatabase();
+export const RedisCtrl = init();
