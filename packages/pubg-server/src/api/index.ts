@@ -30,7 +30,7 @@ export const setUpApi = (params: { prefix: string }) => {
     init: (app: Koa) => {
       const router = new Router();
 
-      router.get("/__status", hasAuthHeader, async (ctx) => {
+      router.get("/__status", async (ctx) => {
         const uptime = Math.floor(process.uptime());
         ctx.body = {
           status: "success",
