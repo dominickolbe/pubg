@@ -40,6 +40,8 @@ export const setUpApi = (params: { prefix: string }) => {
       // PLAYERS
 
       router.get("/players/search", async (ctx) => {
+        // TODO
+        // @ts-ignore
         const players = await PlayerDbController.search(ctx.query.q);
         if (players.ok) {
           ctx.body = players.val;
@@ -114,7 +116,10 @@ export const setUpApi = (params: { prefix: string }) => {
         "/matches/:id",
         getCache,
         async (ctx, next) => {
+          // TODO
+          // @ts-ignore
           const limit = parseInt(ctx.query.limit) ?? 10;
+          // @ts-ignore
           const offset = parseInt(ctx.query.offset) ?? 0;
 
           const matches = await PlayerDbController.findMatches(
