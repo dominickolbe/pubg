@@ -43,6 +43,9 @@ const init = () => {
         });
       });
     },
+    incr: (key: string) => {
+      client.incr(key);
+    },
     delete: (key: string) => {
       client.del(key);
     },

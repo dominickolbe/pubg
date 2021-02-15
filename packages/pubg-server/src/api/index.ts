@@ -13,6 +13,7 @@ import {
   PlayerDbController,
   PlayerModel,
 } from "../database/mongo/model/player";
+import { RedisCtrl } from "../database/redis";
 import { getCache, setCache } from "../middleware/cache";
 import {
   cache,
@@ -66,6 +67,7 @@ export const setUpApi = (params: { prefix: string }) => {
           const returnPlayer = (player: IPlayer) => {
             const resp = player.toObject();
             const { matches, autoUpdate, ...rest } = resp;
+            RedisCtrl.incr(rest.name);
             ctx.body = rest;
             return next();
           };
