@@ -124,25 +124,28 @@ export const setUpApi = (params: { prefix: string }) => {
       router.get(
         "/matches/:id",
         getCache,
-        async (ctx, next) => {
-          // TODO
-          // @ts-ignore
-          const limit = parseInt(ctx.query.limit) ?? 10;
-          // @ts-ignore
-          const offset = parseInt(ctx.query.offset) ?? 0;
-
-          const matches = await PlayerDbController.findMatches(
-            { name: ctx.params.id },
-            limit,
-            offset
-          );
-
-          if (matches.ok) {
-            ctx.body = matches.val;
-            return next();
+        async (ctx) => {
+          try {
+            const query = rt
+              .Record({
+                limit: rt.String.Or(rt.Undefined),
+                offset: rt.String.Or(rt.Undefined),
+              })
+              .check(ctx.query);
+            const limit = parseInt(query.limit || "50");
+            const offset = parseInt(query.offset || "0");
+            const matches = await PlayerDbController.findMatches(
+              { name: ctx.params.id },
+              limit,
+              offset
+            );
+            if (matches.ok) {
+              ctx.body = matches.val;
+            }
+          } catch {
+            ctx.response.status = HTTP_STATUS_BAD_REQUEST;
+            return;
           }
-
-          ctx.response.status = HTTP_STATUS_NOT_FOUND;
         },
         setCache
       );
