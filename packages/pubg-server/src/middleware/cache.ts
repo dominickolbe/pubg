@@ -1,6 +1,6 @@
 import Koa from "koa";
 import { HTTP_STATUS_OK } from "pubg-utils/src";
-import { CUSTOM_HEADER } from "../constants";
+import { CACHE_TTL_DEFAULT, CUSTOM_HEADER } from "../constants";
 import { RedisCtrl } from "../database/redis";
 
 export const checkCacheHeader = (ctx: Koa.Context, next: Koa.Next) => {
@@ -29,7 +29,11 @@ export const getCache = async (ctx: Koa.Context, next: Koa.Next) => {
 export const setCache = async (ctx: Koa.Context, next: Koa.Next) => {
   if (!ctx.cache) return next();
   if (ctx.response.status === HTTP_STATUS_OK) {
-    RedisCtrl.set(ctx.request.url, JSON.stringify(ctx.body));
+    RedisCtrl.setWithEx(
+      ctx.request.url,
+      JSON.stringify(ctx.body),
+      CACHE_TTL_DEFAULT
+    );
   }
   return next();
 };

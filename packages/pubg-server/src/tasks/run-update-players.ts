@@ -36,7 +36,6 @@ const run = async () => {
       console.log(`[Error]: STOP importer. PUBG API LIMIT REACHED.`);
       await exit(0);
     }
-    RedisCtrl.flushdb();
   }
 
   await exit(0);

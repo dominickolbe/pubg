@@ -23,7 +23,6 @@ export const PUBG_API_BASE = "https://api.pubg.com/shards/steam";
 
 // CACHE
 
-export const CACHE_TTL_PLAYER = 60 * 10;
-export const CACHE_TTL_MATCHES = 60 * 5;
+export const CACHE_TTL_DEFAULT = 60 * 5;
 
 export const ON_THE_FLY_UPDATE_INTERVAL = 30;
