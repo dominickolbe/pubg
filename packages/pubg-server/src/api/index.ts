@@ -6,16 +6,11 @@ import {
   HTTP_STATUS_NOT_FOUND,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
-import {
-  CACHE_TTL_MATCHES,
-  CACHE_TTL_PLAYER,
-  ON_THE_FLY_UPDATE_INTERVAL,
-} from "../constants";
+import { ON_THE_FLY_UPDATE_INTERVAL } from "../constants";
 import {
   PlayerDbController,
   PlayerModel,
 } from "../database/mongo/model/player";
-import { hasAuthHeader } from "../middleware/auth";
 import { getCache, setCache } from "../middleware/cache";
 import {
   cache,
