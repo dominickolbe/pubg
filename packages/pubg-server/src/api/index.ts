@@ -124,7 +124,7 @@ export const setUpApi = (params: { prefix: string }) => {
       router.get(
         "/matches/:id",
         getCache,
-        async (ctx) => {
+        async (ctx, next) => {
           try {
             const query = rt
               .Record({
@@ -141,6 +141,7 @@ export const setUpApi = (params: { prefix: string }) => {
             );
             if (matches.ok) {
               ctx.body = matches.val;
+              return next();
             }
           } catch {
             ctx.response.status = HTTP_STATUS_BAD_REQUEST;
