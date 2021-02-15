@@ -3,9 +3,11 @@ import Koa from "koa";
 import Router from "koa-router";
 import { IPlayer } from "pubg-model/types/Player";
 import {
+  HTTP_STATUS_BAD_REQUEST,
   HTTP_STATUS_NOT_FOUND,
   HTTP_STATUS_TOO_MANY_REQUESTS,
 } from "pubg-utils/src";
+import * as rt from "runtypes";
 import { ON_THE_FLY_UPDATE_INTERVAL } from "../constants";
 import {
   PlayerDbController,
@@ -40,11 +42,19 @@ export const setUpApi = (params: { prefix: string }) => {
       // PLAYERS
 
       router.get("/players/search", async (ctx) => {
-        // TODO
-        // @ts-ignore
-        const players = await PlayerDbController.search(ctx.query.q);
-        if (players.ok) {
-          ctx.body = players.val;
+        try {
+          const query = rt
+            .Record({
+              q: rt.String,
+            })
+            .check(ctx.query);
+          const players = await PlayerDbController.search(query.q);
+          if (players.ok) {
+            ctx.body = players.val;
+          }
+        } catch {
+          ctx.response.status = HTTP_STATUS_BAD_REQUEST;
+          return;
         }
       });
 
@@ -57,7 +67,6 @@ export const setUpApi = (params: { prefix: string }) => {
             const resp = player.toObject();
             const { matches, autoUpdate, ...rest } = resp;
             ctx.body = rest;
-
             return next();
           };
 
@@ -101,10 +110,10 @@ export const setUpApi = (params: { prefix: string }) => {
             // add failed player request to cache
             cache.pubgPlayerNotFound.push(ctx.params.id);
             ctx.response.status = HTTP_STATUS_NOT_FOUND;
-            return next();
+            return;
           } else if (importedPlayer.err === HTTP_STATUS_TOO_MANY_REQUESTS) {
             ctx.response.status = HTTP_STATUS_TOO_MANY_REQUESTS;
-            return next();
+            return;
           }
         },
         setCache
