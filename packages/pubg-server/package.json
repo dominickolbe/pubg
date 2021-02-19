@@ -18,7 +18,7 @@
     "option-t": "^25.0.2",
     "redis": "^3.0.2",
     "runtypes": "^5.0.1",
-    "yup": "^0.32.8"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@types/koa": "^2.13.0",
