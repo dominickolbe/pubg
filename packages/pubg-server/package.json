@@ -17,7 +17,7 @@
     "mongoose": "^5.12.1",
     "option-t": "^25.0.2",
     "redis": "^3.0.2",
-    "runtypes": "^5.0.1",
+    "runtypes": "^5.0.2",
     "yup": "^0.32.9"
   },
   "devDependencies": {
