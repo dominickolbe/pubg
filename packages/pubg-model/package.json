@@ -6,7 +6,7 @@
   "dependencies": {
     "mongoose": "^5.12.1",
     "option-t": "^25.0.4",
-    "runtypes": "^5.0.2"
+    "runtypes": "^5.1.0"
   },
   "devDependencies": {
     "@types/mongoose": "^5.10.4",
