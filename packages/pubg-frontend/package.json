@@ -19,7 +19,7 @@
     "@risingstack/react-easy-state": "^6.3.0",
     "@sentry/browser": "^6.2.5",
     "axios": "^0.21.1",
-    "date-fns": "^2.20.3",
+    "date-fns": "^2.21.1",
     "lodash": "^4.17.21",
     "option-t": "^25.2.0",
     "react": "^17.0.2",
