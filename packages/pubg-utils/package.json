@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "option-t": "^25.4.0",
-    "runtypes": "^5.2.0"
+    "runtypes": "^6.3.0"
   },
   "devDependencies": {
     "typescript": "^4.2.4"
