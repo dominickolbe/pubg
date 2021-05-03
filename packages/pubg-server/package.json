@@ -17,7 +17,7 @@
     "mongoose": "^5.12.7",
     "option-t": "^25.4.0",
     "redis": "^3.1.2",
-    "runtypes": "^5.2.0",
+    "runtypes": "^6.3.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -25,7 +25,7 @@
     "@types/koa-router": "^7.4.2",
     "@types/koa__cors": "^3.0.2",
     "@types/mongoose": "^5.10.5",
-    "@types/node": "^14.14.41",
+    "@types/node": "^15.0.1",
     "@types/redis": "^2.8.28",
     "@types/yup": "^0.29.11",
     "nodemon": "^2.0.7",
