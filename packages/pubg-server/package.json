@@ -10,7 +10,7 @@
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "axios": "^0.21.1",
-    "date-fns": "^2.21.1",
+    "date-fns": "^2.21.2",
     "dotenv-safe": "^8.2.0",
     "koa": "^2.13.1",
     "koa-router": "^10.0.0",
@@ -25,7 +25,7 @@
     "@types/koa-router": "^7.4.2",
     "@types/koa__cors": "^3.0.2",
     "@types/mongoose": "^5.10.5",
-    "@types/node": "^15.0.1",
+    "@types/node": "^15.0.2",
     "@types/redis": "^2.8.28",
     "@types/yup": "^0.29.11",
     "nodemon": "^2.0.7",
