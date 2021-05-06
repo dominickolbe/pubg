@@ -7,10 +7,10 @@ export const RtPlayer = rt.Record({
   name: rt.String,
   stats: RtStats,
   statsUpdatedAt: rt.String.Or(rt.Null),
-  matches: rt.Optional(rt.Array(rt.InstanceOf(mongoose.Types.ObjectId))),
+  matches: rt.Array(rt.InstanceOf(mongoose.Types.ObjectId)),
   matchesUpdatedAt: rt.String.Or(rt.Null),
   createdAt: rt.String,
-  autoUpdate: rt.Optional(rt.Boolean),
+  autoUpdate: rt.Boolean,
 });
 
 export const RtPlayersSearchSingle = rt.Record({
@@ -25,5 +25,7 @@ export const RtPlayerResults = rt.Array(RtPlayer);
 
 export const RtPlayerRequest = rt.Record({
   ...RtPlayer.fields,
+  matches: rt.Optional(rt.Array(rt.InstanceOf(mongoose.Types.ObjectId))),
+  autoUpdate: rt.Optional(rt.Boolean),
   _id: rt.String,
 });
