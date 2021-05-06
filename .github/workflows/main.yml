@@ -28,7 +28,7 @@ jobs:
       - name: Install, build and test
         run: |
           yarn install --frozen-lockfile
-          yarn frontend:build
+          yarn build:frontend
           yarn prettier-check
 
         env:
