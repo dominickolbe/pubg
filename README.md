@@ -30,11 +30,11 @@ https://api.pubg.lol
 
 I build this entire project with the following setup:
 
-- macOS Big Sur version 11.1
-- node v14.15.4
-- npm 6.14.10
+- macOS Big Sur version 11.4
+- node v14.16.1
+- npm 6.14.12
 - yarn v1.22.10
-- Docker version 20.10.2, build 2291f61
+- Docker version 20.10.5, build 55c4c88
 
 ---
 
@@ -51,13 +51,13 @@ yarn install
 3. start frontend
 
 ```bash
-yarn start:dev:frontend
+yarn frontend:start
 ```
 
 4. start server
 
 ```bash
-yarn start:dev:server
+yarn server:start:dev
 ```
 
 ---
