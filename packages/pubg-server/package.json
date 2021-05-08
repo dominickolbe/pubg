@@ -10,7 +10,7 @@
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "axios": "^0.21.1",
-    "date-fns": "^2.21.2",
+    "date-fns": "^2.21.3",
     "dotenv-safe": "^8.2.0",
     "koa": "^2.13.1",
     "koa-router": "^10.0.0",
