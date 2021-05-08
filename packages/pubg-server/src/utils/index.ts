@@ -4,7 +4,7 @@ import { IPlayer } from "pubg-model/types/Player";
 import { HTTP_STATUS_NOT_FOUND } from "pubg-utils/src";
 import { MatchDbController } from "../database/mongo/model/match";
 import { PlayerModel } from "../database/mongo/model/player";
-import { MATCH_TYPES, PubgApiDriver } from "../services/PubgApiDriver";
+import { PubgApiDriver } from "../services/PubgApiDriver";
 
 export const importNewPlayer = async (name: string) => {
   console.log(`[Info]: start importing player "${name}" ...`);
@@ -56,13 +56,16 @@ export const updatePlayerStatsAndMatches = async (
     `[Info]: stats for player "${newPlayer.name}" successfully imported`
   );
 
-  const matches: string[] = [];
+  const matchesRequest = await PubgApiDriver.player.getById(player.pubgId);
 
-  MATCH_TYPES.forEach((type) => {
-    request.val.data.relationships[type].data.forEach((match) => {
-      matches.push(match.id);
-    });
-  });
+  if (!matchesRequest.ok) {
+    console.log(`[Error]: pubg api request failed`);
+    return createErr(matchesRequest.err);
+  }
+
+  const matches = matchesRequest.val.data.relationships.matches.data.map(
+    (match) => match.id
+  );
 
   // import matches to db
   const importedMatches = await Promise.all(
@@ -119,9 +122,13 @@ export const importPlayerStats = async (
 };
 
 export const importMatchById = async (id: string) => {
-  const exist = await MatchDbController.findById(id);
+  const exist = await MatchDbController.findByMatchId(id);
 
-  if (exist.ok) {
+  if (!exist.ok) {
+    return createErr(exist.err);
+  }
+
+  if (exist.val !== null) {
     // console.log(`[Info]: skip import. match already exist`);
     return createOk(exist.val);
   }
@@ -168,11 +175,11 @@ export const importMatchById = async (id: string) => {
   });
 
   if (!match.ok) {
-    console.log(`[Error]: import match to db failed`);
-    return createErr(null);
+    console.log(`[Error]: match import failed | ${id}`);
+    return createErr(match.err);
   }
 
-  console.log(`[Info]: match "${match.val._id}" successfully imported`);
+  console.log(`[Info]: match successfully imported | ${id}`);
 
   return createOk(match.val);
 };

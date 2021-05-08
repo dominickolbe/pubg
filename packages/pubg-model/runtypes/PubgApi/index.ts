@@ -1,7 +1,29 @@
 import * as rt from "runtypes";
 import { RtStats } from "../Stats";
 
+const RtPubgPlayerMatchItem = rt.Record({
+  data: rt.Array(
+    rt.Record({
+      type: rt.Literal("match"),
+      id: rt.String,
+    })
+  ),
+});
+
 export const RtPubgPlayerRequest = rt.Record({
+  data: rt.Record({
+    type: rt.Literal("player"),
+    id: rt.String,
+    attributes: rt.Record({
+      name: rt.String,
+    }),
+    relationships: rt.Record({
+      matches: RtPubgPlayerMatchItem,
+    }),
+  }),
+});
+
+export const RtPubgPlayersRequest = rt.Record({
   data: rt.Array(
     rt.Record({
       type: rt.Literal("player"),
@@ -9,15 +31,9 @@ export const RtPubgPlayerRequest = rt.Record({
       attributes: rt.Record({
         name: rt.String,
       }),
-    })
-  ),
-});
-
-const RtPubgPlayerMatchItem = rt.Record({
-  data: rt.Array(
-    rt.Record({
-      type: rt.Literal("match"),
-      id: rt.String,
+      relationships: rt.Record({
+        matches: RtPubgPlayerMatchItem,
+      }),
     })
   ),
 });

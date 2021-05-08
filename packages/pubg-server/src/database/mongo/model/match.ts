@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { createNone, createSome, Option } from "option-t/cjs/PlainOption";
+import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
 import { RtMatch } from "pubg-model/runtypes/Match";
 import { IMatch, Match, MatchCreate } from "pubg-model/types/Match";
 
@@ -46,25 +46,27 @@ const MatchSchema = new mongoose.Schema(
 export const MatchModel = mongoose.model<IMatch>("Match", MatchSchema);
 
 export const MatchDbController = {
-  findById: async (matchId: string): Promise<Option<Match>> => {
+  findByMatchId: async (
+    matchId: string
+  ): Promise<Result<Match | null, any>> => {
     try {
       const result = await MatchModel.findOne({ matchId });
-      if (!result) return createNone();
-      const player = RtMatch.check(result.toObject());
-      return createSome(player);
+      if (!result) return createOk(null);
+      const match = RtMatch.check(result.toObject());
+      return createOk(match);
     } catch (error) {
-      console.log(error);
-      return createNone();
+      console.error(error);
+      return createErr(error);
     }
   },
-  save: async (match: MatchCreate): Promise<Option<Match>> => {
+  save: async (match: MatchCreate): Promise<Result<Match, any>> => {
     try {
       const result = await new MatchModel(match).save();
       const newMatch = RtMatch.check(result && result.toObject());
-      return createSome(newMatch);
+      return createOk(newMatch);
     } catch (error) {
-      console.log(error);
-      return createNone();
+      console.error(error);
+      return createErr(error);
     }
   },
 };
