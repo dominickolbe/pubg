@@ -14,4 +14,4 @@ RUN yarn install --frozen-lockfile
 
 COPY packages packages
 
-CMD ["yarn", "start"]
+CMD ["yarn", "server:start"]
