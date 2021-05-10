@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { App } from "./App";
 import { SENTRY_URL } from "./constants";
 import "./index.css";
-
 import * as serviceWorker from "./serviceWorker";
 
 if (process.env.NODE_ENV === "production") {
