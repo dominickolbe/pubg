@@ -17,7 +17,7 @@
     "server:start:dev": "yarn workspace pubg-server start:dev",
     "server:start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts",
     "prettier-check": "prettier --check packages/",
-    "prettier:fix": "prettier --write packages/"
+    "prettier:fix": "prettier --write packages/**/*"
   },
   "dependencies": {
     "ts-node": "^9.1.1",
