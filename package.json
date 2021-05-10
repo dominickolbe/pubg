@@ -16,7 +16,7 @@
     "frontend:build": "yarn workspace pubg-frontend build",
     "server:start:dev": "yarn workspace pubg-server start:dev",
     "server:start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts",
-    "prettier-check": "prettier --check packages/",
+    "prettier-check": "prettier --check packages/**/*",
     "prettier:fix": "prettier --write packages/**/*"
   },
   "dependencies": {
