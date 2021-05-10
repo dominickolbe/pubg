@@ -62,9 +62,8 @@ export const MatchTableRowDetails = (props: {
   const [message, setMessage] = React.useState("Loading...");
   const [tab, setTab] = React.useState(0);
 
-  const [telemetry, setTelemetry] = React.useState<ITelemtryPlayer | null>(
-    null
-  );
+  const [telemetry, setTelemetry] =
+    React.useState<ITelemtryPlayer | null>(null);
 
   const loadTelemetry = async () => {
     const telemetry = await ApiController.getTelemetry(match.telemetry);
