@@ -31,10 +31,10 @@ https://api.pubg.lol
 I build this entire project with the following setup:
 
 - macOS Big Sur version 11.4
-- node v14.16.1
-- npm 6.14.12
+- node v14.17.0
+- npm 6.14.13
 - yarn v1.22.10
-- Docker version 20.10.5, build 55c4c88
+- Docker version 20.10.6, build 370c289
 
 ---
 
