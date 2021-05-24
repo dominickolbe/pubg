@@ -30,7 +30,7 @@ https://api.pubg.lol
 
 I build this entire project with the following setup:
 
-- macOS Big Sur version 11.4
+- macOS Big Sur version 11.5 Beta
 - node v14.17.0
 - npm 6.14.13
 - yarn v1.22.10
