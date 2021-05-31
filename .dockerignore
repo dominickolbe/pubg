@@ -1,9 +1,5 @@
 .git
-*/node_modules
+node_modules
 Dockerfile*
 docker-compose*
-.dockerignore
-.git
-.gitignore
-README.md
-.eslintcache
+.DS_Store
