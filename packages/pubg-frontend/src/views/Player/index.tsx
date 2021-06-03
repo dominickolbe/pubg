@@ -64,9 +64,6 @@ export const Player = view(() => {
   const [matches, setMatches] = useState<MatchesRequest | null>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const [intervalFn, setIntervalFn] =
-    useState<ReturnType<typeof setInterval> | null>(null);
-
   const abortCtrl = new AbortController();
 
   const loadMatches = async () => {
