@@ -100,6 +100,11 @@ export const theme = createMuiTheme({
     ].join(","),
   },
   overrides: {
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: "#222B36",
+      },
+    },
     MuiButton: {
       root: {
         textTransform: "initial",

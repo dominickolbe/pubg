@@ -25,7 +25,6 @@ export const AppDrawer = view(() => {
         paper: classes.drawerPaper,
       }}
     >
-      <Toolbar />
       <div className={classes.drawerContainer}>
         <List
           subheader={

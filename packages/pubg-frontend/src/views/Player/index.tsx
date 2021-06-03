@@ -20,17 +20,14 @@ import { PlayerRequest } from "pubg-model/types/Player";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
+import { LastPlayedTeamCard } from "../../components/LastPlayedTeamCard";
 import { MatchTable } from "../../components/MatchTable";
 import {
   PlayerStatsCard,
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
-import { LastPlayedTeamCard } from "../../components/LastPlayedTeamCard";
 import { rootstore } from "../../components/store";
-import {
-  matchRequestDefaults,
-  PLAYER_VIEW_UPDATE_INTERVAL,
-} from "../../constants";
+import { matchRequestDefaults } from "../../constants";
 import { generateTotalStats } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -116,22 +113,6 @@ export const Player = view(() => {
       abortCtrl.abort();
     };
   }, [id]);
-
-  useEffect(() => {
-    if (intervalFn && !rootstore.app.playerIntervalUpdate)
-      clearInterval(intervalFn);
-    if (rootstore.app.playerIntervalUpdate) {
-      if (abortCtrl.signal.aborted) return;
-      setIntervalFn(
-        setInterval(() => {
-          loadPlayer();
-        }, PLAYER_VIEW_UPDATE_INTERVAL)
-      );
-    }
-    return () => {
-      if (intervalFn) clearInterval(intervalFn);
-    };
-  }, [rootstore.app.playerIntervalUpdate]);
 
   const totalStats = player ? generateTotalStats(player.stats) : null;
 
