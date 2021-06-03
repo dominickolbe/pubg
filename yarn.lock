@@ -2197,10 +2197,10 @@
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/mongoose@^5.11.48":
-  version "5.11.48"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.11.48.tgz#be258319bbbc78c6c425ce259f76adb02f7ebcf8"
-  integrity sha512-3BCntvn76lTfduC+SFM0Ch7oL2nx8kQGREaSVsshUOLJ2TR7v5S2QdUGZqgfnrikuHAHtG+sIbMB+umq68rTSA==
+"@types/mongoose@^5.11.67":
+  version "5.11.67"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.11.67.tgz#518a853c511e664be1019bf2fddf4f1af140796b"
+  integrity sha512-sWSFC+N0h6ohw459wgHrZq7WA29iTbsqaN7Xh3yulDBJ4nZ6mwbUEKArarUXqRlqMOMCvSt42ChHfdiC3t+3ZQ==
   dependencies:
     mongoose "*"
 
