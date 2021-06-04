@@ -67,6 +67,8 @@ export const getMapName = (name: string) => {
       return "Erangel";
     case "Baltic_Main":
       return "Erangel";
+    case "Chimera_Main":
+      return "Paramo";
     case "Range_Main":
       return "Camp Jackal";
     case "Savage_Main":
