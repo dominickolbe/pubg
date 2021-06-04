@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { App } from "./App";
 import { SENTRY_URL } from "./constants";
 import "./index.css";
-import * as serviceWorker from "./serviceWorker";
+import { initializeTracking } from "./services/TrackingProvider";
 
 if (process.env.NODE_ENV === "production") {
   if (SENTRY_URL) {
@@ -16,5 +16,4 @@ if (process.env.NODE_ENV === "production") {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-// TODO: WIP
-serviceWorker.unregister();
+initializeTracking();

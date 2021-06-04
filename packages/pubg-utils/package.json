@@ -4,10 +4,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "option-t": "^27.1.0",
-    "runtypes": "^6.3.0"
+    "option-t": "27.1.0",
+    "runtypes": "6.3.0"
   },
   "devDependencies": {
-    "typescript": "^4.3.2"
+    "typescript": "4.3.2"
   }
 }
