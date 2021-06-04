@@ -5,11 +5,9 @@
   "private": true,
   "dependencies": {
     "mongoose": "5.12.12",
-    "option-t": "27.1.0",
     "runtypes": "6.3.0"
   },
   "devDependencies": {
-    "@types/mongoose": "5.11.96",
-    "typescript": "4.3.2"
+    "@types/mongoose": "5.11.96"
   }
 }

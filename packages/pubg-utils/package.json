@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": true,
-  "dependencies": {
-    "option-t": "27.1.0",
-    "runtypes": "6.3.0"
-  },
-  "devDependencies": {
-    "typescript": "4.3.2"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
