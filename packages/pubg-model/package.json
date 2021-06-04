@@ -8,6 +8,6 @@
     "runtypes": "6.3.0"
   },
   "devDependencies": {
-    "@types/mongoose": "5.11.96"
+    "@types/mongoose": "5.11.97"
   }
 }
