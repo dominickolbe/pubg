@@ -11,15 +11,10 @@
       "src": "favicon.png",
       "type": "image/png",
       "sizes": "192x192"
-    },
-    {
-      "src": "favicon.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "fullscreen",
-  "theme_color": "#407AF6",
-  "background_color": "#303030"
+  "theme_color": "#171C24",
+  "background_color": "#171C24"
 }
