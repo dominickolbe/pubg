@@ -14,6 +14,7 @@ import { view } from "@risingstack/react-easy-state";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { rootstore } from "../../components/store";
+import { usePageview } from "../../services/Tracking/usePageview";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +35,8 @@ export const Start = view(() => {
   const onSubmit = () => {
     search && history.push(`/players/${search}`);
   };
+
+  usePageview("/");
 
   useEffect(() => {
     rootstore.title = "";

@@ -1,8 +1,6 @@
-export const APP_TITLE =
-  process.env.NODE_ENV === "production" ? "pubg.lol" : "pubg.lol (dev)";
+export const APP_NAME = process.env.REACT_APP_NAME ?? "APP_NAME_MISSING";
 
 export const API_BASE = process.env.REACT_APP_API_URL;
-export const SENTRY_URL = process.env.REACT_APP_SENTRY_URL ?? null;
 
 export const matchRequestDefaults = {
   limit: 50,

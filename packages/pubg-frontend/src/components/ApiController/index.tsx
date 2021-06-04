@@ -1,8 +1,8 @@
 import * as Sentry from "@sentry/browser";
 import axios from "axios";
 import { createErr, createOk } from "option-t/cjs/PlainResult";
-import { RtPlayerRequest } from "pubg-model/runtypes/Player";
 import { RtMatchesRequest } from "pubg-model/runtypes/Match";
+import { RtPlayerRequest } from "pubg-model/runtypes/Player";
 import { RtTelemtry } from "pubg-model/runtypes/Telemtry";
 import { API_BASE } from "../../constants";
 

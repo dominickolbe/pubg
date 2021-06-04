@@ -28,6 +28,7 @@ import {
 } from "../../components/PlayerStatsCard";
 import { rootstore } from "../../components/store";
 import { matchRequestDefaults } from "../../constants";
+import { usePageview } from "../../services/Tracking/usePageview";
 import { generateTotalStats } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -103,13 +104,12 @@ export const Player = view(() => {
   useEffect(() => {
     setError(null);
     loadPlayer();
-
-    window.scrollTo(0, 0);
-
     return () => {
       abortCtrl.abort();
     };
   }, [id]);
+
+  usePageview(`/players/${id}`);
 
   const totalStats = player ? generateTotalStats(player.stats) : null;
 

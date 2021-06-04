@@ -9,6 +9,7 @@ import SettingsIcon from "@material-ui/icons/Tune";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { APP_NAME } from "../../constants";
 import { PlayerSearch } from "../PlayerSearch";
 import { rootstore } from "../store";
 
@@ -41,7 +42,7 @@ export const AppHeader = view(() => {
         </IconButton>
         <div className={classes.title}>
           <Button onClick={() => history.push("/")}>
-            <Typography variant="h4">pupg.lol</Typography>
+            <Typography variant="h4">{APP_NAME}</Typography>
           </Button>
         </div>
         <div className={classes.searchContainer}>

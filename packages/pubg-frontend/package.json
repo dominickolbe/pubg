@@ -4,8 +4,8 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "REACT_APP_BUILD_TIME=$(date '+%x %X') react-scripts start",
+    "build": "REACT_APP_BUILD_TIME=$(date '+%x %X') react-scripts build"
   },
   "dependencies": {
     "@emotion/css": "11.1.3",

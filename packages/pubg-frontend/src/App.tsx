@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { AppDrawer } from "./components/AppDrawer";
 import { AppHeader } from "./components/AppHeader";
+import { ScrollToTop } from "./components/ScrollToTop";
 import { SettingsDialog } from "./components/SettingsDialog";
 import { rootstore } from "./components/store";
 import { theme, useStyles } from "./theme";
@@ -36,6 +37,7 @@ export const App = view(() => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
+        <ScrollToTop />
         <div className={classes.root}>
           <AppHeader />
           <AppDrawer />
