@@ -10,6 +10,6 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "typeRoots": ["./index.d.ts", "./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"]
   }
 }

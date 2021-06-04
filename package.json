@@ -14,13 +14,15 @@
   "scripts": {
     "frontend:start": "yarn workspace pubg-frontend start",
     "frontend:build": "yarn workspace pubg-frontend build",
-    "server:start:dev": "yarn workspace pubg-server start:dev",
-    "server:start": "NODE_ENV=production yarn workspace pubg-server ts-node --transpile-only src/index.ts",
+    "server:dev": "REACT_APP_VERSION=$npm_package_version yarn workspace pubg-server start:dev",
+    "server:start": "REACT_APP_VERSION=$npm_package_version yarn workspace pubg-server start",
     "prettier:check": "prettier --check packages/**/*",
-    "prettier:fix": "prettier --write packages/**/*"
+    "prettier:fix": "prettier --write packages/**/*",
+    "test": "yarn run prettier:check"
   },
-  "dependencies": {
-    "ts-node": "10.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "2.3.0",
     "typescript": "4.3.2"
   }
 }
