@@ -13,8 +13,9 @@ export const PlayerSearch = (props: { onSubmit: (value: string) => void }) => {
   const [options, setOptions] = useState<PlayersSearch>([]);
   const [inputValue, setInputValue] = useState("");
 
-  const [timeoutFn, setTimeoutFn] =
-    useState<ReturnType<typeof setTimeout> | null>(null);
+  const [timeoutFn, setTimeoutFn] = useState<ReturnType<
+    typeof setTimeout
+  > | null>(null);
 
   useEffect(() => {
     if (!inputValue) return;
