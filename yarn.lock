@@ -10818,10 +10818,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-runtypes@6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/runtypes/-/runtypes-6.3.0.tgz#bd88392c21f471bd45591d5eabaa4644ca7cdf3c"
-  integrity sha512-FTNUs13CIrCTjReBOaeY/8EY1LYIQVkkwyE9z5MCjZe9uew9/8TRbWF1PcTczgTFfGBjkjUKeedFWU2O3ExjPg==
+runtypes@6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/runtypes/-/runtypes-6.3.1.tgz#58566dde275e60d762f3cc0d7036d5cb0b79a8d1"
+  integrity sha512-XMroIPFshQw4A41tfvcpMECESJSydiIGxDtQZxryFZMfL6QGYuoBjixIpQj2vL1MJSIbrcgQnw/1tzfyABmVkg==
 
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
