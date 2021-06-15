@@ -44,14 +44,6 @@ export const RtPubgPlayerStatsRequest = rt.Record({
     attributes: rt.Record({
       gameModeStats: RtStats,
     }),
-    relationships: rt.Record({
-      matchesSolo: RtPubgPlayerMatchItem,
-      matchesSoloFPP: RtPubgPlayerMatchItem,
-      matchesDuo: RtPubgPlayerMatchItem,
-      matchesDuoFPP: RtPubgPlayerMatchItem,
-      matchesSquad: RtPubgPlayerMatchItem,
-      matchesSquadFPP: RtPubgPlayerMatchItem,
-    }),
   }),
 });
 
