@@ -10,12 +10,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
-import { PLAYER_VIEW_UPDATE_INTERVAL } from "../../constants";
 import { rootstore } from "../store";
 
 export const SettingsDialog = view(() => {
@@ -68,23 +66,6 @@ export const SettingsDialog = view(() => {
       </DialogTitle>
       <DialogContent>
         <List dense>
-          <ListItem>
-            <ListItemText
-              primary="Auto reload player stats and matches"
-              secondary={`Players view gets updated automatically every ${
-                PLAYER_VIEW_UPDATE_INTERVAL / 1000 / 60
-              } minutes`}
-            />
-            <ListItemSecondaryAction>
-              <Switch
-                checked={rootstore.app.playerIntervalUpdate}
-                onChange={() => onChangePlayerIntervalUpdate()}
-                color="primary"
-                size="small"
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
-          <Divider />
           <ListItem>
             <ListItemText
               primary="Clear favorite players"
