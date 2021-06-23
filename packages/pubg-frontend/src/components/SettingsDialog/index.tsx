@@ -17,15 +17,6 @@ import React from "react";
 import { rootstore } from "../store";
 
 export const SettingsDialog = view(() => {
-  const onChangePlayerIntervalUpdate = () => {
-    rootstore.app.playerIntervalUpdate = !rootstore.app.playerIntervalUpdate;
-
-    rootstore.notification.msg = `Player view interval updates ${
-      rootstore.app.playerIntervalUpdate ? "activated" : "deactivated"
-    }`;
-    rootstore.notification.type = "success";
-    rootstore.notification.show = true;
-  };
   const onDeleteFavoritePlayers = () => {
     rootstore.favoritePlayer = [];
 
