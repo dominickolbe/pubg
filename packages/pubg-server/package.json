@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/koa": "2.13.3",
     "@types/koa-router": "7.4.2",
-    "@types/koa__cors": "3.0.2",
+    "@types/koa__cors": "3.0.3",
     "@types/mongoose": "5.11.96",
     "@types/node": "15.14.0",
     "@types/redis": "2.8.30",
