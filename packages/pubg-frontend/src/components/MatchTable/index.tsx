@@ -95,8 +95,8 @@ export const MatchTable = (props: {
             count={matches.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            onChangePage={(event, newPage) => setPage(newPage)}
-            onChangeRowsPerPage={(event) =>
+            onPageChange={(event, newPage) => setPage(newPage)}
+            onRowsPerPageChange={(event) =>
               setRowsPerPage(parseInt(event.target.value, 10))
             }
           />
