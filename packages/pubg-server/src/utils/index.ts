@@ -199,6 +199,5 @@ export const duplicatedPlayerCheck = (ctx: Koa.Context, next: Koa.Next) => {
   return next();
 };
 
-export const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
+export const sleep = (ms: number) =>
+  new Promise((resolve) => window.setTimeout(resolve, ms));
