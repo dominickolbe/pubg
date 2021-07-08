@@ -75,6 +75,8 @@ export const getMapName = (name: string) => {
       return "Sanhok";
     case "Summerland_Main":
       return "Karakin";
+    case "Tiger_Main":
+      return "Taego";
     default:
       return name;
   }
