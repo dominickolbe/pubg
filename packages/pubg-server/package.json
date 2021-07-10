@@ -21,13 +21,13 @@
   },
   "devDependencies": {
     "@types/koa": "2.13.4",
-    "@types/koa-router": "7.4.3",
+    "@types/koa-router": "7.4.4",
     "@types/koa__cors": "3.0.3",
     "@types/mongoose": "5.11.96",
-    "@types/node": "16.0.2",
+    "@types/node": "16.3.1",
     "@types/redis": "2.8.31",
-    "nodemon": "2.0.10",
-    "ts-node": "10.0.0",
+    "nodemon": "2.0.11",
+    "ts-node": "10.1.0",
     "typescript": "4.3.5"
   }
 }
