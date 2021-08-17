@@ -1,4 +1,5 @@
 ![Node CI](https://github.com/dominickolbe/pubg/workflows/Node%20CI/badge.svg?branch=master)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/dominickolbe/pubg)
 
 <p align="center">
   <p align="center">:baby_chick: :hatching_chick: :hatched_chick:</p>
@@ -8,7 +9,7 @@
 
 ![Preview](https://github.com/dominickolbe/pubg/blob/master/preview.png?raw=true "pubg.lol")
 
-### Preview
+## Preview
 
 [see live version here](https://pubg.lol)
 
@@ -31,14 +32,14 @@ https://api.pubg.lol
 I build this entire project with the following setup:
 
 - macOS Monterey v12.0 Beta
-- node v16.6.1
+- node v16.6.2
 - yarn v1.22.11
 - npm v7.20.3
-- Docker version 20.10.6, build 370c289
+- Docker v20.10.7
 
 ---
 
-### Development
+## Development
 
 1. create your `.env` file based on the `.env.example`
 
@@ -59,8 +60,6 @@ yarn frontend:start
 ```bash
 yarn server:start:dev
 ```
-
----
 
 ## Production
 
