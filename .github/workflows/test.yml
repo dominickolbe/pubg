@@ -1,14 +1,14 @@
-name: Build and test
+name: Test
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop]
   pull_request:
-    branches: [master]
+    branches: [master, develop]
 
 jobs:
   test:
-    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    name: Test on Node.js ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -17,7 +17,7 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node_version }}
@@ -25,11 +25,8 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
-      - name: Install, build and test
+      - name: Install dependencies, build and test
         run: |
           yarn install --frozen-lockfile
           yarn frontend:build
           yarn test
-
-        env:
-          CI: true

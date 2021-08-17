@@ -1,4 +1,5 @@
-![Node CI](https://github.com/dominickolbe/pubg/workflows/Node%20CI/badge.svg?branch=master)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Test?label=test)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Release?label=release)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/dominickolbe/pubg)
 
 <p align="center">
