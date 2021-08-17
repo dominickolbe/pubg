@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.21.1](https://github.com/dominickolbe/pubg/compare/v1.21.0...v1.21.1) (2021-08-17)
+
+
+### Chores
+
+* rename github action and add badge ([fb2736b](https://github.com/dominickolbe/pubg/commit/fb2736bd0ab19224d67752a6017b85eb830ccd89))
+
 ## [1.21.0](https://github.com/dominickolbe/pubg/compare/v1.20.1...v1.21.0) (2021-08-17)
 
 
