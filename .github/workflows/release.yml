@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  release:
+    name: Release
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: ["16"]
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Release Body
+        run: npx extract-changelog-release > RELEASE_BODY.md
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          bodyFile: "RELEASE_BODY.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
