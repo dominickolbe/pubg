@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/dominickolbe/pubg/compare/v1.20.1...v1.21.0) (2021-08-17)
+
+
+### Features
+
+* create github release action ([1aa0dba](https://github.com/dominickolbe/pubg/commit/1aa0dba2f2c742adeb085363521a31e2adfc0a04))
+
 ### [1.20.1](https://github.com/dominickolbe/pubg/compare/v1.20.0...v1.20.1) (2021-08-17)
 
 
