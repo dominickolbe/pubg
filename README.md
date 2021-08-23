@@ -1,4 +1,4 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Test?label=test)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Test?label=tests)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Release?label=release)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/dominickolbe/pubg)
 
@@ -30,7 +30,7 @@ https://api.pubg.lol
 
 ### Prerequisites
 
-I build this entire project with the following setup:
+I build this project with the following setup:
 
 - macOS Monterey v12.0 Beta
 - node v16.6.2
