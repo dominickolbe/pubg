@@ -33,7 +33,7 @@ https://api.pubg.lol
 I build this project with the following setup:
 
 - macOS Monterey v12.0 Beta
-- node v16.6.2
+- node v16.7.0
 - yarn v1.22.11
 - npm v7.20.3
 - Docker v20.10.7
