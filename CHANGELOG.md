@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.22.0](https://github.com/dominickolbe/pubg/compare/v1.21.3...v1.22.0) (2021-08-25)
+
+
+### Chores
+
+* rename workflow ([bc3dc3b](https://github.com/dominickolbe/pubg/commit/bc3dc3b9d35f8f60ca5ea7ce2bec60c0046eb97f))
+* update dependencies ([317a67f](https://github.com/dominickolbe/pubg/commit/317a67f333a85b8c0460e19cf4c6a60f9a38de14))
+
 ### [1.21.3](https://github.com/dominickolbe/pubg/compare/v1.21.2...v1.21.3) (2021-08-24)
 
 
