@@ -36,7 +36,7 @@ I build this project with the following setup:
 - node v16.7.0
 - yarn v1.22.11
 - npm v7.20.3
-- Docker v20.10.7
+- Docker version 20.10.8, build 3967b7d
 
 ---
 
