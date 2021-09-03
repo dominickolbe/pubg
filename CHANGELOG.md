@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0](https://github.com/dominickolbe/pubg/compare/v1.22.1...v1.23.0) (2021-09-03)
+
+
+### Bug Fixes
+
+* add useUnknownInCatchVariables to tsconfig.json ([b188bf5](https://github.com/dominickolbe/pubg/commit/b188bf57728e5c6bbfbe41680fb7777d45ee9689))
+* remove mongo connection options ([0f24463](https://github.com/dominickolbe/pubg/commit/0f244636b52f9d65ae5e1566a6031daadc7c23a5))
+* remove mongo useCreateIndex ([5f6148d](https://github.com/dominickolbe/pubg/commit/5f6148d3570ba27fca594281eee30205e3085dc1))
+
+
+### Refactoring
+
+* tsconfig.json files ([692e2ed](https://github.com/dominickolbe/pubg/commit/692e2ed8be710312122f45612271fad094601d0f))
+
+
+### Chores
+
+* rename createMuiTheme - deprecated ([30c0250](https://github.com/dominickolbe/pubg/commit/30c02504397b5b93589ccf1683a312fa12c0f183))
+* yarn.lock ([20cb989](https://github.com/dominickolbe/pubg/commit/20cb98915de0b9b029dc8418e90b0c1a2da105b3))
+
 ### [1.22.1](https://github.com/dominickolbe/pubg/compare/v1.22.0...v1.22.1) (2021-09-02)
 
 
