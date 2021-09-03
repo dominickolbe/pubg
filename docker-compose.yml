@@ -3,7 +3,7 @@ version: "3.8"
 services:
   mongo:
     container_name: pubg-mongo
-    image: mongo
+    image: mongo:4.2
     restart: unless-stopped
     networks:
       - pubg-network
