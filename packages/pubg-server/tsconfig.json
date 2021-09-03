@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "lib": ["es2020", "DOM"],
-    "module": "commonjs",
-    "target": "es2019",
     "allowJs": true,
-    "outDir": "build",
-    "rootDir": "src",
-    "strict": true,
-    "noImplicitAny": true,
     "esModuleInterop": true,
+    "lib": ["esnext", "DOM"],
+    "module": "commonjs",
+    "noImplicitAny": true,
     "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"]
-  }
+    "strict": true,
+    "target": "esnext",
+    "typeRoots": ["./node_modules/@types"],
+    "useUnknownInCatchVariables": false
+  },
+  "include": ["src"]
 }
