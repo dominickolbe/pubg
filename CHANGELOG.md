@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0](https://github.com/dominickolbe/pubg/compare/v1.24.0...v1.25.0) (2021-09-03)
+
+
+### Bug Fixes
+
+* pubg telemtry api rename of LogPlayerKillV2 ([a552220](https://github.com/dominickolbe/pubg/commit/a552220e289515243e3af24147e828785f23ba88))
+
 ## [1.24.0](https://github.com/dominickolbe/pubg/compare/v1.23.0...v1.24.0) (2021-09-03)
 
 
