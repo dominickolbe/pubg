@@ -4,9 +4,7 @@ import { MONGO_HOST } from "../../constants";
 
 const options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  retryWrites: false,
+  retryWrites: true,
 };
 
 export const Database = {
