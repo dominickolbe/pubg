@@ -6,7 +6,6 @@ import { IPlayer, PlayersSearch } from "pubg-model/types/Player";
 import { generateNewStatsObj } from "pubg-utils/src";
 import { MatchModel } from "./match";
 
-mongoose.set("useCreateIndex", true);
 const PlayerSchema = new mongoose.Schema(
   {
     pubgId: {

@@ -3,7 +3,6 @@ import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
 import { RtMatch } from "pubg-model/runtypes/Match";
 import { IMatch, Match, MatchCreate } from "pubg-model/types/Match";
 
-mongoose.set("useCreateIndex", true);
 const MatchSchema = new mongoose.Schema(
   {
     matchId: {
