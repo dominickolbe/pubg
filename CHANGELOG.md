@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.24.0](https://github.com/dominickolbe/pubg/compare/v1.23.0...v1.24.0) (2021-09-03)
+
+
+### Bug Fixes
+
+* downgrade mongo to 4.2 ([7d28818](https://github.com/dominickolbe/pubg/commit/7d288181552c33b31239962317640541de58a1aa))
+
+
+### Documentation
+
+* README.md ([09617ce](https://github.com/dominickolbe/pubg/commit/09617cebe6f65d73d6ea869ef18486419f816871))
+
 ## [1.23.0](https://github.com/dominickolbe/pubg/compare/v1.22.1...v1.23.0) (2021-09-03)
 
 
