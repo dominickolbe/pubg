@@ -199,7 +199,7 @@ export const parseMatchTelemetryByPlayer = (
     // with different event types
     if ("_T" in event) {
       switch (event._T) {
-        case "LogPlayerKill":
+        case "LogPlayerKillV2":
           // Player killed by bluezone
           // damageTypeCategory ="Damage_BlueZone"
           if (event.killer === null) return;

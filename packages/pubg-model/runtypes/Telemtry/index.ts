@@ -5,7 +5,7 @@ export const RtTelemtryEvent_Any = rt.Record({
 });
 
 export const RtTelemtryEvent_PlayerKill = rt.Record({
-  _T: rt.Literal("LogPlayerKill"),
+  _T: rt.Literal("LogPlayerKillV2"),
   _D: rt.String,
   damageTypeCategory: rt.String,
   damageCauserName: rt.String,
