@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.1](https://github.com/dominickolbe/pubg/compare/v1.25.0...v1.25.1) (2021-09-10)
+
+
+### Bug Fixes
+
+* github action node version ([f757ea5](https://github.com/dominickolbe/pubg/commit/f757ea54bdf69e3512ac4dda64bb2135bc34a2c5))
+
+
+### Chores
+
+* update dependencies ([199deae](https://github.com/dominickolbe/pubg/commit/199deae2b4f0ae92bfd744856744f7ea98965c37))
+* yarn.lock ([f058c5f](https://github.com/dominickolbe/pubg/commit/f058c5f0e664dfd37808242301b5cc44ee78cfe6))
+
 ## [1.25.0](https://github.com/dominickolbe/pubg/compare/v1.24.0...v1.25.0) (2021-09-03)
 
 
