@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.2](https://github.com/dominickolbe/pubg/compare/v1.25.1...v1.25.2) (2021-09-10)
+
+
+### Bug Fixes
+
+* github action node version ([b2b3cb4](https://github.com/dominickolbe/pubg/commit/b2b3cb4014a08042dc095af65d6f24d36ba3d3e6))
+
 ### [1.25.1](https://github.com/dominickolbe/pubg/compare/v1.25.0...v1.25.1) (2021-09-10)
 
 
