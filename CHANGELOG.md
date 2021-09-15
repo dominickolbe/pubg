@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.3](https://github.com/dominickolbe/pubg/compare/v1.25.2...v1.25.3) (2021-09-15)
+
+
+### Chores
+
+* update dependencies ([e7cf561](https://github.com/dominickolbe/pubg/commit/e7cf561a10b69c7f3ebaf08e63354fd5c1984015))
+
 ### [1.25.2](https://github.com/dominickolbe/pubg/compare/v1.25.1...v1.25.2) (2021-09-10)
 
 
