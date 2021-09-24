@@ -1,6 +1,6 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Tests?label=tests)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Release?label=release)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/dominickolbe/pubg)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/dominickolbe/pubg?color=%23688eff&style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/dominickolbe/pubg?color=%23688eff&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dominickolbe/pubg/Tests?color=%237DD420&label=tests&style=flat-square)
 
 <p align="center">
   <p align="center">:baby_chick: :hatching_chick: :hatched_chick:</p>
