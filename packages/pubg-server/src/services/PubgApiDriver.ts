@@ -49,7 +49,7 @@ export const PubgApiDriver = {
           console.log(`[Error]: PubgApiDriver.player.getById validation error`);
           return createErr(null);
         }
-        return createOk(response.data);
+        return createOk(request.value);
       } catch (error) {
         if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
           console.log(
@@ -83,7 +83,7 @@ export const PubgApiDriver = {
           );
           return createErr(null);
         }
-        return createOk(response.data);
+        return createOk(request.value);
       } catch (error) {
         if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
           console.log(
@@ -116,7 +116,7 @@ export const PubgApiDriver = {
           );
           return createErr(null);
         }
-        return createOk(response.data);
+        return createOk(request.value);
       } catch (error) {
         if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
           console.log(
@@ -150,7 +150,7 @@ export const PubgApiDriver = {
           );
           return createErr(null);
         }
-        return createOk(response.data);
+        return createOk(request.value);
       } catch (error) {
         if (error.response!.status === HTTP_STATUS_NOT_FOUND) {
           console.log(

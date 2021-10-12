@@ -43,6 +43,7 @@ export const PlayerSearch = (props: { onSubmit: (value: string) => void }) => {
 
     const results = await ApiController.search(searchValue);
     if (results.ok) {
+      // @ts-ignore
       setOptions(results.val);
 
       // @ts-ignore
