@@ -15,7 +15,7 @@ export const theme = createTheme({
     },
     secondary: {
       light: "#ff4081",
-      main: "#f50057",
+      main: "#394660",
       dark: "#c51162",
       contrastText: "#fff",
     },
@@ -102,7 +102,7 @@ export const theme = createTheme({
   overrides: {
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: "#222B36",
+        backgroundColor: "#161B25",
       },
     },
     MuiButton: {
