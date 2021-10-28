@@ -1,3 +1,4 @@
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   title: {
-    padding: theme.spacing(2, 2, 0),
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -46,9 +47,14 @@ export const Start = view(() => {
     <Container maxWidth="sm">
       <Grid container className={classes.root} alignItems="center" spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h3">Search for player:</Typography>
+          <Typography component="div" className={classes.title}>
+            <Box fontWeight="fontWeightMedium" fontSize={24}>
+              Search for player:
+            </Box>
+          </Typography>
         </Grid>
-        <Grid item sm={8} xs={12}>
+
+        <Grid item sm={9} xs={12}>
           <TextField
             label="Player name"
             variant="filled"
@@ -62,11 +68,12 @@ export const Start = view(() => {
             autoFocus
           />
         </Grid>
-        <Grid item sm={4} xs={12}>
+        <Grid item sm={3} xs={12}>
           <Button variant="contained" fullWidth onClick={() => onSubmit()}>
             Search
           </Button>
         </Grid>
+
         <Grid item xs={12} style={{ marginTop: 32 }}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>

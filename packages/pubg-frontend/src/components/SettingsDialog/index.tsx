@@ -98,10 +98,7 @@ export const SettingsDialog = view(() => {
         </List>
       </DialogContent>
       <DialogActions>
-        <Button
-          color="inherit"
-          onClick={() => (rootstore.dialog.settings.open = false)}
-        >
+        <Button onClick={() => (rootstore.dialog.settings.open = false)}>
           close
         </Button>
       </DialogActions>

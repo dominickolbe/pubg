@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   title: {
-    padding: theme.spacing(2, 2),
+    marginBottom: theme.spacing(2),
   },
   favButton: {
     marginLeft: "auto",
@@ -136,7 +136,7 @@ export const Player = view(() => {
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12} className={classes.header}>
           <Typography component="div" className={classes.title}>
-            <Box fontWeight="fontWeightMedium" fontSize={26}>
+            <Box fontWeight="fontWeightBold" fontSize={26}>
               {id}
             </Box>
           </Typography>

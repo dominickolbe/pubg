@@ -1,4 +1,5 @@
 import AppBar from "@material-ui/core/AppBar";
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,7 +43,9 @@ export const AppHeader = view(() => {
         </IconButton>
         <div className={classes.title}>
           <Button onClick={() => history.push("/")}>
-            <Typography variant="h4">{APP_NAME}</Typography>
+            <Typography component="div">
+              <Box fontWeight="fontWeightBold">{APP_NAME}</Box>
+            </Typography>
           </Button>
         </div>
         <div className={classes.searchContainer}>
