@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.0](https://github.com/dominickolbe/pubg/compare/v1.26.1...v1.27.0) (2021-10-28)
+
+
+### Bug Fixes
+
+* drawer fav player list ([c97e377](https://github.com/dominickolbe/pubg/commit/c97e3774401eb9b2c5a4e7772e67e51055530f16))
+
+
+### Refactoring
+
+* change styling ([7f4dfbb](https://github.com/dominickolbe/pubg/commit/7f4dfbb777e474fd433c25201ab8a10e27559d9e))
+* move config values ([5713d77](https://github.com/dominickolbe/pubg/commit/5713d77b036dedf7c6f6b988283138d317705c34))
+* styling ([61e0819](https://github.com/dominickolbe/pubg/commit/61e081924517a5daf905a05dfaeca331823a9588))
+
+
+### Chores
+
+* update dependencies ([3d7c847](https://github.com/dominickolbe/pubg/commit/3d7c8471e438daac86ea34bd2138170201f92c2b))
+
 ### [1.26.1](https://github.com/dominickolbe/pubg/compare/v1.26.0...v1.26.1) (2021-10-27)
 
 
