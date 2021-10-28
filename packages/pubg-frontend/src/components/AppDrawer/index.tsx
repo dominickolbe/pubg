@@ -3,6 +3,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
+import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
@@ -25,6 +26,7 @@ export const AppDrawer = view(() => {
       }}
     >
       <div className={classes.drawerContainer}>
+        <Toolbar />
         <List
           subheader={
             <ListSubheader component="div">Favorite players</ListSubheader>
