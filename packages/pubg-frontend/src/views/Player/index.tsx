@@ -17,6 +17,7 @@ import { view } from "@risingstack/react-easy-state";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { MatchesRequest } from "pubg-model/types/Match";
 import { PlayerRequest } from "pubg-model/types/Player";
+import { PLAYER_MATCHES_REQUEST_DEFAULTS } from "pubg-utils/src";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ApiController } from "../../components/ApiController";
@@ -27,7 +28,6 @@ import {
   PlayerStatsCardLoading,
 } from "../../components/PlayerStatsCard";
 import { rootstore } from "../../components/store";
-import { matchRequestDefaults } from "../../constants";
 import { usePageview } from "../../services/Tracking/usePageview";
 import { generateTotalStats } from "../../utils";
 
@@ -71,8 +71,8 @@ export const Player = view(() => {
     setMatches(null);
     const response = await ApiController.getPlayerMatches(
       id,
-      matchRequestDefaults.limit,
-      matchRequestDefaults.offset
+      PLAYER_MATCHES_REQUEST_DEFAULTS.LIMIT,
+      PLAYER_MATCHES_REQUEST_DEFAULTS.OFFSET
     );
     if (abortCtrl.signal.aborted) return;
     if (response.ok) setMatches(response.val);

@@ -62,3 +62,8 @@ export const generateNewStatsObj = () => {
     squadfpp: { ...STATS_OBJ },
   };
 };
+
+export const PLAYER_MATCHES_REQUEST_DEFAULTS = {
+  LIMIT: 100,
+  OFFSET: 0,
+};

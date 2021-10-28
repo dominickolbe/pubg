@@ -6,6 +6,7 @@ import {
   HTTP_STATUS_BAD_REQUEST,
   HTTP_STATUS_NOT_FOUND,
   HTTP_STATUS_TOO_MANY_REQUESTS,
+  PLAYER_MATCHES_REQUEST_DEFAULTS,
 } from "pubg-utils/src";
 import * as rt from "runtypes";
 import { ON_THE_FLY_UPDATE_INTERVAL } from "../constants";
@@ -134,8 +135,12 @@ export const setUpApi = (params: { prefix: string }) => {
                 offset: rt.String.Or(rt.Undefined),
               })
               .check(ctx.query);
-            const limit = parseInt(query.limit || "50");
-            const offset = parseInt(query.offset || "0");
+            const limit = parseInt(
+              query.limit || PLAYER_MATCHES_REQUEST_DEFAULTS.LIMIT.toString()
+            );
+            const offset = parseInt(
+              query.offset || PLAYER_MATCHES_REQUEST_DEFAULTS.OFFSET.toString()
+            );
             const matches = await PlayerDbController.findMatches(
               { name: ctx.params.id },
               limit,
