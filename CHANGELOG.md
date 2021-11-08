@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.3](https://github.com/dominickolbe/pubg/compare/v1.27.2...v1.27.3) (2021-11-08)
+
+
+### Bug Fixes
+
+* react-router dependencies downgrade ([61dcf66](https://github.com/dominickolbe/pubg/commit/61dcf66202dc4408249c7b1fc6d3eff8aacdb6ec))
+
 ### [1.27.2](https://github.com/dominickolbe/pubg/compare/v1.27.1...v1.27.2) (2021-11-07)
 
 
