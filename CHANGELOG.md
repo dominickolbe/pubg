@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0](https://github.com/dominickolbe/pubg/compare/v1.27.9...v1.28.0) (2021-11-26)
+
+
+### Bug Fixes
+
+* new redis version ([a84dd17](https://github.com/dominickolbe/pubg/commit/a84dd1739e0f586b2b94f00e67d4d49171d75d72))
+
 ### [1.27.9](https://github.com/dominickolbe/pubg/compare/v1.27.8...v1.27.9) (2021-11-26)
 
 
