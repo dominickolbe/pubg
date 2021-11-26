@@ -15,7 +15,7 @@ services:
   redis:
     container_name: pubg-redis
     image: redis:alpine
-    command: redis-server --requirepass ${REDIS_PASS}
+    command: redis-server
     restart: unless-stopped
     networks:
       - pubg-network
