@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.9](https://github.com/dominickolbe/pubg/compare/v1.27.8...v1.27.9) (2021-11-26)
+
+
+### Bug Fixes
+
+* redit dependencies ([9fb1e9d](https://github.com/dominickolbe/pubg/commit/9fb1e9db4af50c11f7eea89afe8362fb654ab2c8))
+
 ### [1.27.8](https://github.com/dominickolbe/pubg/compare/v1.27.7...v1.27.8) (2021-11-25)
 
 
