@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.28.1](https://github.com/dominickolbe/pubg/compare/v1.28.0...v1.28.1) (2021-11-26)
+
+
+### Bug Fixes
+
+* redis auth ([816745e](https://github.com/dominickolbe/pubg/commit/816745e980e1e640cd4baf5695a64592970e24c2))
+
 ## [1.28.0](https://github.com/dominickolbe/pubg/compare/v1.27.9...v1.28.0) (2021-11-26)
 
 
