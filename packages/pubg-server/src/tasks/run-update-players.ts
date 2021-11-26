@@ -10,7 +10,7 @@ const run = async () => {
   console.log("start job");
 
   const exit = async (exitCode: number) => {
-    RedisCtrl.end();
+    await RedisCtrl.end();
     await Database.disconnect();
     console.log("end job");
     process.exit(exitCode);

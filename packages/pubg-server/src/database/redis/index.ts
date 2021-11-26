@@ -1,10 +1,12 @@
 import { createErr, createOk, Result } from "option-t/cjs/PlainResult";
-import redis from "redis";
+import { createClient } from "redis";
 import { REDIS_HOST } from "../../constants";
 
-const client = redis.createClient(REDIS_HOST);
-
 const init = () => {
+  const client = createClient({
+    url: REDIS_HOST,
+  });
+
   client.on("connect", () =>
     console.log(`[Info]: (redis) successfully connected`)
   );
@@ -13,35 +15,38 @@ const init = () => {
     console.error(error);
   });
 
+  client.connect();
+
   return {
-    get: async (key: string): Promise<Result<string, Error | null>> => {
-      return new Promise((resolve) => {
-        client.get(key, (error, value) => {
-          if (error) return resolve(createErr(error));
-          if (value == null) return resolve(createErr(null));
-          return resolve(createOk(value));
-        });
-      });
+    get: async (key: string): Promise<Result<string, any>> => {
+      try {
+        const result = await client.get(key);
+        return result ? createOk(result) : createErr(result);
+      } catch (error) {
+        return createErr(error);
+      }
     },
-    set: async (key: string, value: string): Promise<Result<true, Error>> => {
-      return new Promise((resolve) => {
-        client.set(key, value, (error) => {
-          if (error) return resolve(createErr(error));
-          return resolve(createOk(true));
-        });
-      });
+    set: async (key: string, value: string): Promise<Result<string, any>> => {
+      try {
+        const result = await client.set(key, value);
+        return result ? createOk(result) : createErr(result);
+      } catch (error) {
+        return createErr(error);
+      }
     },
     setWithEx: async (
       key: string,
       value: string,
       expires: number
-    ): Promise<Result<true, Error>> => {
-      return new Promise((resolve) => {
-        client.set(key, value, "EX", expires, (error) => {
-          if (error) return resolve(createErr(error));
-          return resolve(createOk(true));
+    ): Promise<Result<string, any>> => {
+      try {
+        const result = await client.set(key, value, {
+          EX: expires,
         });
-      });
+        return result ? createOk(result) : createErr(result);
+      } catch (error) {
+        return createErr(error);
+      }
     },
     incr: (key: string) => {
       client.incr(key);
@@ -51,11 +56,11 @@ const init = () => {
     },
     flushdb: () => {
       console.log(`[Info]: (redis) flush db`);
-      client.flushdb();
+      client.flushDb();
     },
-    end: () => {
+    end: async () => {
       console.log(`[Info]: (redis) end connection`);
-      client.end(false);
+      await client.disconnect();
     },
   };
 };
