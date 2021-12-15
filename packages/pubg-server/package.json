@@ -16,7 +16,7 @@
     "koa-router": "10.1.1",
     "mongoose": "6.1.1",
     "option-t": "29.1.0",
-    "redis": "4.0.0",
+    "redis": "4.0.1",
     "runtypes": "6.5.0"
   },
   "devDependencies": {
@@ -24,10 +24,10 @@
     "@types/koa-router": "7.4.4",
     "@types/koa__cors": "3.1.0",
     "@types/mongoose": "5.11.96",
-    "@types/node": "16.11.12",
+    "@types/node": "16.11.13",
     "@types/redis": "4.0.10",
     "nodemon": "2.0.15",
     "ts-node": "10.4.0",
-    "typescript": "4.5.3"
+    "typescript": "4.5.4"
   }
 }
