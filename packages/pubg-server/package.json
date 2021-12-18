@@ -15,7 +15,7 @@
     "koa": "2.13.4",
     "koa-router": "10.1.1",
     "mongoose": "6.1.2",
-    "option-t": "29.2.0",
+    "option-t": "29.2.1",
     "redis": "4.0.1",
     "runtypes": "6.5.0"
   },
