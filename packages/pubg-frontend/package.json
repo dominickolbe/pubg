@@ -20,7 +20,7 @@
     "axios": "0.24.0",
     "date-fns": "2.27.0",
     "lodash": "4.17.21",
-    "option-t": "29.2.1",
+    "option-t": "30.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-ga": "3.3.0",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/axios": "0.14.0",
     "@types/lodash": "4.14.178",
-    "@types/node": "17.0.0",
+    "@types/node": "17.0.2",
     "@types/react": "17.0.37",
     "@types/react-dom": "17.0.11",
     "@types/react-router-dom": "5.3.2",
