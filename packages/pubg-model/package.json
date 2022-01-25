@@ -4,7 +4,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "mongoose": "6.1.7",
+    "mongoose": "6.1.8",
     "runtypes": "6.5.0"
   },
   "devDependencies": {
