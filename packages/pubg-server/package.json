@@ -14,7 +14,7 @@
     "dotenv-safe": "8.2.0",
     "koa": "2.13.4",
     "koa-router": "10.1.1",
-    "mongoose": "6.2.3",
+    "mongoose": "6.2.4",
     "option-t": "30.0.0",
     "redis": "4.0.4",
     "runtypes": "6.5.1"
@@ -28,6 +28,6 @@
     "@types/redis": "4.0.10",
     "nodemon": "2.0.15",
     "ts-node": "10.5.0",
-    "typescript": "4.5.5"
+    "typescript": "4.6.2"
   }
 }
