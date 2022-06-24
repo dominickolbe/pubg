@@ -12,12 +12,12 @@
 
 ## Preview
 
-[see live version here](https://pubg.lol)
+[see live version here](https://pubg.domnc.app)
 
 The current production build is served by [vercel.com](https://vercel.com)
 
 ```http
-https://pubg.lol
+https://pubg.domnc.app
 ```
 
 the server is running on AWS
